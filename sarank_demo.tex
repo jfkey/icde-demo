@@ -1,0 +1,133 @@
+\documentclass[conference]{IEEEtran}
+
+\ifCLASSINFOpdf
+\else
+\fi
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+
+\title{A Ranking System For Scholarly Data Analysis}
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{Michael Shell}
+\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
+Georgia Institute of Technology\\
+Atlanta, Georgia 30332--0250\\
+Email: http://www.michaelshell.org/contact.html}
+\and
+\IEEEauthorblockN{Homer Simpson}
+\IEEEauthorblockA{Twentieth Century Fox\\
+Springfield, USA\\
+Email: homer@thesimpsons.com}
+\and
+\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
+\IEEEauthorblockA{Starfleet Academy\\
+San Francisco, California 96678--2391\\
+Telephone: (800) 555--1212\\
+Fax: (888) 555--1212}}
+
+\maketitle
+
+
+\begin{abstract}
+Scholarly search engine brings great convenience in querying articles and discovering knowledge. Up to now, some systems have been developed with a tremendous amount of scholarly data and providing a range of functions to query keywords. However, these systems barely support different types ranking or various entities ranking (\itshape e.g.,\upshape venues, affiliation and authors) when researchers tend to get better knowledge about the keywords. In the paper, we design and develop a novel ranking system for scholarly data analysis that uses graph engine to efficiently manage the heterogeneous, evolving and dynamic natures of structured scholarly data and integrates different types ranking and various entities ranking based on SARank.
+\end{abstract}
+
+
+\IEEEpeerreviewmaketitle
+
+
+\section{Introduction}
+\par
+Scientific research plays a key role in promoting the development of society across the era. As a result of scientific research, scholarly articles accelerate the dissemination of scientific discoveries all around the world.
+% background
+
+\par
+Researchers prefer to retrieve influential and recent works in massive scholarly articles that will inspire their future works. In order to do this, we need to rank articles by making full use of the involved entities (\itshape i.e,\upshape articles,venues and authors) and assessing the relevance of searching conditions to articles.
+%we need ranking system
+
+\par
+Generally speaking, a ranking is \itshape a function that assigns each item a numerical score. \upshape Scholarly articles involve with multi entities such as articles, authors, venues, affiliations and references which form a complex heterogeneous graph. Hence, scholarly articles ranking is essentially a problem of assessing the importance of nodes in a heterogeneous graph. There still remains some challenges in ranking and analysing scholarly data. Firstly, high quality heterogenous structured scholarly data is difficult to manage and operate that has exceeded one billion nodes and two billion relationships. Furthermore, academic data keeps increasing at around 5.7 million per year \cite{sinha2015overview}. Secondly, even if we are only to rank one type of entities(\itshape i.e., \upshape scholarly articles), the other type of entities such as venues and authors are closely involved. Moreover, the impact of different types of entities on the ranking of scholarly articles differ from each other. Finally, the importance of entities change with time in a complex manner. Recently published articles are more likely to have a increasing impacts in next few years and those published many years ago tend to have decreasing impacts since researchers potentially interested in latest discoveries.
+%what is ranking. challenges in ranking.
+
+\par
+Actually academic search engine has drawn significant attentions from both academic and industry. Some academic search engines are prevalent over the past decade \itshape e.g., \upshape Google Scholar \cite{googlescholar}, Microsoft Academic \cite{sinha2015overview}, Semantic Scholar \cite{semantic}, CiteSeerX \cite{li2006citeseerx}, Aminer \cite{tang2008arnetminer} and AceMap \cite{tan2016acemap}. Their common goal is to help researchers discover academic information and provide appropriate ways to present academic data. However, there still remains several issues in these systems. For example, when ranking papers for queries some of them focus on citation of articles \cite{tang2008arnetminer,tan2016acemap}, or exploits the time-dependent information of scholarly data in the form of exponential decay(?), which fails to capture the diverse citation patterns of individual articles. Furthermore, some of them fail to support to query or rank affiliation, venue information which is also practicable to researchers.
+% current academic search engine and its weakness
+
+\par
+\textbf{Contributions.}
+To this end, we build a novel ranking system for scholarly data according to SARank, to provide better rankings for researchers that realizes a range of functions including: (1) easily and efficiently search academic information by keywords; (2) rank various scholarly entities (\itshape i.e., \upshape article, author, affiliation and venue) by different ranking type (\itshape i.e., \upshape SARank, relevance rank, citation and year); (3) check home pages of affiliation, author, venue  \itshape etc.; \upshape (4) find detailed information about an article.\\
+(1) We construct a huge heterogenous academic data property graph based on graph engine that achieve great performance in querying academic data. \\
+(2) We develop a ranking model for various entities (\itshape i.e., \upshape articles, author, affiliation and venue) by evaluating the importance of the entity in academic graph. And the importance captures the temporal nature of entities. \\
+(3) We build a prototype system for ranking and analysing scholarly data that provide better services for researchers.
+
+\par
+\textbf{Organization.}
+The rest of our paper is organized as follows. Section 2 introduces the ranking model including author ranking, venue ranking affiliation ranking and article ranking. We give a system overview in Section 3, which a gives a brief description of our system. And the conclusion is shown in Section 4.
+
+
+\section{Ranking Model}
+ranking models in our work.
+
+\subsection{Author Ranking}
+ author ranking
+
+\subsection{Venue Ranking}
+venue ranking
+
+\subsection{Affiliation Ranking}
+affiliation ranking
+
+\subsection{Article Ranking}
+article ranking
+
+
+\section{System Overview}
+system contains\cite{ma2018query} three \cite{sinha2015overview} parts.
+
+\section{Conclusion}
+conclusion
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+
+% \begin{thebibliography}{1}
+
+% \bibitem{IEEEhowto:kopka}
+% H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+%   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+% \end{thebibliography}
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,refs}
+
+\end{document}
+
+
