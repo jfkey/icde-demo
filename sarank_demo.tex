@@ -1,10 +1,48 @@
-\documentclass[conference]{IEEEtran}
+\documentclass[10pt,conference,letterpaper]{IEEEtran}
+\special{papersize=8.5in,11in}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{epsfig}
+\usepackage{xspace}
+\usepackage{graphicx,epstopdf}
+%\usepackage{times}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{balance}
+\usepackage{amsmath, bm}
+\usepackage[english]{babel}
+\usepackage{array}
 
-\ifCLASSINFOpdf
-\else
-\fi
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
 
-\hyphenation{op-tical net-works semi-conduc-tor}
+\newcommand{\eat}[1]{}
+\newcommand{\sttab}{\rule{0pt}{8pt}\\[-3ex]}
+\newcounter{ccc}
+\newcommand{\bcc}{\setcounter{ccc}{1}\theccc.}
+\newcommand{\icc}{\addtocounter{ccc}{1}\theccc.}
+\newcommand{\myhrule}{\rule[.5pt]{\hsize}{.5pt}}
+\newcommand{\mat}[2]{{\begin{tabbing}\hspace{#1}\=\+\kill #2\end{tabbing}}}
+\newcommand{\stitle}[1]{\vspace{0.5ex}\noindent{\bf #1}}
+\newcommand{\etitle}[1]{\vspace{0.5ex}\noindent{\em \underline{#1}}}
+\newcommand{\marked}[1]{\textcolor{red}{#1}}
+\newcommand{\markedb}[1]{\textcolor{blue}{#1}}
+\newcommand{\subsubtitle}[1]{\vspace{0.5ex}\noindent\underline{{\bf #1}}}
+
+%\newcommand{\stab}{\rule{0pt}{8pt}\\[-1.6ex]}
+%\newcommand{\sttab}{\rule{0pt}{8pt}\\[-2ex]}
+\newcommand{\sstab}{\rule{0pt}{8pt}\\[-2ex]}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\wrt}{\emph{w.r.t.}\xspace}
+\newcommand{\aka}{\emph{a.k.a.}\xspace}
+\newcommand{\kw}[1]{{\ensuremath {\mathsf{#1}}}\xspace}
 
 \begin{document}
 
@@ -14,6 +52,7 @@
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
+\eat{
 \author{\IEEEauthorblockN{Michael Shell}
 \IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
 Georgia Institute of Technology\\
@@ -30,6 +69,13 @@ Email: homer@thesimpsons.com}
 San Francisco, California 96678--2391\\
 Telephone: (800) 555--1212\\
 Fax: (888) 555--1212}}
+}%%% eat original format author
+
+\author{\IEEEauthorblockN{Author List}
+\IEEEauthorblockA{SKLSDE Lab, Beihang University, Beijing, China}
+\IEEEauthorblockA{Beijing Advanced Innovation Center for Big Data and Brain Computing, Beijing, China}
+\{email list\}@buaa.edu.cn}
+%liujunfeng, mashuai, hurenjun, huaijp
 
 \maketitle
 
@@ -41,151 +87,9 @@ Scholarly search engine brings great convenience in querying articles and discov
 
 \IEEEpeerreviewmaketitle
 
-
-\section{Introduction}
-\par
-Scientific research plays a key role in promoting the development of society across the era. As a result of scientific research, scholarly articles accelerate the dissemination of scientific discoveries all around the world.
-% background
-
-\par
-Researchers prefer to retrieve influential and recent works in massive scholarly articles that will inspire their future works. In order to do this, we need to rank articles by making full use of the involved entities (\itshape i.e,\upshape articles,venues and authors) and assessing the relevance of searching conditions to articles.
-%we need ranking system
-
-\par
-Generally speaking, a ranking is \itshape a function that assigns each item a numerical score. \upshape Scholarly articles involve with multi entities such as articles, authors, venues, affiliations and references which form a complex heterogeneous graph. Hence, scholarly articles ranking is essentially a problem of assessing the importance of nodes in a heterogeneous graph. There still remains some challenges in ranking and analysing scholarly data. Firstly, high quality heterogenous structured scholarly data is difficult to manage and operate that has exceeded one billion nodes and two billion relationships. Furthermore, academic data keeps increasing at around 5.7 million per year \cite{sinha2015overview}. Secondly, even if we are only to rank one type of entities(\itshape i.e., \upshape scholarly articles), the other type of entities such as venues and authors are closely involved. Moreover, the impact of different types of entities on the ranking of scholarly articles differ from each other. Finally, the importance of entities change with time in a complex manner. Recently published articles are more likely to have a increasing impacts in next few years and those published many years ago tend to have decreasing impacts since researchers potentially interested in latest discoveries.
-%what is ranking. challenges in ranking.
-
-\par
-Actually academic search engine has drawn significant attentions from both academic and industry. Some academic search engines are prevalent over the past decade \itshape e.g., \upshape Google Scholar \cite{googlescholar}, Microsoft Academic \cite{sinha2015overview}, Semantic Scholar \cite{semantic}, CiteSeerX \cite{li2006citeseerx}, Aminer \cite{tang2008arnetminer} and AceMap \cite{tan2016acemap}. Their common goal is to help researchers discover academic information and provide appropriate ways to present academic data. However, there still remains several issues in these systems. For example, when ranking papers for queries some of them focus on citation of articles \cite{tang2008arnetminer,tan2016acemap}, or exploits the time-dependent information of scholarly data in the form of exponential decay(?), which fails to capture the diverse citation patterns of individual articles. Furthermore, some of them fail to support to query or rank affiliation, venue information which is also practicable to researchers.
-% current academic search engine and its weakness
-
-\par
-\textbf{Contributions.}
-To this end, we build a novel ranking system for scholarly data according to SARank, to provide better rankings for researchers that realizes a range of functions including: (1) easily and efficiently search academic information by keywords; (2) rank various scholarly entities (\itshape i.e., \upshape article, author, affiliation and venue) by different ranking type (\itshape i.e., \upshape SARank, relevance rank, citation and year); (3) check home pages of affiliation, author, venue  \itshape etc.; \upshape (4) find detailed information about an article.\\
-(1) We construct a huge heterogenous academic data property graph based on graph engine that achieve great performance in querying academic data. \\
-(2) We develop a ranking model for various entities (\itshape i.e., \upshape articles, author, affiliation and venue) by evaluating the importance of the entity in academic graph. And the importance captures the temporal nature of entities. \\
-(3) We build a prototype system for ranking and analysing scholarly data that provide better services for researchers.
-
-\par
-\textbf{Organization.}
-The rest of our paper is organized as follows. Section 2 introduces the ranking model including author ranking, venue ranking affiliation ranking and article ranking. We give a system overview in Section 3, which a gives a brief description of our system. And the conclusion is shown in Section 4.
-
-
-\section{Ranking Model}
-\par
-We first introduce Time-Weighted PageRank for evaluating the importance of entities, defined as a combination of the prestige and popularity, and then introduce entity ranking including author ranking, venue ranking, affiliation ranking and type ranking \itshape e.g., \upshape relevance ranking.
-
-
-\subsection{Time-Weighted PageRank}
-\par
-PageRank is a typical method in scholarly articles ranking as we can easily make use of the reference between different articles. Due to the following problems, (1) xxx,
-(2)xxx.
-We introduce Time-Weighted PageRank(TWPageRank) by extending a time decay factor because of the impact of an article decay with time after peak time.
-% introduce time weight pagerank
-
-\par
-We present TWPageRank that evaluate the prestige of nodes in a directed graph, in which each node attached with time information. And we use \itshape the impact weight \upshape to describe the relative weight from the edge sources to targets. Formally, the impact weight on a directed edge $(u,v), i.e.,$ an edge $u$ from $v$, is defined as:
-
-\begin{equation}
-\centering
-\label{eq:edgeWeight}
-w(u,v)=\left \{
-\begin{array}{ccl}
-1                        &    &{T_u   <   Peak_v} \\
-e^{\sigma (T_u-Peak_v)}  &    &{T_u   \ge Peak_v} \\
-\end{array} \right.
-\end {equation}
-where $T_u$ is the time of node $u$, $Peak_v$ is the peak time of node $v$ after which the impact weights of edges to $v$ decay with time, and $\sigma$ is a negative number controlling the decaying speed of the impacts. By default, we use years as its time granularity in Eq. (\ref{eq:edgeWeight}).
-
-\par
-Thus, the update rule of Time-weighted PageRank is
-
-\begin{equation}
-\centering
-\label{eq:twPR}
-PR(v)= d \sum_{(u,v)\in E} \frac{w(u,v)PR(u)}{W(u)} + \frac{1-d}{n}
-\end{equation}
-where $PR(u)$ and $PR(v)$ are the TWPageRank score of $u$ and $v$. And $E$ is a set of edges, $W(u)=\sum_v w(u,v)$ is the sum of the impact weights on all edges from $u$, $n$ is the number of nodes and $d$ is a damping parameter in (0, 1).
-% what's TWpagerank
-
-
-\subsection{Entity Ranking and Type Ranking}
-\par
-Scholarly entities(\itshape e.g., \upshape affiliation, venue, author and article) ranking is a problem of assessing the importance of nodes in a heterogeneous network. The importance is a combination of \itshape prestige \upshape and \itshape popularity \upshape to capture the evolving nature of entities. The prestige of scholarly entities is derived by applying TWPageRank on the citation graph $G$, and each type of entity is assigned the corresponding TWPageRank score as its prestige score $Prs$.
-
-\par
-To learn about the popularity of different scholarly entities, we first introduce the popularity of an article. The popularity of an article $v$ is the sum of all its citation freshness, \itshape i.e., \upshape the closeness to the current year:
-\begin{equation}
-\centering
-\label{eq:pop}
-Pop (v) = \sum_{(u,v) \in E^c} e^{\sigma(T_0 - T_u)}
-\end{equation}
-Here, $T_0$ is the current year, $T_u$ is the largest year among all articles, $\sigma$ is the negative decaying factor in Eq. (\ref{eq:edgeWeight}).
-
-\par
-Intuitively, prestige favors those with many citations soon after the publication of articles or associated articles of venues and authors, and popularity capture the temporal nature of entities.
-
-
-\textbf{Affiliation Ranking.} We computes the importance of affiliations by their associated articles. As the importance of an affiliation evolves with time, we treat the affiliation importance in each year individually, and its importance is the sum of importance in all individual years.
-
-\par
-We construct an affiliation graph $G^a(V^a, E^a)$ using the citation information among affiliations, in which a node represents an affiliation in a specific year and a direct edge $(s, t)$  means that there exists articles of affiliation $s$ citing articles of affiliation $t$. Thus, the impact weights are defined as sums of impact weights from affiliation $s$ to affiliation $t$, \itshape i.e., \upshape
-\begin{equation}
-\centering
-\label{eq:authorSumWeight}
-w_a(s,t) = \sum_{u \in C(s), v \in C(t)} w(u,v)
-\end{equation}
-Here, $C(s)$ and $C(t)$ are the sets of articles of affiliation $s$ and affiliation $t$, and $w(u,v)$ is the impact weight of articles $u$ and $v$.
-% define the impact weight between between author s and author t
-
-\par
-The prestige of an affiliation in a specific year ($Prs_a$) is computed using the impact weights Eq. (\ref{eq:authorSumWeight}) and the update rule in Eq. (\ref{eq:twPR}). The popularity of an affiliation in a specific year ($Pop_a$) is defined as the average popularity of its articles that is computed using Eq. (\ref{eq:pop}). Thus, the \itshape affiliation importance score \upshape ($Imp_a$) is defined as a combination of its prestige and popularity:
-\begin{equation}
-\centering
-\label{eq:imp}
-Imp_a(v) = Prs_a(v)^{\lambda} Pop_a(v)^{1-\lambda}
-\end{equation}
-Here, $\lambda \in [0, 1]$ is the importance factor, indicates the weighting about prestige and popularity.
-
-\textbf{Venue Ranking.}
-We computes the importance of venue using their associated articles which is similar with affiliation ranking. We treat the venue importance in each year, and construct a venue graph $G^v(V^v, E^v)$ using citation information among venues. And then we combine the prestige of a venue ($Prs_v$) and the popularity of venue ($Pop_v$) as the \itshape venue importance score \upshape ($Imp_v$).
-
-
-\textbf{Author Ranking.}
-We evaluate the importance of each author, and compute the average importance of the authors of an article as its \itshape author importance score. \upshape However, it is obvious that the author citation graph is too large to handle. Hence, we evaluate the prestige, popularity of the author by using the average prestige, popularity of all her/his published articles, respectively. Then, the author importance score ($Imp_{aut}$) is the combination of its prestige and popularity, similar to affiliation ranking.
-
-
-\textbf{Article Ranking.}
-If we are only to rank scholarly articles, the other type of entities such as venues and authors are closely involved. Hence, we assemble the importance of article, venue and author to produce the final scholarly articles ranking, illustrated in Fig. 1. Venue ranking and author ranking have presented in previous paragraphs. Next, introduce how to compute the importance of article using citation information.
-
-\par
-We first construct a citation graph $G^c(V^c, E^c)$ using citation information among articles. The prestige of articles ($Prs_c$) is derived by using TWPageRank in citation graph $G^c$. The popularity of an article ($Pop_c$)is the sum of all its freshness which has described in Eq. (\ref{eq:pop}). The importance of citation component ($Imp_c$) is a combination of its prestige and popularity in the citation graph by applying Eq. (\ref{eq:imp}).
-
-\par
-Thus, the static ranking score of an article $v$ is aggregated as follows:
-\begin{equation}
-\centering
-\label{eq:assemble}
-S(v) = \alpha Imp_v(v) + \beta Imp_{aut}(v) + (1 - \alpha - \beta)Imp_c(v)
-\end{equation}
-Here parameter $\alpha$, $\beta$ and $1- \alpha - \beta$  regularize the contributions of the venue, author and citation information.
-
-
-\textbf{Relevance Ranking.} We have introduced affiliation, venue, author, article ranking in the former sections. These rankings are query independent and
-aim to give a static ranking based on scholarly data only. However, it is vital to evaluate the similarity between the short query and sentence (\itshape i.e., \upshape title of the paper) when retrieve articles by keywords.
-
-\par 
-Hence, we apply distributional semantic approach to represent words. Similarities between the term vectors indicates the corresponding semantic similarities \cite{corrado2013efficient}. The final ranking score of an article $v$ that relates to semantics of article title, defined as follow:
-\begin{equation}
-\centering
-\label{eq:simscore}
-F(v) = \theta S(v) + (1- \theta) \sum_j idf(Q_j) \frac {Q_j \cdot T} {\left \| Q_j \right \| \left \| T \right \|}
-\end{equation}
-Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
-
-
-\section{System Overview}
-
+\input{sec-intro}
+\input{sec-model}
+\input{sec-system}
 
 
 
@@ -227,7 +131,7 @@ conclusion
 % \end{thebibliography}
 
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,refs}
+\bibliography{refs}
 
 \end{document}
 
