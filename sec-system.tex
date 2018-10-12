@@ -14,7 +14,7 @@ The component of storage consists of property graph and transaction. Heterogeneo
 We apply a popular graph database Neo4j \cite{Neo4j} to manage and operate massive scholarly data based on the following reasons. First, scholarly data is naturally structured data connected by the reference relationship. At the same time, graph database has great performance implementation handling connections. Second, Neo4j is provided with highly performant read and write scalability thanks to native graph storage and processing. Thus, it works well in managing scholarly data and searching subgraphs.
 
 \par
-In order to manage effectively and query efficiently with Neo4j, we design a graph schema mainly based on two principles. (1) Nodes for things and relationships for structure. (2) We take into consideration of the query ability of the graph schema. Thus, we model academic data as a heterogeneous graph, shown in Fig. \ref{fig:schema}
+In order to manage effectively and query efficiently with Neo4j, we design a graph schema mainly based on two principles. (1) Nodes for things and relationships for structure. (2) We take into consideration of the query ability of the graph schema and adopt specific trade-offs. Thus, we model academic data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
 
 \begin{figure}
 \centering
@@ -32,29 +32,20 @@ In order to manage effectively and query efficiently with Neo4j, we design a gra
 \end{figure}
 
 \par
-The graph schema contains seven type of entities: author, affiliation, field of study, paper, venue(journal and conferences \itshape e.g., \upshape KDD, ICDE ), conference instance (\itshape e.g., \upshape KDD 2019, ICDE 2019), years. In order to xxx, we introduce a node PAA to capture the paper-author-affiliation n-gran .  We derive affiliation, author, venue and article ranking score in section 2. , Incremental computation \cite{ma2018query} . Those score is described as a property in the graph schema. In fact, we can apply any scholarly ranking algorithm to xxx.
+The graph schema contains seven type of entities: author, affiliation, field of study, paper, venue(journal and conferences \itshape e.g., \upshape KDD, ICDE ), conference instance (\itshape e.g., \upshape KDD 2019, ICDE 2019), years. In order to query efficiently, we introduce an additional node PAA to represent the paper-author-affiliation n-ary relationships. Intuitively, a paper get published in a journal/conference by the author means the edges among paper, author and venue node. 
 
-
-
-
-%why we use graph database. 1. 2. and further why Neo4j. ACID.
-%\\
-%property graph design based on two principles, what we design? necessary
-%\\
-%In fact, we can apply any rank algorithm in our database.?
-%\\
-%support transaction,
-
-
+\par
+By employing ranking model as stated in section 2, we derive affiliation, author, venue and article ranking score using incremental computation \cite{ma2018query}. And those score is described as a property in the graph schema. In fact, we can apply any algorithms to rank scholarly entities in the graph schema.
 
 
 \subsubsection{Query Engine}
-query engine
-\\Lucene Index.
+Query engine is the main component that is responsible for handling scholarly data. It consists of lucene index, query optimizer, Neo4j query engine and ranking algorithm. Lucene index is especially important for retrieving articles from Neo4j. Obviously, we index article's title after using stop words, and index the distributed vector representation of words. 
+\\ Lucene Index.
+\\ why we need index. index is important for xxx 
 \\ what we indexed?
 \\ 1. title after using stop word in desk.
 \\ 2. vector, word representation
-\\ Query Optimizer  and
+\\ Query Optimizer and
 \\ Neo4j Query Engine
 \\ Ranking Algorithm
 \\ relevance, ranking results.
