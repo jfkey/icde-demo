@@ -44,6 +44,8 @@
 \newcommand{\aka}{\emph{a.k.a.}\xspace}
 \newcommand{\kw}[1]{{\ensuremath {\mathsf{#1}}}\xspace}
 
+\newcommand{\oursystem}{\kw{SDRanker}}
+
 \begin{document}
 
 
@@ -81,8 +83,13 @@ Fax: (888) 555--1212}}
 
 
 \begin{abstract}
-Scholarly search engines bring great convenience in querying articles and discovering knowledge. Up to now, some systems have been developed with a tremendous amount of scholarly data and providing a range of functions to query keywords. However, these systems barely support different types ranking or various entities ranking (\itshape e.g.,\upshape venues, affiliation and authors) when researchers tend to get better knowledge about the keywords. In the paper, we design and develop a novel ranking system for scholarly data analysis that uses graph engine to efficiently manage the heterogeneous, evolving and dynamic natures of structured scholarly data and integrates different types ranking and various entities ranking based on SARank.
+Scholarly search engines bring great convenience in querying scholarly data and discovering knowledge.
+%
+Recently, a number of scholarly search engines have been developed to facilitate efficient article ranking. However, these systems barely support ranking other heterogenous entities and, hence, fail to answer questions such as which authors/venues/affiliations are the most authoritative in the queried field of study.
+%
+To this end, in this paper, we design and develop a scholarly data ranking system, referred to as \oursystem, to support heterogeneous entity ranking given specific query words. It enables both traditional citation-based and more advanced importance-based rankings. Moreover, it utilizes a popular graph database Neo4j for efficient scholarly data management.
 \end{abstract}
+% Up to now, some systems have been developed with a tremendous amount of scholarly data and providing a range of functions to query keywords. However, these systems barely support different types ranking or various entities ranking (\itshape e.g.,\upshape venues, affiliation and authors) when researchers tend to get better knowledge about the keywords. In the paper, we design and develop a novel ranking system for scholarly data analysis that uses graph engine to efficiently manage the heterogeneous, evolving and dynamic natures of structured scholarly data and integrates different types ranking and various entities ranking based on SARank.
 
 
 \IEEEpeerreviewmaketitle
