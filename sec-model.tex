@@ -7,10 +7,8 @@ We first introduce Time-Weighted PageRank for evaluating the importance of entit
 
 \subsection{Time-Weighted PageRank}
 \par
-PageRank is a typical method in scholarly articles ranking as we can easily make use of the reference between different articles. Due to the following problems, (1) xxx,
-(2)xxx.
-We introduce Time-Weighted PageRank(TWPageRank) by extending a time decay factor because of the impact of an article decay with time after peak time.
-% introduce time weight pagerank
+PageRank is a typical method in scholarly articles ranking as we can easily make use of the reference between different articles. Due to the following reasons: (1) Different articles typically have different impacts in practice, and there is a need to differentiate, while PageRank essentially assumes equal impacts (2) The semantics of citation relationships are time-dependent, which means that citations at different periods of time may reveal different information. We introduce Time-Weighted PageRank(TWPageRank) by extending a time decay factor because of the impact of an article decay with time after peak time.
+% why time weight pagerank
 
 \par
 We present TWPageRank that evaluate the prestige of nodes in a directed graph, in which each node attached with time information. And we use \itshape the impact weight \upshape to describe the relative weight from the edge sources to targets. Formally, the impact weight on a directed edge $(u,v), i.e.,$ an edge $u$ from $v$, is defined as:
