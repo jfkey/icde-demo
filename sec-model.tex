@@ -1,7 +1,41 @@
 \section{Ranking Model}
 \label{sec-model}
 
-\par
+
+Central to \oursystem is our ranking model that supports heterogeneous scholarly entity ranking with four metrics.
+We next introduce the details of our ranking model.
+
+\subsection{Ranking Metrics}
+\label{subsec:rankingMetric}
+Our \oursystem is equipped with four ranking metrics, namely {\em relevance}, {\em importance}, {\em citation number} and {\em time}, to fit the various ranking scenarios. We first elaborate how to rank scholarly articles with these metrics and leave the extension for other entities in the next subsection.
+
+\stitle{Sorted by relevance}. With the first metric, we first evaluate 
+
+ it is vital to evaluate the similarity between the short query and sentence (\ie title of the paper) when retrieve articles by keywords.
+
+Hence, we employ distributional semantic approach to represent words. Similarities between the term vectors indicates the corresponding semantic similarities \cite{corrado2013efficient}. The final ranking score of an article $v$ that relates to semantics of article title, defined as follow:
+\begin{equation}
+\centering
+\label{eq:simscore}
+F(v) = \theta S(v) + (1- \theta) \sum_j idf(Q_j) \frac {Q_j \cdot T} {\left \| Q_j \right \| \left \| T \right \|}
+\end{equation}
+Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
+
+\stitle{Sorted by importance}. 
+
+\stitle{Sorted by citation number and time}. For the remaining two metric, we simply sort articles based on their numbers of total citations and their publish time, respectively. And ties are broken by further comparing importance scores.
+
+
+
+\subsection{Heterogeneous Scholarly Entity Ranking}
+\label{subsec:heteroRanking}
+
+
+
+
+
+% \eat{
+-------------------- original version --------------------  \\
 We first introduce Time-Weighted PageRank for evaluating the importance of entities, defined as a combination of the prestige and popularity, and then introduce entity ranking including author ranking, venue ranking, affiliation ranking and type ranking \itshape e.g., \upshape relevance ranking.
 
 
@@ -109,3 +143,4 @@ Hence, we employ distributional semantic approach to represent words. Similariti
 F(v) = \theta S(v) + (1- \theta) \sum_j idf(Q_j) \frac {Q_j \cdot T} {\left \| Q_j \right \| \left \| T \right \|}
 \end{equation}
 Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
+%} %%% end of \eat
