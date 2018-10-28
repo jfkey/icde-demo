@@ -23,16 +23,34 @@
 \label{fig: search keywords}
 \end{figure*}
 
-As state in former section, we build a ranking system for scholarly data analysis. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \itshape Storage, Query Engine \upshape and \itshape Visualizer \upshape respectively. And we demonstrate some scenarios that can be supported by our system.
+\par
+We mainly use Microsoft Academic Graph(MAG) to build \oursystem \cite{sinha2015overview}. It contains about 126 million scientific publication records, 529 million citation relationship and other scholarly activities information. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \emph{Storage, Query Engine} and \emph{Visualizer} respectively. Based on the framework, we then present a set of web-based scenarios using RESTful APIs.
+% 126909021 paper  114698044 articles 529 million 
 
 \subsection{System Framework}
-% The framework of the system consists of three main components, storage, query engine and visualizer.
+%Data source. currently storage solution, shortage, why graph database. storage contents
 
 \subsubsection{Storage}
 \par
-The component of storage consists of property graph and transaction. Heterogeneous academic data is stored as property graph model which possesses nodes and relationships, and we use transaction to ensure the predictability of relationship-based queries.
+%We mainly use Microsoft Academic Graph(MAG) to build \oursystem \cite{sinha2015overview}. It contains scholarly information such as author, article, venue, affiliation, field of study as well as other information. Aminer, CiteSeerx and Semantic Scholar use relational database system such as Mysql to store and manage the xxx. 
+
 
 \par
+Scholarly data highly connected by reference relationship between articles and constructs a huge heterogeneous graph. Aminer, CiterSeerx and Semantic Scholar use RDBMS such as Mysql to store and manage scholarly data. While Acemap apply Spark to operate massive memory data and Microsoft Academic use Azure to store those huge data. Take RDBMS as an example, complex joins and self-joins will incur obviously performance bottleneck when the scholarly dataset becomes more inter-related. A comparison of the performance of querying the cited articles of an article using RDBMS(Mysql) and graph database(Neo4j) is given in table 1. Furthermore, our heterogeneous entities ranking algorithm, a type of Time-Weighted PageRank, assesses the importance of nodes in a heterogeneous graph. Thus, it utilizes graph database to manage and operate heterogeneous scholarly data.
+% scholarly data source, currently solution, why graph database. 
+
+\par 
+The component of storage consists of property graph and transaction. Heterogeneous academic data is stored as property graph model which possesses nodes and relationships, and we use transaction to ensure the predictability of relationship-based queries.
+% storage
+
+\par
+In order to manage effectively and query efficiently with Neo4j, we design a graph schema mainly based on two principles. (1) Nodes for things and relationships for structure. (2) We take into consideration of the query ability of the graph schema and adopt time and space trade-offs. Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
+
+
+-------------------- original version --------------------  \\
+
+The component of storage consists of property graph and transaction. Heterogeneous academic data is stored as property graph model which possesses nodes and relationships, and we use transaction to ensure the predictability of relationship-based queries.
+
 We apply a popular graph database Neo4j \cite{Neo4j} to manage and operate massive scholarly data based on the following reasons. First, scholarly data is naturally structured data connected by the reference relationship. At the same time, graph database has great performance implementation handling connections. Second, Neo4j is provided with highly performant read and write scalability thanks to native graph storage and processing. Thus, it works well in managing scholarly data and searching subgraphs.
 
 \par
