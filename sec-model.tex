@@ -37,12 +37,18 @@ Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of 
 \subsection{Heterogeneous Scholarly Entity Ranking}
 \label{subsec:heteroRanking}
 
-Since 
-Besides scholarly articles, \oursystem also supports scholarly data
+Besides scholarly articles, other heterogeneous entities are another important part of the scholarly data.
+To ensure a deep analysis, our \oursystem further supports ranking these heterogeneous scholarly entities, \ie authors, venues, and affiliations.
+More specifically, we consider the following two heterogeneous ranking scenarios.
+
+\stitle{Heterogeneous entity ranking given a query}. Given a specific query, \oursystem also ranks the related authors, venues, and affiliations according to the selected metric. This helps to answer questions like which authors/venues/affiliations are the most authoritative in the queried field of study.
+These rankings are derived based on the ranking scores of scholarly articles, \ie the ranking score of an entity is computed as the sum of the ranking scores of its associated articles. When sorted by time, we use an exponentially decayed ranking score $e^{T_a-T_0}$ where $T_a$ and $T_0$ is the publish year of article $a$ and the current year, respectively.
+
+\stitle{Direct author, venue and affiliation ranking}. Finally, \oursystem provides an interface to directly query and rank these heterogeneous entities given their names, where importance is used as the ranking metric.
 
 
 
-% \eat{
+\eat{
 -------------------- original version --------------------  \\
 We first introduce Time-Weighted PageRank for evaluating the importance of entities, defined as a combination of the prestige and popularity, and then introduce entity ranking including author ranking, venue ranking, affiliation ranking and type ranking \itshape e.g., \upshape relevance ranking.
 
@@ -151,4 +157,4 @@ Hence, we employ distributional semantic approach to represent words. Similariti
 F(v) = \theta S(v) + (1- \theta) \sum_j idf(Q_j) \frac {Q_j \cdot T} {\left \| Q_j \right \| \left \| T \right \|}
 \end{equation}
 Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
-%} %%% end of \eat 
+} %%% end of \eat 
