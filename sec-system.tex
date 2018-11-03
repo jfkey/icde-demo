@@ -18,13 +18,13 @@
 
 \begin{figure*}[tp]
 \centering
-\includegraphics[width=\textwidth]{searchKeywords.pdf}
+\includegraphics[width=\textwidth]{searchKeywords110.pdf}
 \caption{search keywords : graph database}
 \label{fig: search keywords}
 \end{figure*}
 
 \par
-We mainly use Microsoft Academic Graph(MAG) to build \oursystem \cite{sinha2015overview}. It contains about 126 million scientific publication records, 529 million citation relationship and other scholarly activities information. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \emph{Storage, Query Engine} and \emph{Visualizer} respectively. Based on the framework, we then present a set of web-based scenarios using RESTful APIs.
+We mainly use Microsoft Academic Graph(MAG) to build \oursystem ~\cite{sinha2015overview}. It contains about 126 million scientific publication records, 529 million citation relationship and other scholarly activities information. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \emph{Storage, Query Engine} and \emph{Visualizer} respectively. Based on the framework, we then present a set of web-based scenarios using RESTful APIs.
 % 126909021 paper  114698044 articles 529 million
 
 \subsection{System Framework}
@@ -54,70 +54,38 @@ The graph schema contains seven type of entities: author, affiliation, field of 
 
 
 \subsubsection{Query Engine}
-\oursystem supports a variety of queries on scholarly graph that involves keywords retrieval, subgraph search, top-k important heterogeneous entities. Query engine is the main component that is responsible for a common set of queries from graph database. It consists of lucene index, query optimization, Neo4j query engine and ranking algorithm. 
+\oursystem supports a variety of queries on scholarly graph that involves keywords retrieval, subgraph search, top-k important heterogeneous entities. Query engine is the main component that is responsible for a common set of queries from graph database. It consists of Lucene index, query optimization, Neo4j query engine and ranking algorithm. 
 
 \par 
-\oursystem takes the advantage of Lucene index that is an inverted index. For the purpose of query efficiently, we employ lucene index in property of paper title, author name and distributed representation of words. Query optimization aims to reduce cardinality of work in the progress to generate a new query plan, such as hitting index, reducing matching paths. Moreover, Neo4j query engine executes the query plan to perform efficient data retrieval. And search results are aggregated by SARank, relevance, citation, year, average and maximum functions.
-
-% Moreover, in order to speed up a wide query functions, we load a part of index into main-memory.
-
-%why we need index. index is important for xxx
-%what we indexed?
-%1. title after using stop word in desk.
-%2. vector, word representation
-%Query Optimizer and
-%Neo4j Query Engine
-%Ranking Algorithm
-%relevance, ranking results.
-
+\oursystem takes the advantage of Lucene index that is an inverted index. For the purpose of query efficiently, we employ Lucene index in property of paper title, author name and distributed representation of words. Query optimization aims to reduce cardinality of work in the progress to generate a new query plan, such as hitting index, reducing matching paths. Moreover, Neo4j query engine executes the query plan to perform efficient data retrieval. And search results are aggregated by SARank, relevance, citation, year, average and maximum functions.
+% query engine; function(?)
 
 \subsubsection{Visualizer}
-With all the technical details of managing and querying scholarly data in the system back-end, the ranking system takes users queries through user interfaces, dispatches them to the query engine, and receives the answers back to visualize. The next section presents some scenarios to demonstrate the front-end.
+With all the technical details of managing and querying scholarly data in the system back-end, the ranking system takes users queries through user interfaces, dispatches them to the query engine, and receives the answers back to visualize. The next subsection presents some scenarios to demonstrate the front-end.
 
-
-\subsection{System Demonstration}
-Fig. \ref{fig: search keywords}, search keywords: given a search ``graph database". It has four major areas: (1) Area 1, the top of the picture, where users can search keywords, authors and affiliations. (2) Area 2 presents relevant papers about the keywords, which is in the center of the picture. (3) At left of the picture is Area 3, we can choose different ranking type, such as SARank, relevance ranking, most citation and time ranking. (4) Top-k prestige authors, influential affiliations, famous journals/conferences is show in Area 4, which is at the right of the picture.
-
-
-
-
-\eat {
-
-The component of storage consists of property graph and transaction. Heterogeneous academic data is stored as property graph model which possesses nodes and relationships, and we use transaction to ensure the predictability of relationship-based queries.
-
-We apply a popular graph database Neo4j \cite{Neo4j} to manage and operate massive scholarly data based on the following reasons. First, scholarly data is naturally structured data connected by the reference relationship. At the same time, graph database has great performance implementation handling connections. Second, Neo4j is provided with highly performant read and write scalability thanks to native graph storage and processing. Thus, it works well in managing scholarly data and searching subgraphs.
-
-\par
-In order to manage effectively and query efficiently with Neo4j, we design a graph schema mainly based on two principles. (1) Nodes for things and relationships for structure. (2) We take into consideration of the query ability of the graph schema and adopt specific trade-offs. Thus, we model academic data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
-
-
-
-\par
-The graph schema contains seven type of entities: author, affiliation, field of study, paper, venue(journal and conferences \itshape e.g., \upshape KDD, ICDE ), conference instance (\itshape e.g., \upshape KDD 2019, ICDE 2019), years. In order to query efficiently, we introduce an additional node PAA to represent the paper-author-affiliation n-ary relationships. Intuitively, a paper get published in a journal/conference by the author means the edges among paper, author and venue node.
-
-\par
-By employing ranking model as stated in section 2, we derive affiliation, author, venue and article ranking score using incremental computation \cite{ma2018query}. And those score is described as a property in the graph schema. In fact, we can apply any algorithms to rank scholarly entities in the graph schema.
-
-
-\subsubsection{Query Engine}
-Query engine is the main component that is responsible for retrieving scholarly data from Neo4j. It consists of lucene index, query optimization, Neo4j query engine and ranking algorithm. To query efficiently, we employing lucene index in property of paper title, author name and distributed representation of words. Moreover, we can load a part of index into main-memory to speed up a wide query functions.
-Query optimization aims to reduce cardinality of work in the progress to generate a new query plan. Moreover, Neo4j query engine executes the query plan to perform efficient data retrieval. The ranking algorithm is responsible for ranking the results according to SARank, relevance ranking,  \itshape ect. \upshape
-
-%why we need index. index is important for xxx
-%what we indexed?
-%1. title after using stop word in desk.
-%2. vector, word representation
-%Query Optimizer and
-%Neo4j Query Engine
-%Ranking Algorithm
-%relevance, ranking results.
-
-\subsubsection{Visualizer}
-With all the technical details of managing and querying scholarly data in the system back-end, the ranking system takes users queries through user interfaces, dispatches them to the query engine, and receives the answers back to visualize. The next section presents some scenarios to demonstrate the front-end.
-
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{msWordCloud.pdf}
+\includegraphics[width=\columnwidth]{msInterest.pdf}
+\includegraphics[width=\columnwidth]{msPapers.pdf}
+\caption{Author Profiling}
+\label{fig:msProfile}
+\end{figure}
 
 \subsection{System Demonstration}
-Fig. \ref{fig: search keywords}, search keywords: given a search ``graph database". It has four major areas: (1) Area 1, the top of the picture, where users can search keywords, authors and affiliations. (2) Area 2 presents relevant papers about the keywords, which is in the center of the picture. (3) At left of the picture is Area 3, we can choose different ranking type, such as SARank, relevance ranking, most citation and time ranking. (4) Top-k prestige authors, influential affiliations, famous journals/conferences is show in Area 4, which is at the right of the picture.
+\stitle{Keywords search and profiling}. Fig. \ref{fig: search keywords} is an example of Search Page. In this page, we fulfill the query need with their ranking metrics and construct keywords profiling, try to answer which authors/venues/affiliations are the most authoritative in the queried field of study.
+\par
+It has four major areas: (1) Area 1, the top of the picture, where users can search keywords, authors, affiliations, journal and conference (2) Area 2 presents influential papers about the keywords and {\em relevance} for default ranking metric, which is in the center of the picture. (3) At left of the picture is Area 3, users can specify different ranking metrics such as {\em relevance}, {\em importance}, {\em citation}, {\em year} to fit various ranking scenarios. (4) Top-k prestige authors, influential affiliations, famous journals/conferences corresponding to ranking metrics and keywords are shown in Area 4, which is at the right of the picture.
+% keywords search and profiling. 
 
 
-}
+\par 
+\stitle{Author profiling}. Fig. \ref{fig:msProfile} is an example of an Author Page, where contains author's basic information and author's detailed profiling. For basic information, users can check author's publications, related authors and author's affiliations. We also develop author's detailed profiling to have a knowledge of the author both from breadth and depth. Thus, we model the evolution of author's research interest, author's avatar with word cloud description, the statistics of publication, {\em etc}.
+%author profiling 
+
+%\par
+%\stitle{Affiliation profiling}. As shown in fig. \ref{}, we give an example of affiliation profiling. The layout of the Affiliation Page is similar with Search Page, users can discover publications using various ranking metrics and check statistics information, such as the importance author, relevant affiliation, famous journals/conferences.
+%% affiliation profiling
+
+%\par 
+%\stitle{Venue profiling} venue
