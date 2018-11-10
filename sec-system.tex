@@ -10,16 +10,32 @@
 \vspace{-2ex}
 \end{figure}
 
+(1) Schema design
+(2) 
 
-Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component.
+
+Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component. 
+
+\marked{highlight graph storage, query engine detail}
+
+\marked{relation to ranking model, when to do ranking}
+
+\marked{incremental computation}
 %We mainly use Microsoft Academic Graph(MAG) to build \oursystem ~\cite{sinha2015overview}. It contains about 126 million scientific publication records, 529 million citation relationship and other scholarly activities information. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \emph{Storage, Query Engine} and \emph{Visualizer} respectively. Based on the framework, we then present a set of web-based scenarios using RESTful APIs.
 % 126909021 paper  114698044 articles 529 million
 
 
 %Data source. currently storage solution, shortage, why graph database. storage contents
 
-\subsection{Storage}
+\subsection{Graph Storage}
 %We mainly use Microsoft Academic Graph(MAG) to build \oursystem \cite{sinha2015overview}. It contains scholarly information such as author, article, venue, affiliation, field of study as well as other information. Aminer, CiteSeerx and Semantic Scholar use relational database system such as Mysql to store and manage the xxx.
+
+
+(1) schema design (reasonale)
+
+(2) property graph (billion-scale) -- lucene index 
+%(1) adopt neo4j 
+%(2) 
 
 Storage is a key factor for the success of scholarly analysis systems, due to the large volume of scholarly data (\eg \oursystem mainly uses the MAG data with 126 and 529 million articles and citations, respectively~\cite{sinha2015overview}) and the complex entities and relationships. 
 %
@@ -28,11 +44,12 @@ Traditional RDBMS are used by CiteSeerx, AMiner and Semantic Scholar to manage s
 We observe that entities in scholarly data are inherently linked. The existing storage solutions all ignore such linked feature, and may face challenges for efficient and high-concurrent query processing when the computing resources are limited. For instance, complex join operations in RDBMS will become the bottleneck when processing queries such as {\em finding all articles of someone's co-authors}.
 %
 To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
+\marked{RDBMS vs. graph database moved to Introduction}
 
 %Scholarly data highly connected by reference relationship between articles and constructs a huge heterogeneous graph.  Take RDBMS as an example, complex joins and self-joins will incur obviously performance bottleneck when the scholarly dataset becomes more inter-related. A comparison of the performance of querying the cited articles of an article using RDBMS(Mysql) and graph database(Neo4j) is given in table 1. Furthermore, our heterogeneous entities ranking algorithm, a type of Time-Weighted PageRank bases on graph structure, assesses the importance of nodes in a heterogeneous graph. Thus, it utilizes a popular graph database Neo4j to store and manage heterogeneous scholarly data.
 % scholarly data source, currently solution, why graph database.
 
-Our storage solution includes the property graph and transactions. The scholarly data is stored as a property graph with nodes and relationships and we use transactions to ensure the predictability of relationship-based queries.
+Our storage solution includes the property graph and transactions. The scholarly data is stored as a property graph with nodes and relationships and we use transactions to ensure the predictability of relationship-based queries. \marked{derivatives}
 %  which possesses nodes and relationships
 In order to efficiently retrieve and rank heterogeneous scholarly entities, we design the Neo4j graph schema following two principles: \marked{(a) nodes for entities and relationships for linked structures (\eg citation, authored-by), and (b) reducing fine-grained relationship names while increase generic relationships qualified with property appropriately}.
 
@@ -67,7 +84,12 @@ Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic 
 \vspace{-3ex}
 \end{figure*}
 
-\subsection{Query Engine}
+\subsection{(Graph) Query Engine}
+
+(1) ranking computation \& incremental
+(2) functionality based on query engine 
+(3) example 
+
 \oursystem supports a variety of queries on scholarly data such as keyword retrieval, subgraph search, heterogeneous entity ranking. Query engine is the component responsible for processing a common set of queries on graph database. It consists of the Lucene index, query optimization, Neo4j query engine and ranking algorithms.
 % add heterogenous entity Ranking ?
 
