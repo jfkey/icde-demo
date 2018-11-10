@@ -11,10 +11,10 @@
 \end{figure}
 
 (1) Schema design
-(2) 
+(2)
 
 
-Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component. 
+Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component.
 
 \marked{highlight graph storage, query engine detail}
 
@@ -33,11 +33,11 @@ Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists
 
 (1) schema design (reasonale)
 
-(2) property graph (billion-scale) -- lucene index 
-%(1) adopt neo4j 
-%(2) 
+(2) property graph (billion-scale) -- lucene index
+%(1) adopt neo4j
+%(2)
 
-Storage is a key factor for the success of scholarly analysis systems, due to the large volume of scholarly data (\eg \oursystem mainly uses the MAG data with 126 and 529 million articles and citations, respectively~\cite{sinha2015overview}) and the complex entities and relationships. 
+Storage is a key factor for the success of scholarly analysis systems, due to the large volume of scholarly data (\eg \oursystem mainly uses the MAG data with 126 and 529 million articles and citations, respectively~\cite{sinha2015overview}) and the complex entities and relationships.
 %
 Traditional RDBMS are used by CiteSeerx, AMiner and Semantic Scholar to manage scholarly data. On the other hand, Acemap and Microsoft Academic exploit distributed file systems.
 %
@@ -78,7 +78,7 @@ Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic 
 
 \begin{figure*}[tp]
 \centering
-\includegraphics[width=\textwidth]{searchKeywords110.pdf}
+\includegraphics[width=\textwidth]{searchKeywords.pdf}
 \caption{Search Keywords And Heterogeneous Entity Ranking}
 \label{fig: search keywords}
 \vspace{-3ex}
@@ -87,8 +87,8 @@ Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic 
 \subsection{(Graph) Query Engine}
 
 (1) ranking computation \& incremental
-(2) functionality based on query engine 
-(3) example 
+(2) functionality based on query engine
+(3) example
 
 \oursystem supports a variety of queries on scholarly data such as keyword retrieval, subgraph search, heterogeneous entity ranking. Query engine is the component responsible for processing a common set of queries on graph database. It consists of the Lucene index, query optimization, Neo4j query engine and ranking algorithms.
 % add heterogenous entity Ranking ?
@@ -107,7 +107,7 @@ We will demonstrate some scholarly analysis scenarios in the next Section.
 \centering
 \includegraphics[width=\columnwidth]{hjwAvatar.pdf}
 \includegraphics[width=\columnwidth]{hjwInterest.pdf}
-\includegraphics[width=\columnwidth]{hjwPapers.pdf}
+%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
 \caption{Author Profiling}
 \label{fig:hjwProfile}
 \vspace{-3ex}

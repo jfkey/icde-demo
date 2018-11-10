@@ -1,31 +1,25 @@
 \section{System Demonstration}
-\par The demonstration consists of three parts. (1) we demonstrate its ranking models and heterogenous entity rankings given the query keywords by \oursystem. (2) To further illustrate the effective ranking model based on importance, we take {\em time ranking} in SIGMOD as an example. (3) We also demonstrate author profiling for a better knowledge of the author.
+\par The demonstration consists of three parts. (1) we demonstrate its ranking models and heterogenous entity rankings given the query keywords by \oursystem. (2) To further illustrate the effective ranking model based on importance, we take {\em time ranking} in SIGMOD as an example. (3) We also demonstrate author profiling for better knowledge of the author.
 
 
-\stitle{Article Ranking and Keywords Profiling}. Fig. \ref{fig: search keywords} is an example of Search Page. In this page, we fulfill the query need with their ranking metrics and construct keywords profiling,
-try to answer which authors/venues/affiliations are the most authoritative in the queried field of study.
+\stitle{Article Ranking and Keywords Profiling}. Fig. \ref{fig: search keywords} is an example of Search Page. In this page, we fulfill the query need with their ranking metrics and construct keywords profiling, try to answer which authors/venues/affiliations are the most authoritative in the queried field of study.
 
 \par
+We equip \oursystem with both article retrieval and other academic entity retrieval, such as author, affiliations, journal, conference series and conference instance. We present influential papers about the keywords and {\em importance} for default ranking metric. In order to fit various ranking scenarios, \oursystem supports different ranking metrics such as {\em relevance}, {\em importance}, {\em citation}, {\em year}. {\em Relevance} is more suitable for retrieving articles by keywords, because of capturing semantic information. While {\em importance} is more appropriate for ranking articles of affiliation and venue. We also demonstrate top-k prestige authors, influential affiliations, famous journals/conferences corresponding to ranking metrics and keywords.
 
+\eat{
 It has four major areas: (1) Area 1, the top of the picture, where users can search keywords, authors, affiliations, journal and conference (2) Area 2 presents influential papers about the keywords and {\em relevance} for default ranking metric, which is in the center of the picture. (3) At left of the picture is Area 3, users can specify different ranking metrics such as {\em relevance}, {\em importance}, {\em citation}, {\em year} to fit various ranking scenarios. (4) Top-k prestige authors, influential affiliations, famous journals/conferences corresponding to ranking metrics and keywords are shown in Area 4, which is at the right of the picture.
-
 % keywords search and profiling.
+}
 
-\stitle{Ranking Instance}
+\stitle{Ranking Instance} We rank the conference papers \eg SIGMOD following the metrics of {\em time ranking}. We only collect articles published earlier than 2016, so the top of {\em time ranking} is the maximum importance score in 2015. As shown in fig. \ref{fig:sigmod}, we put ``Spark SQL: Relational Data Processing in Spark" in second place, which has the most citations(653) in SIGMOD 2015 up to now. More generally, in our top 10, there are 3 articles that has the most citation in SIGMOD 2015.
+% the description in ICDE 2018
 
-
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{sigmod15.pdf}
-\caption{SIGMOD 2015}
-\label{fig:sigmod}
-\vspace{-3ex}
-\end{figure}
-
+\par
+Although they share the same venue component in the same year, the author of the article has higher prestige and popularity, such as Matei Zaharia and Michael Armbrust. Besides, an article in VLDB cites the paper published in the same years that increases the prestige and popularity of the citation components. Thus, the paper possesses a higher importance score by assembling the component of citation, author and venue.
 
 \stitle{Author profiling}. Fig. \ref{fig:hjwProfile} is an example of an Author Page, where contains author's basic information and author's detailed profiling. For basic information, users can check author's publications, related authors and author's affiliations. We also develop author's detailed profiling to have a knowledge of the author both from breadth and depth. Thus, we model the evolution of author's research interest, author's avatar with word cloud description, the statistics of publication, {\em etc}.
 %author profiling
-
 
 %\par
 %\stitle{Affiliation profiling}. As shown in fig. \ref{}, we give an example of affiliation profiling. The layout of the Affiliation Page is similar with Search Page, users can discover publications using various ranking metrics and check statistics information, such as the importance author, relevant affiliation, famous journals/conferences.
