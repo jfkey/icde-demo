@@ -4,28 +4,11 @@
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{systemFrame.pdf}
+\includegraphics[width=0.5\columnwidth]{systemFrame.pdf}
 \caption{System Framework}
 \label{fig:frame}
 \vspace{-2ex}
 \end{figure}
-
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}
-\caption{Neo4j Schema Design}
-\label{fig:schema}
-\vspace{-3ex}
-\end{figure}
-
-\begin{figure*}[tp]
-\centering
-\includegraphics[width=\textwidth]{searchKeywords110.pdf}
-\caption{Search Keywords And Heterogeneous Entity Ranking}
-\label{fig: search keywords}
-\vspace{-3ex}
-\end{figure*}
 
 \par
 We mainly use Microsoft Academic Graph(MAG) to build \oursystem ~\cite{sinha2015overview}. It contains about 126 million scientific publication records, 529 million citation relationship and other scholarly activities information. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \emph{Storage, Query Engine} and \emph{Visualizer} respectively. Based on the framework, we then present a set of web-based scenarios using RESTful APIs.
@@ -56,6 +39,22 @@ The graph schema contains seven type of entities: author, affiliation, field of 
 %In fact, we can apply any other ranking algorithms to rank scholarly entities in the graph schema.
 
 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}
+\caption{Neo4j Schema Design}
+\label{fig:schema}
+\vspace{-3ex}
+\end{figure}
+
+\begin{figure*}[tp]
+\centering
+\includegraphics[width=\textwidth]{searchKeywords110.pdf}
+\caption{Search Keywords And Heterogeneous Entity Ranking}
+\label{fig: search keywords}
+\vspace{-3ex}
+\end{figure*}
 \subsection{Query Engine}
 \oursystem supports a variety of queries on scholarly graph that involves keywords retrieval, subgraph search, top-k important heterogeneous entities. Query engine is the main component that is responsible for a common set of queries from graph database. It consists of Lucene index, query optimization, Neo4j query engine and ranking algorithm.
 % add heterogenous entity Ranking ?
