@@ -1,14 +1,27 @@
-%\section{System Overview}
-\section{System Framework}
+\section{System Overview}
+%\section{System Framework}
 \label{sec-system}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\columnwidth]{systemFrame.pdf}
-\caption{System framework of \oursystem}
-\label{fig:frame}
-\vspace{-2ex}
+\subfigure[{\scriptsize Framework}]{\label{fig:framework}
+\includegraphics[width=0.4\columnwidth]{systemFrame.pdf}}
+\subfigure[{\scriptsize Neo4j schema design}]{\label{fig:schema}
+\includegraphics[width=0.4\columnwidth]{neo4jSchema.pdf}}
+\caption{System overview of \oursystem}
+\label{fig:system}
+%\vspace{-2ex}
 \end{figure}
+
+\eat{
+\begin{figure}
+\centering
+\includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}
+\caption{Neo4j property graph schema design}
+\label{fig:schema}
+\vspace{-3ex}
+\end{figure}
+}
 
 (1) Schema design
 (2)
@@ -65,16 +78,6 @@ Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic 
 % We take into consideration of the query ability of the graph schema and adopt specific time and space trade-offs. heterogeneous scholarly entity ranking ?
 
 %In fact, we can apply any other ranking algorithms to rank scholarly entities in the graph schema.
-
-
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}
-\caption{Neo4j property graph schema design}
-\label{fig:schema}
-\vspace{-3ex}
-\end{figure}
 
 \begin{figure*}[tp]
 \centering

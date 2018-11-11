@@ -2,22 +2,15 @@
 \label{sec-intro}
 
 
-% Contributions: (1) graph database for scholarly data management, (2) heterogeneous entity ranking, (3) demonstration
-%% Why graph database:
+% Contributions: (1) heterogeneous entity ranking, (2) graph database for scholarly data management, (3) demonstration
 %% Why heterogeneous entity ranking:
+%% Why graph database:
+
 
 % background
-Academic publications accelerate the dissemination of scientific discoveries all around the world. However, it is becoming more challenging to manage scientific advancement nowadays, due to the huge volume of scientific articles published.
+%Scholarly analysis systems greatly enhance scientific knowledge discovery and propagation.
+Scientific publications accelerate the dissemination of scientific discoveries all around the world. However, it is becoming more challenging to manage scientific advancement nowadays, due to the huge volume of scientific articles published.
 Consequently, ranking systems play a more important role for efficient scholarly data analysis than ever before.
-
-%Considering that the numbers of recorded articles and authors have reached 208 and 252 millions\footnote{https://academic.microsoft.com/}, respectively, an effective ranking system for scholarly data analysis is of great importance than ever before.
-
-%Building a ranking system for scholarly data analysis is a critical and challenging task. due to the following reasons. First,  heterogeneous, evolving and dynamic nature of entities involved in scholarly articles. The large-scale of collection of academic publication.
-%Scientific research plays a key role in promoting the development of society across the era. As a result of scientific
-%research, scholarly articles accelerate the dissemination of scientific discoveries all around the world.
-%The rise of large-scale collection of data on academic publications
-%what we are doing now.
-%retrieve and ranking is important .
 
 
 % Search Engine | supporting entities | ranking metric | url
@@ -45,26 +38,7 @@ Recently, an importance-based scholarly article ranking model, namely \sarank, h
 
 \marked{difference with existing systems}
 
-\marked{the reason for using Neo4j} 
-
-
-%~\cite{sinha2015overview}
-
-%Actually Some academic search engines are prevalent over the past decade  e.g.,  Their common goal is to help researchers discover academic information and present academic data. However, there still remains several shortages in these systems, especially in ranking articles. For example, when rank queried articles some of them focus on citation of articles \cite{tang2008arnetminer,tan2016acemap}. While CiteSeerX evaluate articles employing weight PageRank and rank authors by coauthorship networks \cite{sun2007popularity,fiala2013citeseer}. They fails to capture the evolving nature of entities and take the involved entities (\itshape i.e,\upshape venues and authors) into consideration. Furthermore, some of them fail to support to query or rank affiliation, venue information which is also practicable to researchers \cite{tan2016acemap, googlescholar}.
-% current academic search engine and its weakness
-
-
-%Researchers prefer to retrieve influential and recent works in massive scholarly articles that will inspire their future works. In order to do this, we need to rank articles by making full use of the involved entities (\itshape i.e,\upshape articles,venues and authors) based on SARank \cite{ma2018query} and assessing the relevance of searching conditions and articles.
-%why we need ranking system
-
-
-%Generally speaking, a ranking is \itshape a function that assigns each item a numerical score. \upshape Scholarly articles involve with multi entities such as articles, authors, venues, affiliations and references which form a complex heterogeneous graph. Hence, scholarly articles ranking is essentially a problem of assessing the importance of nodes in a heterogeneous graph.
-
-
-%Ranking such a huge heterogeneous graph and retrieving academic information remain some challenges. Firstly, high quality structured scholarly data is difficult to manage and operate that has exceeded 126 million articles and 114 million authors. Furthermore, academic data keeps increasing at around 5.7 million per year \cite{sinha2015overview}. Secondly, if we are only to rank one type of entities(\itshape i.e., \upshape scholarly articles), the other type of entities such as venues and authors are closely involved. Moreover, the impact of different types of entities on the ranking of scholarly articles differ from each other. Finally, the importance of entities change with time in a complex manner. Recently published articles are more likely to have a increasing impacts in next few years and those published many years ago tend to have decreasing impacts since researchers potentially interested in latest discoveries.
-
-%what is ranking. challenges in ranking.
-
+\marked{the reason for using Neo4j}
 
 
 \stitle{Contributions}.

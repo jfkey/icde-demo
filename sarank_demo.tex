@@ -87,11 +87,13 @@ Fax: (888) 555--1212}}
 
 
 \begin{abstract}
-Scholarly analysis systems greatly enhance knowledge discovery and propagation.
+Scholarly analysis systems greatly enhance scientific knowledge discovery and propagation.
 %
-Recently, a number of scholarly analysis systems have been developed to facilitate various article rankings. However, these systems barely support ranking other heterogenous entities and, hence, fail to answer questions such as which authors/venues/affiliations are the most authoritative in the queried field of study.
+Recently, a number of scholarly analysis systems have been developed. However, these systems barely support ranking heterogenous scholarly entities under different metrics and, hence, fail to answer questions such as which authors/venues/affiliations are the most relevant/important in the queried field of study. In addition, existing systems adopt RDBMS or distributed file systems as their storage solutions, whereas the linked feature of scholarly data is largely ignored.
 %
-To this end, in this paper, we design and develop a scholarly data ranking system \oursystem to support Heterogeneous Scholarly Entity ranking given specific query keywords. It enables both traditional citation-based and more advanced importance-based rankings. Moreover, it utilizes a popular graph database Neo4j for efficient scholarly data management.
+To this end, in this paper, we design and develop a novel scholarly analysis system \oursystem to support heterogeneous scholarly entity ranking. \oursystem is equipped with both traditional relevance- and citation-based and more recent importance-based ranking metrics. Moreover, \oursystem utilizes a popular graph database Neo4j as the storage solution. The linked structures are directly leveraged to facilitate the efficiency of scholarly data management.
+%Based on the above, we have built an online service for scholarly analysis. 
+We demonstrate the advantage of Neo4j-based storage compared with RDBMS, and two use cases in heterogeneous scholarly entity ranking and author profiling.
 \end{abstract}
 % Up to now, some systems have been developed with a tremendous amount of scholarly data and providing a range of functions to query keywords. However, these systems barely support different types ranking or various entities ranking (\itshape e.g.,\upshape venues, affiliation and authors) when researchers tend to get better knowledge about the keywords. In the paper, we design and develop a novel ranking system for scholarly data analysis that uses graph engine to efficiently manage the heterogeneous, evolving and dynamic natures of structured scholarly data and integrates different types ranking and various entities ranking based on SARank.  bring great convenience in querying scholarly data and discovering knowledge.
 
