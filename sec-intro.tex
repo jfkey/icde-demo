@@ -26,24 +26,33 @@ With this in the background, scholarly analysis systems are studied and develope
 % AceMap: Article & author | authors, venues of key words, based on the numbers | https://acemap.info
 
 
+%difference with existing systems
 In the academic and industry, a number of academic search engines have been developed, \eg Microsoft Academic\footnote{https://academic.microsoft.com/}, Google Scholar\footnote{https://scholar.google.com/}, Semantic Scholar\footnote{https://www.semanticscholar.org/}, CiteSeerX~\cite{li2006citeseerx}, AMiner~\cite{tang2008arnetminer} and AceMap~\cite{tan2016acemap}.
 %
-These systems enable to rank articles in a variety of  ways based on published time, relevance or by  employing citation analysis. For instance, Google Scholar ranks articles mainly based on the number of citation, while Semantic Scholar proposes to use the citation velocity, which is a weighted average number of article citations in the last three years. On the other hand, CiteSeerX exploits weighted PageRank on the citation networks to determine the ranks of articles~\cite{sun2007popularity}.
+Given query keywords, these systems rank scholarly articles in a variety of ways based on published time, relevance or by employing citation analysis. %For instance, Google Scholar ranks articles mainly based on the number of citation, while Semantic Scholar proposes to use the citation velocity, which is a weighted average number of article citations in the last three years. On the other hand, CiteSeerX exploits weighted PageRank on the citation networks to determine the ranks of articles~\cite{sun2007popularity}.
 %
-However, none of these systems supports ranking other heterogenous entities, \eg authors, venues and affiliations, given query keywords, except AceMap~\cite{tan2016acemap} that is based on the numbers of associated articles relevant to the query keywords only. As a result, these systems fail to answer questions such as which authors/venues/affiliations are the most authoritative in the queried field of study.
-
-
-Besides the ranking entities, existing systems also have problems to fulfill the query need with their ranking metrics.
-Researchers are more preferred to find the influential and recent articles in an early stage to inspire their future work.
-However, neither published time and relevance based nor tradition citation-based rankings (\eg based on citation numbers or PageRank scores) is able to identify those from massive scholarly articles. Note that the latter ranking metrics are well known to have bias to old articles.
+Besides, they also allow to retrieve and rank authors given author names.
 %
-Recently, an importance-based scholarly article ranking model, namely \sarank, has proven effective for identifying recent and influential articles even when their citations have not been well observed yet~\cite{ma2018query}. It ranks scholarly articles by assembling the importance of involved entities such that the importance is a combination of prestige and popularity. %to capture the evolving nature of entities.
+However, none of them supports query-dependent rankings of other heterogenous entities, \eg authors, venues and affiliations, except AceMap~\cite{tan2016acemap} that is based on the numbers of associated articles relevant to the query keywords only.
+%
+As a result, these systems fail to answer questions such as which authors/venues/affiliations are the most authoritative in the queried field of study.
 
 
-\marked{difference with existing systems}
+%Besides the ranking entities, existing systems also have problems to fulfill the query need with their ranking metrics.
+%Researchers are more preferred to find the influential and recent articles in an early stage to inspire their future work.
+%However, neither published time and relevance based nor tradition citation-based rankings (\eg based on citation numbers or PageRank scores) is able to identify those from massive scholarly articles. Note that the latter ranking metrics are well known to have bias to old articles.
+%Recently, an importance-based scholarly article ranking model, namely \sarank, has proven effective for identifying recent and influential articles even when their citations have not been well observed yet~\cite{ma2018query}. It ranks scholarly articles by assembling the importance of involved entities such that the importance is a combination of prestige and popularity. %to capture the evolving nature of entities.
+
 
 \marked{the reason for using Neo4j}
-
+Storage is a key factor for the success of scholarly analysis systems, due to the large volume of scholarly data (\eg \oursystem mainly uses the MAG data with 126 and 529 million articles and citations, respectively~\cite{sinha2015overview}) and the complex entities and relationships.
+%
+Traditional RDBMS are used by CiteSeerx, AMiner and Semantic Scholar to manage scholarly data. On the other hand, Acemap and Microsoft Academic exploit distributed file systems.
+%
+We observe that entities in scholarly data are inherently linked. The existing storage solutions all ignore such linked feature, and may face challenges for efficient and high-concurrent query processing when the computing resources are limited. For instance, complex join operations in RDBMS will become the bottleneck when processing queries such as {\em finding all articles of someone's co-authors}.
+%
+To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
+\marked{RDBMS vs. graph database moved to Introduction}
 
 \stitle{Contributions}.
 To this end, in this paper, we design and develop a novel ranking system \oursystem (for her wisdom and justice) to support heterogeneous scholarly entity
