@@ -9,7 +9,7 @@
 
 % background
 %Scholarly analysis systems greatly enhance scientific knowledge discovery and propagation.
-The continuous advancements in science and engineering has contributed to an ever-expanding body of scientific literature. 
+The continuous advancements in science and engineering has contributed to an ever-expanding body of scientific literature.
 As a result, it is becoming more and more challenging for people to follow the related research progress timely.
 With this in the background, scholarly analysis systems are studied and developed to enhance scientific knowledge discovery and propagation. Basically, these systems enable to retrieve related scholarly entities (\eg articles, authors) given a query and, better, give an analysis of those retrieved.
 
@@ -53,6 +53,21 @@ We observe that entities in scholarly data are inherently linked. The existing s
 %
 To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
 \marked{RDBMS vs. graph database moved to Introduction}
+
+\begin{table}
+\caption{}
+\centering
+\begin{tabular*}{8cm}{llll}
+\hline
+ & Paper Info & Author's TopK Paper & TopK Cited Article Info\\
+\hline
+MySQL & 0.251 s  & 6.493 s & 35.190 s \\
+\hline
+Neo4j & 0.239 s  & 3.062 s & 24.332 s \\
+\hline
+\end{tabular*}
+\end{table}
+
 
 \stitle{Contributions}.
 To this end, in this paper, we design and develop a novel ranking system \oursystem (for her wisdom and justice) to support heterogeneous scholarly entity
