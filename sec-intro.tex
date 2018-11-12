@@ -29,11 +29,10 @@ With this in the background, scholarly analysis systems are studied and develope
 %difference with existing systems
 In the academic and industry, a number of academic search engines have been developed, \eg Microsoft Academic\footnote{https://academic.microsoft.com/}, Google Scholar\footnote{https://scholar.google.com/}, Semantic Scholar\footnote{https://www.semanticscholar.org/}, CiteSeerX~\cite{li2006citeseerx}, AMiner~\cite{tang2008arnetminer} and AceMap~\cite{tan2016acemap}.
 %
-Given a query, these systems rank scholarly articles according to publish time, relevance or some citation-based metrics. %For instance, Google Scholar ranks articles mainly based on the number of citation, while Semantic Scholar proposes to use the citation velocity, which is a weighted average number of article citations in the last three years. On the other hand, CiteSeerX exploits weighted PageRank on the citation networks to determine the ranks of articles~\cite{sun2007popularity}.
+Given a query, these systems rank scholarly articles according to publish time, relevance or other citation-based metrics. %For instance, Google Scholar ranks articles mainly based on the number of citation, while Semantic Scholar proposes to use the citation velocity, which is a weighted average number of article citations in the last three years. On the other hand, CiteSeerX exploits weighted PageRank on the citation networks to determine the ranks of articles~\cite{sun2007popularity}.
+%Besides, they also allow to retrieve and rank authors given author names.
 %
-Besides, they also allow to retrieve and rank authors given author names.
-%
-However, none of them supports to rank other heterogenous entities, \eg authors, venues and affiliations, in a specific field of study, except AceMap that is based on the numbers of associated articles relevant to the query only. Moreover, the established ranking metrics are either too simple (\eg time and relevance) or biased to older articles (\eg citation-based). That is, they are insufficient to identify influential scholarly entities in an early stage.
+However, a majority of them do not support to rank other heterogenous entities, \eg authors, venues and affiliations, in a specific field of study, except AceMap and Microsoft Academic. Note that AceMap simply ranks those heterogenous entities  based on the numbers of associated articles relevant to the query, and it is unclear how Microsoft Academic does. Moreover, the established ranking metrics are either too simple (\eg time and relevance) or biased to older articles (\eg citation-based). That is, they are insufficient to identify influential scholarly entities in an early stage.
 %
 To conclude, these systems fail to answer questions such as which authors/venues/affiliations are recently the most relevant/important in the queried field of study.
 
@@ -69,6 +68,28 @@ Neo4j & 0.239 s  & 3.062 s & 24.332 s \\
 \end{tabular*}
 \end{table}
 }
+
+\begin{table}[t!]
+\label{tab-function}
+\begin{center}
+\caption{Functions implemented in \oursystem and other systems}
+\begin{scriptsize}
+\begin{tabular}{|c|c c c c|c c c c|}
+\hline
+\multirow{2}{*}{\bf Systems}   &  \multicolumn{4}{c|}{\bf Querying and Ranking}     & \multicolumn{4}{c|}{\bf Profiling}  \\
+&  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF}  & {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} \\ \hline \hline
+MS Academic & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & & & \\
+Google Scholar & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+Semantic Scholar & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & & & \\
+CiteSeerX & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & & & \\
+AMiner & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} &  \marked{$\times$} & $\surd$ &  \marked{$\times$} &  \marked{$\times$}\\
+AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & & & \\
+\oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
+\end{tabular} \\ \vspace{.5ex}
+AR, AU, VE and AF stand for article, author, venue and affiliation, respectively.
+\end{scriptsize}
+\end{center}
+\end{table}
 
 %(in honor of her wisdom and justice)
 \stitle{Contributions}.
