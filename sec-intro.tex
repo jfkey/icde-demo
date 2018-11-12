@@ -32,7 +32,7 @@ In the academic and industry, a number of academic search engines have been deve
 Given a query, these systems rank scholarly articles according to publish time, relevance or other citation-based metrics. %For instance, Google Scholar ranks articles mainly based on the number of citation, while Semantic Scholar proposes to use the citation velocity, which is a weighted average number of article citations in the last three years. On the other hand, CiteSeerX exploits weighted PageRank on the citation networks to determine the ranks of articles~\cite{sun2007popularity}.
 %Besides, they also allow to retrieve and rank authors given author names.
 %
-However, a majority of them do not support to rank other heterogenous entities, \eg authors, venues and affiliations, in a specific field of study, except AceMap and Microsoft Academic. Note that AceMap simply ranks those heterogenous entities  based on the numbers of associated articles relevant to the query, and it is unclear how Microsoft Academic does. Moreover, the established ranking metrics are either too simple (\eg time and relevance) or biased to older articles (\eg citation-based). That is, they are insufficient to identify influential scholarly entities in an early stage.
+However, a majority of them do not support to rank other heterogenous entities, \eg authors, venues and affiliations, in a specific field of study, except AceMap and Microsoft Academic. Note that AceMap simply ranks those entities  based on the numbers of associated articles relevant to the query, and it is unclear how Microsoft Academic does. Moreover, the established ranking metrics are either too simple (\eg time and relevance) or biased to older articles (\eg citation-based). That is, they are insufficient to identify influential scholarly entities in an early stage.
 %
 To conclude, these systems fail to answer questions such as which authors/venues/affiliations are recently the most relevant/important in the queried field of study.
 
@@ -51,7 +51,7 @@ Existing systems have exploited RDBMS or distributed file systems as the storage
 We observe that scholarly entities are inherently linked. The existing solutions all ignore such linked feature, and may be inferior in answering graph queries compared with structure-aware storage solutions~\cite{BigGraphSearch}. For instance, complex joins in RDBMS will become the bottleneck when processing queries such as {\em finding the top-k articles of an authors}.
 %To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
 
-%may face challenges for efficient and high-concurrent query processing when the computing resources are limited 
+%may face challenges for efficient and high-concurrent query processing when the computing resources are limited
 
 \eat{
 \begin{table}
@@ -76,14 +76,14 @@ Neo4j & 0.239 s  & 3.062 s & 24.332 s \\
 \begin{scriptsize}
 \begin{tabular}{|c|c c c c|c c c c|}
 \hline
-\multirow{2}{*}{\bf Systems}   &  \multicolumn{4}{c|}{\bf Querying and Ranking}     & \multicolumn{4}{c|}{\bf Profiling}  \\
+\multirow{2}{*}{\bf Systems}   &  \multicolumn{4}{c|}{\bf Query-dependent ranking}     & \multicolumn{4}{c|}{\bf Visual profiling}  \\
 &  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF}  & {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} \\ \hline \hline
-MS Academic & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & & & \\
+MS Academic & $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 Google Scholar & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
-Semantic Scholar & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & & & \\
-CiteSeerX & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & & & \\
+Semantic Scholar & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} & \marked{$\times$} \\
+CiteSeerX & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} &\marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 AMiner & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} &  \marked{$\times$} & $\surd$ &  \marked{$\times$} &  \marked{$\times$}\\
-AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & & & \\
+AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
 \oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
 \end{tabular} \\ \vspace{.5ex}
 AR, AU, VE and AF stand for article, author, venue and affiliation, respectively.
@@ -95,7 +95,7 @@ AR, AU, VE and AF stand for article, author, venue and affiliation, respectively
 \stitle{Contributions}.
 To this end, in this paper, we design and develop \oursystem, a novel scholarly analysis system to facilitate deep understanding of scholarly data.
 
-\noindent (1) \oursystem supports ranking four types of scholarly entities (\ie article, author, affiliation and venue) under various ranking metrics. Notably, we further equip \oursystem with a more advanced importance-based ranking function that has proven effective for identifying recent influential articles even when their citations have not been well observed yet~\cite{ma2018query}.
+\noindent (1) \oursystem supports ranking four types of scholarly entities (\ie article, author, venue and affiliation) under various ranking metrics. Notably, we equip \oursystem with a recent importance-based ranking function that has proven effective for identifying recent influential articles even when their citations have not been well observed yet~\cite{ma2018query}.
 
 %We develop a ranking model for various entities (\ie articles, author, affiliation and venue) by evaluating the importance of the entity in academic graph. And the importance captures the temporal nature of entities.
 
@@ -103,7 +103,7 @@ To this end, in this paper, we design and develop \oursystem, a novel scholarly 
 
 %As entities in scholarly data are inherently linked, we construct a huge heterogenous academic data property graph based on graph engine and empirically verify the advantage in querying scholarly data compared with RDBMS.
 
-\noindent (3) We have built an online service for \oursystem. The functions are summarized in Table 1. We demonstrate two use cases in scholarly entity ranking and profiling. We also demonstrate the advantage of storage with Neo4j compared with RDBMS.
+\noindent (3) We have built an online service for \oursystem. In addition to rankings, we also implement heterogeneous entity profiling that presents some visual analysis for better understanding. The functions of \oursystem and other systems are summarized in Table~I. We demonstrate two use cases in scholarly entity ranking and profiling. We also demonstrate the advantage of storage with Neo4j compared with RDBMS.
 
 %Our system implements a range of functions including: (i) article ranking by different ranking models given query keywords, (ii) heterogeneous entity rankings based on importance and (iii) detailed description and statistics of articles, authors, venues and affiliations.
 

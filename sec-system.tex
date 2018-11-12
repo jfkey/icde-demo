@@ -6,9 +6,10 @@
 \centering
 \subfigure[{\scriptsize Framework}]{\label{fig:framework}
 \includegraphics[width=0.4\columnwidth]{systemFrame.pdf}}
-\subfigure[{\scriptsize Neo4j schema design}]{\label{fig:schema}
+\hspace{3ex}
+\subfigure[{\scriptsize Neo4j schema}]{\label{fig:schema}
 \includegraphics[width=0.4\columnwidth]{neo4jSchema.pdf}}
-\caption{System overview of \oursystem}
+\caption{System design of \oursystem}
 \label{fig:system}
 %\vspace{-2ex}
 \end{figure}
@@ -23,11 +24,7 @@
 \end{figure}
 }
 
-(1) Schema design
-(2)
-
-
-Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component.
+Figure \ref{fig:framework} shows the framework of our \oursystem. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component.
 
 \marked{highlight graph storage, query engine detail}
 
@@ -38,7 +35,7 @@ Figure \ref{fig:frame} shows the framework of our \oursystem system. It consists
 % 126909021 paper  114698044 articles 529 million
 
 
-%Data source. currently storage solution, shortage, why graph database. storage contents
+\subsection{Schema Design}
 
 \subsection{Graph Storage}
 %We mainly use Microsoft Academic Graph(MAG) to build \oursystem \cite{sinha2015overview}. It contains scholarly information such as author, article, venue, affiliation, field of study as well as other information. Aminer, CiteSeerx and Semantic Scholar use relational database system such as Mysql to store and manage the xxx.
@@ -78,6 +75,7 @@ Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic 
 % We take into consideration of the query ability of the graph schema and adopt specific time and space trade-offs. heterogeneous scholarly entity ranking ?
 
 %In fact, we can apply any other ranking algorithms to rank scholarly entities in the graph schema.
+
 
 \begin{figure*}[tp]
 \centering
