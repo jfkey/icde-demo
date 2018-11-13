@@ -7,11 +7,11 @@ We next introduce the details of rankings.
 
 \subsection{Ranking Metrics}
 \label{subsec:rankingMetric}
-To fit the various ranking scenarios, \oursystem is equipped with four ranking metrics, namely {\em relevance}, {\em importance}, {\em relevant importance}, {\em citation} and {\em time}. We first elaborate how to rank scholarly articles with these metrics and extend them for other types of entities in the next subsection.
+To fit the various ranking scenarios, \oursystem is equipped with five ranking metrics, namely {\em relevance}, {\em importance}, {\em relevant importance}, {\em citation} and {\em time}. We first elaborate how to rank scholarly articles with these metrics and extend them for other types of entities in the next subsection.
 %
 Note that given a query, those scholarly articles whose titles contain at least one query keyword after removing stop words are retrieved as the candidates for ranking.
 
-\stitle{Sort by relevance}. The first metric enables to query highly-correlated scholarly articles. For doing so, we evaluate the relevance of their titles given the query keywords, and return those with the highest relevance. Since the development of Word2vec, word embedding~\cite{corrado2013efficient} has become the de facto standard method to capture semantic-level relevance. We also exploit Word2vec for evaluating the relevance between a scholarly article and a query, defined as follows:
+\stitle{Sort by relevance}. The first metric enables to query highly-correlated scholarly articles. For doing so, we evaluate the relevance of their titles given the query keywords, and return those with the highest relevance. Since the development of Word2vec, word embedding~\cite{corrado2013efficient} has become the {\em de facto} standard method to capture semantic-level relevance. We also exploit Word2vec for evaluating the relevance between a scholarly article and a query, defined as follows:
 \begin{equation}
 \label{eq:relscore}
 rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.

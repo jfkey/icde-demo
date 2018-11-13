@@ -14,34 +14,39 @@
 %\vspace{-2ex}
 \end{figure}
 
-\eat{
-\begin{figure}
-\centering
-\includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}
-\caption{Neo4j property graph schema design}
-\label{fig:schema}
-\vspace{-3ex}
-\end{figure}
-}
 
-Figure \ref{fig:framework} shows the framework of our \oursystem. It consists of three main components, \emph{Storage}, \emph{Query Engine} and \emph{Visualizer}. We next detail each component.
+Figure \ref{fig:framework} shows the framework of our \oursystem. It consists of two main components, \ie \emph{Storage} and \emph{Query Engine}.
+Below the storage component is a {\em query-independent ranking} module that enriches the data with those pre-computed query-independent ranking metrics. Note that there is another {\em query-dependent ranking} module inside the query engine. Finally, two function modules on top present results to users based on the retrieved results. We next detail our system.
+
+\subsection{Schema Design} \label{subsec:schema}
+
+Graph database Neo4j is adopted for storage. As such, we need to design a schema that abstracts the entities and linked structures (\eg citation, authored-by).
+% schema design rationaile
+We follow two principles for schema design: (a) nodes for entities and relationships for linked structures, and (b) reducing fine-grained relationship names while increase generic relationships qualified with property appropriately.
+
+The schema is presented in Fig.~\ref{fig:schema}. 
+It contains seven basic types of nodes including paper, author, affiliation, venue, field of study (FOS), conference instance (ConIns) and year. In addition, it further incorporates an artificial type of nodes, \ie PAA representing paper-author-affiliation tuples, to enhance query efficiency. 
+Finally, the property graph schema also forms a total of ten types of relationships to represent the linked structures between scholarly entities.
+
+
+
+\subsection{Graph Storage} \label{subsec:storage}
+
+%Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships. 
+% 126909021 paper  114698044 articles 529 million
+
+
+
+Based on the above schema, we store the MAG data~\cite{sinha2015overview} as a huge property graph with \marked{more than one billion nodes and over two billion relationships (replacing one/two billion with concrete numbers).} 
+enables to store and manage our data as a graph.
+
 
 \marked{highlight graph storage, query engine detail}
 
 \marked{relation to ranking model, when to do ranking}
 
 \marked{incremental computation}
-%We mainly use Microsoft Academic Graph(MAG) to build \oursystem ~\cite{sinha2015overview}. It contains about 126 million scientific publication records, 529 million citation relationship and other scholarly activities information. Fig. \ref{fig:frame} shows the framework of our system, which consists of three main components, \emph{Storage, Query Engine} and \emph{Visualizer} respectively. Based on the framework, we then present a set of web-based scenarios using RESTful APIs.
-% 126909021 paper  114698044 articles 529 million
 
-
-\subsection{Schema Design}
-
-\subsection{Graph Storage}
-%We mainly use Microsoft Academic Graph(MAG) to build \oursystem \cite{sinha2015overview}. It contains scholarly information such as author, article, venue, affiliation, field of study as well as other information. Aminer, CiteSeerx and Semantic Scholar use relational database system such as Mysql to store and manage the xxx.
-
-
-(1) schema design (reasonale)
 
 (2) property graph (billion-scale) -- lucene index
 %(1) adopt neo4j
@@ -54,17 +59,14 @@ Traditional RDBMS are used by CiteSeerx, AMiner and Semantic Scholar to manage s
 We observe that entities in scholarly data are inherently linked. The existing storage solutions all ignore such linked feature, and may face challenges for efficient and high-concurrent query processing when the computing resources are limited. For instance, complex join operations in RDBMS will become the bottleneck when processing queries such as {\em finding all articles of someone's co-authors}.
 %
 To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
-\marked{RDBMS vs. graph database moved to Introduction}
+
 
 %Scholarly data highly connected by reference relationship between articles and constructs a huge heterogeneous graph.  Take RDBMS as an example, complex joins and self-joins will incur obviously performance bottleneck when the scholarly dataset becomes more inter-related. A comparison of the performance of querying the cited articles of an article using RDBMS(Mysql) and graph database(Neo4j) is given in table 1. Furthermore, our heterogeneous entities ranking algorithm, a type of Time-Weighted PageRank bases on graph structure, assesses the importance of nodes in a heterogeneous graph. Thus, it utilizes a popular graph database Neo4j to store and manage heterogeneous scholarly data.
 % scholarly data source, currently solution, why graph database.
 
 Our storage solution includes the property graph and transactions. The scholarly data is stored as a property graph with nodes and relationships and we use transactions to ensure the predictability of relationship-based queries. \marked{derivatives}
 %  which possesses nodes and relationships
-In order to efficiently retrieve and rank heterogeneous scholarly entities, we design the Neo4j graph schema following two principles: \marked{(a) nodes for entities and relationships for linked structures (\eg citation, authored-by), and (b) reducing fine-grained relationship names while increase generic relationships qualified with property appropriately}.
 
-%Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
-Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic types of nodes including paper, author, venue, affiliation, field of study, conference instance (\eg ICDE-2019) and year. In addition, we further introduce an artificial type of nodes, \ie PAA representing paper-author-affiliation tuples, to enhance query efficiency. Finally, the property graph schema also forms a total of ten types of relationships to represent the linked structures between scholarly entities.
 
 %Intuitively, a paper get published in a journal/conference by the author means new edges among paper, author and venue node. By employing ranking model as stated in section \ref{sec-model}, we derive affiliation, author, venue and article ranking score using incremental computation \cite{ma2018query}. And those score is described as a property in the graph schema.
 % explain our schema
@@ -85,7 +87,7 @@ Our property graph schema, shown in Fig. \ref{fig:schema}, contains seven basic 
 \vspace{-3ex}
 \end{figure*}
 
-\subsection{(Graph) Query Engine}
+\subsection{Graph Query Engine} \label{subsec:qe}
 
 (1) ranking computation \& incremental
 (2) functionality based on query engine
