@@ -24,23 +24,35 @@ Graph database Neo4j is adopted for storage. As such, we need to design a schema
 % schema design rationaile
 We follow two principles for schema design: (a) nodes for entities and relationships for linked structures, and (b) reducing fine-grained relationship names while increase generic relationships qualified with property appropriately.
 
-The schema is presented in Fig.~\ref{fig:schema}. 
-It contains seven basic types of nodes including paper, author, affiliation, venue, field of study (FOS), conference instance (ConIns) and year. In addition, it further incorporates an artificial type of nodes, \ie PAA representing paper-author-affiliation tuples, to enhance query efficiency. 
+The schema is presented in Fig.~\ref{fig:schema}.
+It contains seven basic types of nodes including paper, author, affiliation, venue, field of study (FOS), conference instance (ConIns) and year. In addition, it further incorporates an artificial type of nodes, \ie PAA representing paper-author-affiliation tuples, to enhance query efficiency.
 Finally, the property graph schema also forms a total of ten types of relationships to represent the linked structures between scholarly entities.
 
 
 
 \subsection{Graph Storage} \label{subsec:storage}
 
-%Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships. 
+%Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
 % 126909021 paper  114698044 articles 529 million
 
-
-
-Based on the above schema, we store the MAG data~\cite{sinha2015overview} as a huge property graph with \marked{more than one billion nodes and over two billion relationships (replacing one/two billion with concrete numbers).} 
+Based on the above schema, we store the MAG data~\cite{sinha2015overview} as a huge property graph with \marked{more than one billion nodes and over two billion relationships (replacing one/two billion with concrete numbers).}
 enables to store and manage our data as a graph.
 
+\par
+Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
+% neo4j native graph storage. 
 
+\par
+Firstly, given that our query independent ranking, a type of Time-Weighted PageRank based on graph, assesses the importance of nodes in the heterogeneous scholarly graph. Thus, it is much more convenient to compute the importance score when employ graph storage. Secondly,
+we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can operate the affected areas of the scholarly graph easily on the graph storage. (weak?) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
+% benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages 
+
+\par
+We create index on property graph to deal with billion-scale scholarly data retrieval. Specifically, {\em Paper title} and {\em Affiliation name} are created fulltext index after stop word with IKAnalyzer to support Chinese. Other properties, such as {\em Author name} and {\em Paper ID}, were also created index for initial entity lookups. 
+% lucene index. Why we need lucene index. index what. result. 
+
+
+\eat{
 \marked{highlight graph storage, query engine detail}
 
 \marked{relation to ranking model, when to do ranking}
@@ -59,12 +71,12 @@ Traditional RDBMS are used by CiteSeerx, AMiner and Semantic Scholar to manage s
 We observe that entities in scholarly data are inherently linked. The existing storage solutions all ignore such linked feature, and may face challenges for efficient and high-concurrent query processing when the computing resources are limited. For instance, complex join operations in RDBMS will become the bottleneck when processing queries such as {\em finding all articles of someone's co-authors}.
 %
 To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
-
+}
 
 %Scholarly data highly connected by reference relationship between articles and constructs a huge heterogeneous graph.  Take RDBMS as an example, complex joins and self-joins will incur obviously performance bottleneck when the scholarly dataset becomes more inter-related. A comparison of the performance of querying the cited articles of an article using RDBMS(Mysql) and graph database(Neo4j) is given in table 1. Furthermore, our heterogeneous entities ranking algorithm, a type of Time-Weighted PageRank bases on graph structure, assesses the importance of nodes in a heterogeneous graph. Thus, it utilizes a popular graph database Neo4j to store and manage heterogeneous scholarly data.
 % scholarly data source, currently solution, why graph database.
 
-Our storage solution includes the property graph and transactions. The scholarly data is stored as a property graph with nodes and relationships and we use transactions to ensure the predictability of relationship-based queries. \marked{derivatives}
+%Our storage solution includes the property graph and transactions. The scholarly data is stored as a property graph with nodes and relationships and we use transactions to ensure the predictability of relationship-based queries. \marked{derivatives}
 %  which possesses nodes and relationships
 
 
@@ -87,8 +99,24 @@ Our storage solution includes the property graph and transactions. The scholarly
 \vspace{-3ex}
 \end{figure*}
 
-\subsection{Graph Query Engine} \label{subsec:qe}
 
+\subsection{Graph Query Engine} \label{subsec:qe}
+\oursystem involves a variety of queries on property graph such as article retrieval, heterogeneous entity ranking and author topK fields of study. Query Engine is the component responsible for processing a common set of queries which consists of Query Dependent Ranking and Neo4j Query Engine. When users execute a query, cypher accesses the Neo4j Query Engine. After parser and semantic analysis, cypher is generated a query planner. It will hit Lucene index for initial entity lookups or directly traverse property graph according to the planner. After that, the result is sent to Query Dependent Ranking, where we compute the relevance or relevant importance score or rerank articles by other ranking metrics.
+
+% query dependent ranking 
+% Neo4j Query Engine 
+% cypher 
+
+\par 
+Generally speaking, \oursystem supports heterogeneous entity query and heterogeneous entity profiling. Take query articles by relevant importance as an example. First, we hit full index, get each paper ID and importance score.  
+
+
+%cypher example. give an example. 
+
+
+% query engine detail, cypher execute, cypher example. take system function for example 
+
+\eat{
 (1) ranking computation \& incremental
 (2) functionality based on query engine
 (3) example
@@ -100,6 +128,7 @@ Our storage solution includes the property graph and transactions. The scholarly
 %
 Query optimization aims to reduce cardinality of work in the progress to generate a new query plan, such as hitting index, reducing matching paths. Moreover, Neo4j query engine executes the query plan to perform efficient data retrieval.
 Finally, search results are aggregated by SARank, relevance, citation, year, average and maximum functions.}
+}
 
 
 \subsection{Visualizer}
