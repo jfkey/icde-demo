@@ -40,16 +40,16 @@ enables to store and manage our data as a graph.
 
 \par
 Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
-% neo4j native graph storage. 
+% neo4j native graph storage.
 
 \par
 Firstly, given that our query independent ranking, a type of Time-Weighted PageRank based on graph, assesses the importance of nodes in the heterogeneous scholarly graph. Thus, it is much more convenient to compute the importance score when employ graph storage. Secondly,
-we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can operate the affected areas of the scholarly graph easily on the graph storage. (weak?) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
-% benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages 
+we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
+% benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages
 
 \par
-We create index on property graph to deal with billion-scale scholarly data retrieval. Specifically, {\em Paper title} and {\em Affiliation name} are created fulltext index after stop word with IKAnalyzer to support Chinese. Other properties, such as {\em Author name} and {\em Paper ID}, were also created index for initial entity lookups. 
-% lucene index. Why we need lucene index. index what. result. 
+We create index on property graph to deal with billion-scale scholarly data retrieval. Specifically, {\em Paper title} and {\em Affiliation name} are created fulltext index after stop word with IKAnalyzer to support Chinese. Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups. 
+% lucene index. Why we need lucene index. index what. result.
 
 
 \eat{
@@ -103,18 +103,32 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 \subsection{Graph Query Engine} \label{subsec:qe}
 \oursystem involves a variety of queries on property graph such as article retrieval, heterogeneous entity ranking and author topK fields of study. Query Engine is the component responsible for processing a common set of queries which consists of Query Dependent Ranking and Neo4j Query Engine. When users execute a query, cypher accesses the Neo4j Query Engine. After parser and semantic analysis, cypher is generated a query planner. It will hit Lucene index for initial entity lookups or directly traverse property graph according to the planner. After that, the result is sent to Query Dependent Ranking, where we compute the relevance or relevant importance score or rerank articles by other ranking metrics.
 
-% query dependent ranking 
-% Neo4j Query Engine 
-% cypher 
+% query dependent ranking
+% Neo4j Query Engine
+% cypher
+% query engine detail, cypher execute, cypher example. take system function for example
 
-\par 
-Generally speaking, \oursystem supports heterogeneous entity query and heterogeneous entity profiling. Take query articles by relevant importance as an example. First, we hit full index, get each paper ID and importance score.  
+\par
+Generally speaking, heterogeneous entity query and heterogeneous entity profiling are supported by \oursystem. An example procedure is provided in Table~\ref{tab-codeExample}. We present how Query Engine works when retrieves Topk articles about keywords ``graph database" by {\em Relevant Importance} ranking metrics.
+%cypher example. give an example.
 
 
-%cypher example. give an example. 
+%1. GraphDatabaseService graphDB = new GraphDatabaseFactory().. .newGraphDatabase(); \\
+%2.    try(Transaction tx = graphDB.beginTx()){ \\
+%3.		IndexHits<Node> hits = db.index().forNodes("fulltext") \\
+%								.query("titile: graph AND title:database"); \\
+%4.		List<ReleImpScore> listScore = calcRelevantImportance(hits); \\
+%5.		List<String> paIDs = getTopKIDs(listScore); \\
+%6.		Result result = graphDB.execute(" \\
+%			WITH {paIDs} AS coll UNWIND coll AS col \\
+%			MATCH (p:Paper)-[:PaPAA]->(r)-[:PAAAth]-(a:Author)\\
+%			WHERE p.paID= col  WITH ... \\
+%			RETURN  title, paID, authors, authorsID;\\
+%		");	\\
+%7.		tx.success();\\
+%	}
 
 
-% query engine detail, cypher execute, cypher example. take system function for example 
 
 \eat{
 (1) ranking computation \& incremental
@@ -131,9 +145,16 @@ Finally, search results are aggregated by SARank, relevance, citation, year, ave
 }
 
 
-\subsection{Visualizer}
-With the development of scholarly data management and processing in the system back-end, the visualizer of \oursystem collects user queries through user interfaces. The queries are dispatched to the query engine and the returned results are then presented by visualizer.
-We will demonstrate some scholarly analysis scenarios in the next Section.
+\subsection{Visualization}
+
+% visualization do what ? 
+% restful API 
+% scenarios, Query and Ranking Scholarly Entity, Author Profiling. 
+Based on the graph storage, scholarly data was managed and processed in the system back-end. \oursystem collects user querys, dispatch to query engine and the results are then presented by visualizer using RESTful API. We employ Echarts (http://echarts.baidu.com/) to display scholarly article analysis and author profiling, detailed demonstrations are accessed in next section.  
+% function implement in back-end, echarts js  using RESTful API. demonstrate xxx in the next section. 
+
+ 
+%With scholarly data management and processing in the system back-end, the visualizer of \oursystem collects user queries through user interfaces. The queries are to the query engine and the returned results are then presented by visualizer. We will demonstrate some scholarly analysis scenarios in the next Section.
 
 \begin{figure}
 \centering
@@ -145,3 +166,32 @@ We will demonstrate some scholarly analysis scenarios in the next Section.
 \vspace{-3ex}
 \end{figure}
 
+
+\begin{table}[t!]
+%\begin{center}
+\caption{Query TopK Articles by Relevant Importance }
+\label{tab-codeExample}
+\begin{scriptsize}
+\begin{tabular}{ l}
+\hline
+{An Example procedure of Query TopK Articles by Relevant Importance } \\
+\hline
+1. GraphDatabaseService graphDB = new GraphDatabaseFactory()... ; \\
+2.  \hspace{6ex}  try(Transaction tx = graphDB.beginTx()) \{ \\
+3.  \hspace{12ex} 	IndexHits $\langle$ Node$\rangle$ hits = db.index().forNodes("fulltext") \\
+    \hspace{20ex}   .query("titile: graph AND title:database"); \\
+4.  \hspace{12ex} 	List$\langle$ ReleImpScore$\rangle$ listScore = calcRelevantImportance(hits); \\
+5.  \hspace{12ex} 	List$\langle$ String$\rangle$  paIDs = getTopKIDs(listScore); \\
+6.  \hspace{12ex}    Result result = graphDB.execute(`` \\
+    \hspace{20ex}		WITH \{paIDs\} AS coll UNWIND coll AS col \\
+    \hspace{20ex}		MATCH (p:Paper)-[:PaToPAA]-$>$(r)-[:PAAToAut]-(a:Author)\\
+	\hspace{20ex}		WHERE p.paID= col  WITH p, r, a, ... \\
+	\hspace{20ex}		RETURN  title, paID, authors, authorsID; ");\\
+7.	\hspace{12ex}	tx.success();\\
+    \hspace{6ex}  \} \\
+\hline
+\end{tabular} \\ %\vspace{.5ex}
+\end{scriptsize}
+%\end{center}
+\end{table}
+    
