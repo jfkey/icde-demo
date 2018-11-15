@@ -6,9 +6,9 @@
 \centering
 \subfigure[{\scriptsize Framework}]{\label{fig:framework}
 \includegraphics[width=0.4\columnwidth]{systemFrame.pdf}}
-\hspace{3ex}
+%\hspace{3ex}
 \subfigure[{\scriptsize Neo4j schema}]{\label{fig:schema}
-\includegraphics[width=0.4\columnwidth]{neo4jSchema.pdf}}
+\includegraphics[width=0.56\columnwidth]{neo4jSchema.pdf}}
 \caption{System design of \oursystem}
 \label{fig:system}
 %\vspace{-2ex}
@@ -16,17 +16,21 @@
 
 
 Figure \ref{fig:framework} shows the framework of our \oursystem. It consists of two main components, \ie \emph{Storage} and \emph{Query Engine}.
-Below the storage component is a {\em query-independent ranking} module that enriches the data with those pre-computed query-independent ranking scores. Note that there is another {\em query-dependent ranking} module inside the query engine. Finally, two function modules on top present our analysis  to users based on the retrieved results. We next detail our system.
+Below the storage component is a {\em Query-Independent Ranking} module that enriches the data with those pre-computed query-independent ranking scores. Note that there is another {\em Query-Dependent Ranking} module inside the query engine. Finally, two function modules on top present our analysis  to users based on the retrieved results. We next detail our system.
 
 \subsection{Schema Design} \label{subsec:schema}
 
 Graph database Neo4j is adopted for storage. As such, we need to design a schema that abstracts the entities and linked structures (\eg citation, authored-by).
 % schema design rationaile
-We follow two principles for schema design: (a) nodes for entities and relationships for linked structures, and (b) reducing fine-grained relationship names while increase generic relationships qualified with property appropriately.
+We follow two principles for schema design: (a) nodes for entities and relationships for linked structures, and (b) trading space for query efficiency if affordable and possible.
 
-The schema is presented in Fig.~\ref{fig:schema}.
-It contains seven basic types of nodes including paper, author, affiliation, venue, field of study (FOS), conference instance (ConIns) and year. In addition, it further incorporates an artificial type of nodes, \ie PAA representing paper-author-affiliation tuples. This enhances query efficiency, \ie an author and her/his affiliation can be retrieved by processing one query.
-Finally, the property graph schema also forms a total of ten types of relationships to represent the linked structures between scholarly entities.
+%reducing fine-grained relationship names while increase generic relationships qualified with property appropriately.
+
+The schema is presented in Fig.~\ref{fig:schema}, where texts nears nodes and relationships represent properties of entities and linked structures, respectively.
+It contains seven basic types of nodes including {\em Paper}, {\em Author}, {\em Affiliation}, {\em Venue}, {\em FOS} (field of study), {\em ConIns} (instances of conferences in each year) and {\em Year}.
+In addition, it further incorporates an artificial type of nodes, \ie {\em PAA} representing paper-author-affiliation tuples. We use extra space to improve query efficiency, \ie an author and her/his affiliation can be retrieved in one query.
+Our schema also forms a total of nine types of relationships, one of which, \ie {\em :VenueScore}, has a property {\em score} and the rest are unweighted.
+As another space-efficiency trade-off, those {\em Paper} nodes also use extra space on properties to maintain conference ID, journal ID and year.
 
 
 
@@ -35,21 +39,22 @@ Finally, the property graph schema also forms a total of ten types of relationsh
 %Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
 % 126909021 paper  114698044 articles 529 million
 
-Based on the above schema, we store the MAG data~\cite{sinha2015overview} as a huge property graph with more than one billion nodes and over two billion relationships \marked{(renjun Note: replacing one/two billion with concrete numbers).}
-enables to store and manage our data as a graph.
+Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than one billion nodes and over two billion relationships \marked{(renjun Note: replacing one/two billion with concrete x.y billion).} We further clarify our graph storage with the following two points.
 
-\par
-Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
+%Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
 % neo4j native graph storage.
 
-\par
-Firstly, given that our query independent ranking, a type of Time-Weighted PageRank based on graph, assesses the importance of nodes in the heterogeneous scholarly graph. Thus, it is much more convenient to compute the importance score when employ graph storage. Secondly,
-we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
+First, based on the original scholarly data, the {\em Query-Independent Ranking} module pre-computes those query-independent ranking metrics, \ie numbers of citations of papers, importance scores of papers, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.  As the most essential operation in the pre-computation, iteratively accessing the linked entities is much more convenient with graph storage.
+Moreover, both citation numbers and importance scores support incremental computation~\cite{ma2018query} and are easier to dynamically maintain once the scholarly data get updated.
+
+%given that our query independent ranking, a type of Time-Weighted PageRank based on graph, assesses the importance of nodes in the heterogeneous scholarly graph. Thus, it is much more convenient to compute the importance score when employ graph storage. Secondly,
+%we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
 % benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages
 
-\par
-We create index on property graph to deal with billion-scale scholarly data retrieval. Specifically, {\em Paper title} and {\em Affiliation name} are created fulltext index after stop word with IKAnalyzer to support Chinese. Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups.
+Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create indices for authors and venues \marked{renjun note: which specific index, corresponds to the previous fulltext}.
+%Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups.
 % lucene index. Why we need lucene index. index what. result.
+%  with IKAnalyzer to support Chinese
 
 
 \eat{
