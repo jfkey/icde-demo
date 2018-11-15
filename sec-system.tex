@@ -37,9 +37,9 @@ As another space-efficiency trade-off, those {\em Paper} nodes also use extra sp
 \subsection{Graph Storage} \label{subsec:storage}
 
 %Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
-% 126909021 paper  114698044 articles 529 million
+% 126909021 paper  114698044 articles 529 million, node:1032827519, relationship:1933421586
 
-Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than one billion nodes and over two billion relationships \marked{(Note: replacing one/two billion with concrete x.y billion).} We further clarify our graph storage with the following two points.
+Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than 1.03 billion nodes and over 1.93 billion relationships. We further clarify our graph storage with the following two points.
 
 %Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
 % neo4j native graph storage.
@@ -51,7 +51,9 @@ Moreover, both citation numbers and importance scores support incremental comput
 %we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
 % benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages
 
-Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create indices for authors and venues \marked{Note: which specific index, corresponds to the previous fulltext}.
+Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create schema indices for author names and venue names for initial entity lookup. 
+% \marked{Note: which specific index, corresponds to the previous fulltext}.
+ 
 %Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups.
 % lucene index. Why we need lucene index. index what. result.
 %  with IKAnalyzer to support Chinese
@@ -96,21 +98,20 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 %In fact, we can apply any other ranking algorithms to rank scholarly entities in the graph schema.
 
 
-\begin{figure*}[tp]
-\centering
-\includegraphics[width=\textwidth]{searchKeywords.pdf}
-\caption{Search Keywords And Heterogeneous Entity Ranking}
-\label{fig: search keywords}
-\vspace{-3ex}
-\end{figure*}
-
-
 \subsection{Graph Query Engine} \label{subsec:qe}
 
-\oursystem supports a variety of common queries on the property graph. And the graph {\em Query Engine} is responsible for processing this set of queries. When users issue a query, \oursystem first translates it into a cypher \marked{check if it is this correct?}. The cypher is then sent to the {\em Neo4j Query Engine}, which generates a query plan after proper parsing and semantic analysis.
-The query plan will hit Lucene index for initial entity lookup or directly process on the property graph. And the results are returned to the {\em Query-Dependent Ranking} module for further ranking computation, \ie the relevance and relevant importance scores. 
-An example of finding the top scholarly articles on ``graph database"  ranked by relevant importance is shown in Table II.
-\marked{Note This is an example of what? cypher or others}
+\oursystem supports a variety of common queries on the property graph. And the graph {\em Query Engine} is responsible for processing this set of queries. When users issue a query, \oursystem first translates it into a cypher. The cypher is then sent to the {\em Neo4j Query Engine}, which generates a query plan after proper parsing and semantic analysis.
+The query plan will hit Lucene index for initial entity lookup or directly process on the property graph. And the results are returned to the {\em Query-Dependent Ranking} module for further ranking computation, \ie the relevance and relevant importance scores.
+An example query process of finding the top scholarly articles on ``graph database"  ranked by relevant importance is shown in Fig.~\ref{fig:queryProcess}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{queryProcess.pdf}
+\caption{Query Process}
+\label{fig:queryProcess}
+\vspace{-3ex}
+\end{figure}
+
 
 %such as article retrieval, heterogeneous entity ranking and author topK fields of study£»
 %which consists of Query Dependent Ranking and Neo4j Query Engine.
@@ -171,41 +172,32 @@ Finally, the two function modules on top collect the related scholarly entities 
 
 %With scholarly data management and processing in the system back-end, the visualizer of \oursystem collects user queries through user interfaces. The queries are to the query engine and the returned results are then presented by visualizer. We will demonstrate some scholarly analysis scenarios in the next Section.
 
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{hjwAvatar.pdf}
-\includegraphics[width=\columnwidth]{hjwInterest.pdf}
-%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
-\caption{Author Profiling}
-\label{fig:hjwProfile}
-\vspace{-3ex}
-\end{figure}
 
+%\begin{table}[t!]
+%%\begin{center}
+%\caption{Query TopK Articles by Relevant Importance }
+%\label{tab-codeExample}
+%\begin{scriptsize}
+%\begin{tabular}{ l}
+%\hline
+%{An Example procedure of Query TopK Articles by Relevant Importance } \\
+%\hline
+%1. GraphDatabaseService graphDB = new GraphDatabaseFactory()... ; \\
+%2.  \hspace{6ex}  try(Transaction tx = graphDB.beginTx()) \{ \\
+%3.  \hspace{12ex} 	IndexHits $\langle$ Node$\rangle$ hits = db.index().forNodes("fulltext") \\
+%    \hspace{20ex}   .query("titile: graph AND title:database"); \\
+%4.  \hspace{12ex} 	List$\langle$ ReleImpScore$\rangle$ listScore = calcRelevantImportance(hits); \\
+%5.  \hspace{12ex} 	List$\langle$ String$\rangle$  paIDs = getTopKIDs(listScore); \\
+%6.  \hspace{12ex}    Result result = graphDB.execute(`` \\
+%    \hspace{20ex}		WITH \{paIDs\} AS coll UNWIND coll AS col \\
+%    \hspace{20ex}		MATCH (p:Paper)-[:PaToPAA]-$>$(r)-[:PAAToAut]-(a:Author)\\
+%	\hspace{20ex}		WHERE p.paID= col  WITH p, r, a, ... \\
+%	\hspace{20ex}		RETURN  title, paID, authors, authorsID; ");\\
+%7.	\hspace{12ex}	tx.success();\\
+%    \hspace{6ex}  \} \\
+%\hline
+%\end{tabular} \\ %\vspace{.5ex}
+%\end{scriptsize}
+%%\end{center}
+%\end{table}
 
-\begin{table}[t!]
-%\begin{center}
-\caption{Query TopK Articles by Relevant Importance }
-\label{tab-codeExample}
-\begin{scriptsize}
-\begin{tabular}{ l}
-\hline
-{An Example procedure of Query TopK Articles by Relevant Importance } \\
-\hline
-1. GraphDatabaseService graphDB = new GraphDatabaseFactory()... ; \\
-2.  \hspace{6ex}  try(Transaction tx = graphDB.beginTx()) \{ \\
-3.  \hspace{12ex} 	IndexHits $\langle$ Node$\rangle$ hits = db.index().forNodes("fulltext") \\
-    \hspace{20ex}   .query("titile: graph AND title:database"); \\
-4.  \hspace{12ex} 	List$\langle$ ReleImpScore$\rangle$ listScore = calcRelevantImportance(hits); \\
-5.  \hspace{12ex} 	List$\langle$ String$\rangle$  paIDs = getTopKIDs(listScore); \\
-6.  \hspace{12ex}    Result result = graphDB.execute(`` \\
-    \hspace{20ex}		WITH \{paIDs\} AS coll UNWIND coll AS col \\
-    \hspace{20ex}		MATCH (p:Paper)-[:PaToPAA]-$>$(r)-[:PAAToAut]-(a:Author)\\
-	\hspace{20ex}		WHERE p.paID= col  WITH p, r, a, ... \\
-	\hspace{20ex}		RETURN  title, paID, authors, authorsID; ");\\
-7.	\hspace{12ex}	tx.success();\\
-    \hspace{6ex}  \} \\
-\hline
-\end{tabular} \\ %\vspace{.5ex}
-\end{scriptsize}
-%\end{center}
-\end{table}

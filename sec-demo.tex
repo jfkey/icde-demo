@@ -1,19 +1,38 @@
 \section{System Demonstration}
 \label{sec-demo}
 
-The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate \oursystem on querying and heterogeneous entities ranking. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) The advantage of storage with Neo4j compared with RDBMS is demonstrated by experiment.
+\begin{figure*}[tp]
+\centering
+\includegraphics[width=\textwidth]{searchKeywords.pdf}
+\caption{Search Keywords And Heterogeneous Entity Ranking}
+\label{fig:searchKeywords}
+\vspace{-3ex}
+\end{figure*}
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{hjwAvatar.pdf}
+\includegraphics[width=\columnwidth]{hjwInterest.pdf}
+%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
+\caption{Author Profiling}
+\label{fig:hjwProfile}
+\vspace{-3ex}
+\end{figure}
+
+
+The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate \oursystem on querying and heterogeneous entities ranking. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) Compared with MySQL, query performance has been significantly improved when utilizes Neo4j.
 % heterogeneous entities ranking, ranking metrics
 % author profiling
 % storage advantage
 
-\stitle{Querying and Ranking Scholarly Entity.} We demonstrate how to query and employ different ranking metrics to rank articles, as shown in Fig. \ref{fig: search keywords}. And heterogenous scholarly entities ranking is demonstrated for deep scholarly data analysis.
+\stitle{Querying and Ranking Scholarly Entity.} We demonstrate how to query and employ different ranking metrics to rank articles, as shown in Fig. \ref{fig:searchKeywords}. Moreover, We use heterogeneous scholarly entities ranking for deep scholarly data analysis.
 
 \par
-\oursystem is equipped with both searching articles and querying other academic entities, such as author, affiliation, journal, conference series and conference instance. Consider a query ``graph database", we present influential paper about the keywords on the basis of different ranking metrics, {\em relevant importance} for default. In order to fit various ranking scenarios, \oursystem supports {\em relevance}, {\em importance}, {\em relevant importance}, {\em citation}, {\em time}, shown at the left of the Fig. \ref{fig: search keywords}.
+\oursystem is equipped with both searching articles and querying other academic entities, such as author, affiliation, journal, conference series and conference instance. Consider a query ``graph database", we present influential paper relevant to the keywords, {\em relevant importance} as default ranking metrics. In order to fit various ranking scenarios, \oursystem also supports {\em relevance}, {\em importance}, {\em citation}, {\em time}, shown at the left of the Fig.~\ref{fig:searchKeywords}.
 % articles were backed to front-end after Neo4j Query Engine executing the cypher.
 
 \par
-{\em Relevance} is more suitable for retrieving articles by keywords, because of capturing semantic information. While {\em Importance} is more appropriate for discovering important articles of affiliations and venues. {\em Relevant Importance} is the combination of the former, which aims to retrieve relevant and important articles. {\em Time Ranking} gives appropriate order for newly published articles and {\em Citation Ranking} helps to find most-cited papers. Moreover, we also demonstrate top-k prestige authors, influential affiliations, authoritative journals/conferences corresponding to ranking metrics and searching keywords.
+{\em Relevance} is more suitable for retrieving articles by keywords, because of capturing semantic information. While {\em Importance} is more appropriate for discovering important articles of affiliations and venues. {\em Relevant Importance} is the combination of the former, which aims to retrieve both relevant and important articles. {\em Time Ranking} gives appropriate order for newly published articles and {\em Citation Ranking} helps to find most-cited papers. Moreover, we also demonstrate top-k prestige authors, influential affiliations, authoritative journals/conferences corresponding to ranking metrics and searching keywords, shown at the right of Fig.~\ref{fig:searchKeywords}
 
 
 \stitle{Author profiling.}. \oursystem is built author profiling which contains research interests, co-authors, relevant affiliations author's publications and statistics of its publications.
