@@ -39,7 +39,7 @@ As another space-efficiency trade-off, those {\em Paper} nodes also use extra sp
 %Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
 % 126909021 paper  114698044 articles 529 million
 
-Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than one billion nodes and over two billion relationships \marked{(renjun Note: replacing one/two billion with concrete x.y billion).} We further clarify our graph storage with the following two points.
+Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than one billion nodes and over two billion relationships \marked{(Note: replacing one/two billion with concrete x.y billion).} We further clarify our graph storage with the following two points.
 
 %Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
 % neo4j native graph storage.
@@ -51,7 +51,7 @@ Moreover, both citation numbers and importance scores support incremental comput
 %we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
 % benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages
 
-Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create indices for authors and venues \marked{renjun note: which specific index, corresponds to the previous fulltext}.
+Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create indices for authors and venues \marked{Note: which specific index, corresponds to the previous fulltext}.
 %Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups.
 % lucene index. Why we need lucene index. index what. result.
 %  with IKAnalyzer to support Chinese
@@ -106,15 +106,22 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 
 
 \subsection{Graph Query Engine} \label{subsec:qe}
-\oursystem involves a variety of queries on property graph such as article retrieval, heterogeneous entity ranking and author topK fields of study. Query Engine is the component responsible for processing a common set of queries which consists of Query Dependent Ranking and Neo4j Query Engine. When users execute a query, cypher accesses the Neo4j Query Engine. After parser and semantic analysis, cypher is generated a query planner. It will hit Lucene index for initial entity lookups or directly traverse property graph according to the planner. After that, the result is sent to Query Dependent Ranking, where we compute the relevance or relevant importance score or rerank articles by other ranking metrics.
+
+\oursystem supports a variety of common queries on the property graph. And the graph {\em Query Engine} is responsible for processing this set of queries. When users issue a query, \oursystem first translates it into a cypher \marked{check if it is this correct?}. The cypher is then sent to the {\em Neo4j Query Engine}, which generates a query plan after proper parsing and semantic analysis.
+The query plan will hit Lucene index for initial entity lookup or directly process on the property graph. And the results are returned to the {\em Query-Dependent Ranking} module for further ranking computation, \ie the relevance and relevant importance scores. 
+An example of finding the top scholarly articles on ``graph database"  ranked by relevant importance is shown in Table II.
+\marked{Note This is an example of what? cypher or others}
+
+%such as article retrieval, heterogeneous entity ranking and author topK fields of study£»
+%which consists of Query Dependent Ranking and Neo4j Query Engine.
 
 % query dependent ranking
 % Neo4j Query Engine
 % cypher
 % query engine detail, cypher execute, cypher example. take system function for example
 
-\par
-Generally speaking, heterogeneous entity query and heterogeneous entity profiling are supported by \oursystem. An example procedure is provided in Table~\ref{tab-codeExample}. We present how Query Engine works when retrieves Topk articles about keywords ``graph database" by {\em Relevant Importance} ranking metrics.
+
+%Generally speaking, heterogeneous entity query and heterogeneous entity profiling are supported by \oursystem. An example procedure is provided in Table~\ref{tab-codeExample}. We present how Query Engine works when retrieves Topk articles about keywords ``graph database" by {\em Relevant Importance} ranking metrics.
 %cypher example. give an example.
 
 
@@ -152,10 +159,13 @@ Finally, search results are aggregated by SARank, relevance, citation, year, ave
 
 \subsection{Visualization}
 
+Finally, the two function modules on top collect the related scholarly entities and rankings returned from the back-end, and present some visual analysis to users. Moreover specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{http://echarts.baidu.com/} to display the scholarly ranking and profiling results. Detailed demonstrations are available in next section.
+
+
 % visualization do what ?
 % restful API
 % scenarios, Query and Ranking Scholarly Entity, Author Profiling.
-Based on the graph storage, scholarly data was managed and processed in the system back-end. \oursystem collects user querys, dispatch to query engine and the results are then presented by visualizer using RESTful API. We employ Echarts (http://echarts.baidu.com/) to display scholarly article analysis and author profiling, detailed demonstrations are accessed in next section.
+%Based on the graph storage, scholarly data was managed and processed in the system back-end. \oursystem collects user querys, dispatch to query engine and the results are then presented by visualizer using RESTful API. We employ Echarts (http://echarts.baidu.com/) to display scholarly article analysis and author profiling, detailed demonstrations are accessed in next section.
 % function implement in back-end, echarts js  using RESTful API. demonstrate xxx in the next section.
 
 
