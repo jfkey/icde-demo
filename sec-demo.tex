@@ -20,26 +20,27 @@
 \end{figure}
 
 
-The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate \oursystem on querying and heterogeneous entities ranking. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) Compared with MySQL, query performance has been significantly improved when utilizes Neo4j.
+The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate the ability of \oursystem to query and rank heterogeneous entities. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) In the scholarly data analysis scenario, we compare the query performance of MySQL and Neo4j through experiments.
+
 % heterogeneous entities ranking, ranking metrics
 % author profiling
 % storage advantage
 
-\stitle{Querying and Ranking Scholarly Entity.} We demonstrate how to query and employ different ranking metrics to rank articles, as shown in Fig. \ref{fig:searchKeywords}. Moreover, We use heterogeneous scholarly entities ranking for deep scholarly data analysis.
+%We demonstrate how to query and employ different ranking metrics to rank articles, as shown in Fig. \ref{fig:searchKeywords}. Moreover, we use heterogeneous scholarly entities ranking for deep scholarly data analysis.
 
-\par
-\oursystem is equipped with both searching articles and querying other academic entities, such as author, affiliation, journal, conference series and conference instance. Consider a query ``graph database", we present influential paper relevant to the keywords, {\em relevant importance} as default ranking metrics. In order to fit various ranking scenarios, \oursystem also supports {\em relevance}, {\em importance}, {\em citation}, {\em time}, shown at the left of the Fig.~\ref{fig:searchKeywords}.
+\stitle{Querying and Ranking Scholarly Entity.}
+\oursystem is equipped with both searching articles and querying other academic entities, \ie author, affiliation, journal, conference series and conference instance. Consider a query ``graph database", we present importance articles relevant to the keywords, {\em relevant importance} as default ranking metrics. \oursystem also supports {\em relevance}, {\em importance}, {\em citation} and {\em time} to fit various ranking scenarios, shown at the left of the Fig.~\ref{fig:searchKeywords}.
 % articles were backed to front-end after Neo4j Query Engine executing the cypher.
 
 \par
-{\em Relevance} is more suitable for retrieving articles by keywords, because of capturing semantic information. While {\em Importance} is more appropriate for discovering important articles of affiliations and venues. {\em Relevant Importance} is the combination of the former, which aims to retrieve both relevant and important articles. {\em Time Ranking} gives appropriate order for newly published articles and {\em Citation Ranking} helps to find most-cited papers. Moreover, we also demonstrate top-k prestige authors, influential affiliations, authoritative journals/conferences corresponding to ranking metrics and searching keywords, shown at the right of Fig.~\ref{fig:searchKeywords}
+{\em Relevance} is more suitable for retrieving articles by keywords, because of the capture of  semantic-level relevance. {\em Importance} is more appropriate for discovering important articles of affiliations and venues. And {\em relevant importance} is a combination of the former, which aims to retrieve both relevant and important articles. {\em Time} gives appropriate order for newly published articles and {\em citation} helps to find most-cited articles. Moreover, we also demonstrate top-k authors, affiliations, journals/conferences corresponding to ranking metrics, shown at the right of Fig.~\ref{fig:searchKeywords}
 
 
-\stitle{Author profiling.}. \oursystem is built author profiling which contains research interests, co-authors, relevant affiliations author's publications and statistics of its publications.
+\stitle{Author profiling.} We demonstrate author profiling in \oursystem, which contains research interests, co-authors, relevant affiliations, author's publications and statistics of its publications.
 %In this way, users are able to explore the different knowledge cells broadly and deeply by following the found knowledge cell links provided by the system
 
 \par
-Fig. \ref{fig:hjwProfile} shows some information of author profiling. Author's avatar is described by word cloud and the weight of the each word is relevant to the important score of the article. We model the evolution of author's research interests through the statistics of publications's filed of study. More specifically, users allow access relevant publications by clicking research interests. In this way, users are able to explore various scholarly information both broadly and deeply.
+Fig. \ref{fig:hjwProfile} shows some information of author profiling. Author's avatar is described by word cloud and the weight of the each word is relevant to the important score of the article. We model the evolution of author's research interests through the statistics of publications' filed of study. More specifically, users are allowed to access relevant publications by clicking research interests. In this way, users are able to explore various scholarly information both broadly and deeply.
 % profiling, word cloud according paper's importance score. avatar, research interest, also find author's paper according fos
 
 \eat {
@@ -48,8 +49,16 @@ Fig. \ref{fig:hjwProfile} is an example of an Author Page, where contains author
 
 
 \stitle{Neo4j Compared with MySQL.}
-We demonstrate the the performance with Neo4j compared with RDBMS(MySQL), shown in Table \ref{tab-compare}. We model a similar ER diagram based on the Neo4j schema, for N:M relationship in Neo4j we introduce an intermediate table and create index on it. Indeed, Neo4j improves the querying efficiency over (search article info, search author's topK articles, topK cited articles' info) by (4.8\%, 52.8\%, 30.9\%). Note that, each query case has (2, 4, 3) {\em joins} in MySQL, respectively. In fact, almost all SQLs involve {\em join} operation in our ranking scenarios, which will result in a decrease in efficiency.
+ In order to compare the performance with MySQL, We model a similar ER diagram based on the Neo4j schema. For many-to-many relationship we introduce an intermediate table and create index on it. All experiments were conducted on a machine with 2 Intel Xeon E5-2630 2.4GHz CPUs and 64 GB of Memory, running a 64 bit Windows 7 professional Ultimate system.
+\par
+As shown in Table \ref{tab-compare}, Neo4j improves the querying efficiency over (search article info, search author's top-k articles, top-k cited articles' info) by (4.8\%, 52.8\%, 30.9\%). Note that, each query case has (2, 4, 3) {\em joins} in MySQL, respectively. Thus, Neo4j with index-free adjacency is more efficient and cheaper than MySQL in handling complex joins.
+
+% native graph storage
 % what, parameter. the result. why.
+% will become the bottleneck
+% Neo4j with native graph storage
+% , more joins will
+
 
 %All experiments were conducted on a machine with 2 Intel Xeon E5-2630 2.4GHz CPUs and 64 GB of Memory, running a 64 bit Windows 7 professional Ultimate system. And the disk cache was forbidden.
 % moreover, A large number of indexes will also lead to a decrease in efficiency when updated database.
@@ -60,9 +69,9 @@ We demonstrate the the performance with Neo4j compared with RDBMS(MySQL), shown 
 \caption{Query performance Neo4j compared with MySQL}
 \label{tab-compare}
 \begin{scriptsize}
-\begin{tabular}{ c c c c}
+\begin{tabular}{lp{2cm}p{2cm}p{2cm}}
 \hline
-{} & {Article Info} & {Author's TopK Articles} & {TopK Cited Articles' Info}\\
+{} & {find paper's title, author by pa.ID} & {find author's top-k papers by au.ID} & {find top-k cited papers by pa.ID}\\
 \hline
 MySQL & 0.251 s  & 6.493 s & 35.190 s \\
 Neo4j & 0.239 s  & 3.062 s & 24.332 s \\

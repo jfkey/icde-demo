@@ -51,13 +51,11 @@ Moreover, both citation numbers and importance scores support incremental comput
 %we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
 % benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages
 
-Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create schema indices for author names and venue names for initial entity lookup. 
-% \marked{Note: which specific index, corresponds to the previous fulltext}.
- 
+Second, we utilize Lucene index to deal with query processing on the billion-scale property graph. More specifically, we create fulltext indices for paper titles and affiliation names. These enable to find papers and affiliations whose titles/names contain a specific word efficiently. We also create schema indices for paper ID, author names and venue names for initial entity lookup.
+
 %Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups.
 % lucene index. Why we need lucene index. index what. result.
 %  with IKAnalyzer to support Chinese
-
 
 \eat{
 \marked{highlight graph storage, query engine detail}
@@ -83,10 +81,6 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 %Scholarly data highly connected by reference relationship between articles and constructs a huge heterogeneous graph.  Take RDBMS as an example, complex joins and self-joins will incur obviously performance bottleneck when the scholarly dataset becomes more inter-related. A comparison of the performance of querying the cited articles of an article using RDBMS(Mysql) and graph database(Neo4j) is given in table 1. Furthermore, our heterogeneous entities ranking algorithm, a type of Time-Weighted PageRank bases on graph structure, assesses the importance of nodes in a heterogeneous graph. Thus, it utilizes a popular graph database Neo4j to store and manage heterogeneous scholarly data.
 % scholarly data source, currently solution, why graph database.
 
-%Our storage solution includes the property graph and transactions. The scholarly data is stored as a property graph with nodes and relationships and we use transactions to ensure the predictability of relationship-based queries. \marked{derivatives}
-%  which possesses nodes and relationships
-
-
 %Intuitively, a paper get published in a journal/conference by the author means new edges among paper, author and venue node. By employing ranking model as stated in section \ref{sec-model}, we derive affiliation, author, venue and article ranking score using incremental computation \cite{ma2018query}. And those score is described as a property in the graph schema.
 % explain our schema
 
@@ -107,7 +101,7 @@ An example query process of finding the top scholarly articles on ``graph databa
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
-\caption{Query Process}
+\caption{Query Process }
 \label{fig:queryProcess}
 \vspace{-3ex}
 \end{figure}
