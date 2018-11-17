@@ -94,14 +94,16 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 
 \subsection{Graph Query Engine} \label{subsec:qe}
 
+\marked{
 \oursystem supports a variety of common queries on the property graph. And the graph {\em Query Engine} is responsible for processing this set of queries. When users issue a query, \oursystem first translates it into a cypher. The cypher is then sent to the {\em Neo4j Query Engine}, which generates a query plan after proper parsing and semantic analysis.
 The query plan will hit Lucene index for initial entity lookup or directly process on the property graph. And the results are returned to the {\em Query-Dependent Ranking} module for further ranking computation, \ie the relevance and relevant importance scores.
 An example query process of finding the top scholarly articles on ``graph database"  ranked by relevant importance is shown in Fig.~\ref{fig:queryProcess}.
+}
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
-\caption{Query Process }
+\caption{\marked{Query Process, line numbers }}
 \label{fig:queryProcess}
 \vspace{-3ex}
 \end{figure}
@@ -152,8 +154,7 @@ Finally, search results are aggregated by SARank, relevance, citation, year, ave
 }
 
 
-%\subsection{Visualization}
-
+\subsection{Function Modules}
 Finally, the two function modules on top collect the related scholarly entities and rankings returned from the back-end, and present some visual analysis to users. Moreover specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{http://echarts.baidu.com/} to display the scholarly ranking and profiling results. Detailed demonstrations are available in next section.
 
 
