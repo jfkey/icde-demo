@@ -93,50 +93,32 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 
 
 \subsection{Graph Query Engine} \label{subsec:qe}
+\oursystem supports a variety of common queries on the property graph. And the graph {\em Query Engine} is responsible for processing this set of queries. When users issue a query, \oursystem first translates it into a cypher. The cypher is then sent to the {\em Neo4j Query Engine}, which generates a query plan after proper parsing and semantic analysis. The query plan will hit lucene index for initial lookup entities. When there are numerous lookup entities, we use {\em Query-Dependent Ranking} to pre-calculate the ranking score \ie the relevance and relevant importance scores. After filtering lookup entities, the results are returned to function modules by traversing property graph.
+% query plan通过命中lucene index来初始化查找集。当结果集很多时，我们通过提前计算排名分数来筛选初始查找集。
 
-\marked{
+\par 
+Fig.~\ref{fig:queryProcess} shows an example of query engine work. When users want to find the top scholarly articles on ``graph database"  ranked by relevant importance, {\em Neo4j Query Engine} first gets fulltext index hits (lines 4, 5). {\em Query-Dependent Ranking} calculate relevant importance scores and get tok-k paper IDs (lines 7, 8). After that, query engine traverse property graph and return results by paper IDs (lines 10 - 15).
+
+
+
+\eat{
 \oursystem supports a variety of common queries on the property graph. And the graph {\em Query Engine} is responsible for processing this set of queries. When users issue a query, \oursystem first translates it into a cypher. The cypher is then sent to the {\em Neo4j Query Engine}, which generates a query plan after proper parsing and semantic analysis.
 The query plan will hit Lucene index for initial entity lookup or directly process on the property graph. And the results are returned to the {\em Query-Dependent Ranking} module for further ranking computation, \ie the relevance and relevant importance scores.
-An example query process of finding the top scholarly articles on ``graph database"  ranked by relevant importance is shown in Fig.~\ref{fig:queryProcess}.
+An example query process of finding the top scholarly articles on ``graph database"  ranked by relevant importance is shown in Fig.~\ref{fig:queryProcess}. 
 }
+
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
-\caption{\marked{Query Process, line numbers }}
+\caption{An example of query engine work}
 \label{fig:queryProcess}
 \vspace{-3ex}
 \end{figure}
 
 
-%such as article retrieval, heterogeneous entity ranking and author topK fields of study；
-%which consists of Query Dependent Ranking and Neo4j Query Engine.
-
-% query dependent ranking
-% Neo4j Query Engine
-% cypher
-% query engine detail, cypher execute, cypher example. take system function for example
-
-
 %Generally speaking, heterogeneous entity query and heterogeneous entity profiling are supported by \oursystem. An example procedure is provided in Table~\ref{tab-codeExample}. We present how Query Engine works when retrieves Topk articles about keywords ``graph database" by {\em Relevant Importance} ranking metrics.
 %cypher example. give an example.
-
-
-%1. GraphDatabaseService graphDB = new GraphDatabaseFactory().. .newGraphDatabase(); \\
-%2.    try(Transaction tx = graphDB.beginTx()){ \\
-%3.		IndexHits<Node> hits = db.index().forNodes("fulltext") \\
-%								.query("titile: graph AND title:database"); \\
-%4.		List<ReleImpScore> listScore = calcRelevantImportance(hits); \\
-%5.		List<String> paIDs = getTopKIDs(listScore); \\
-%6.		Result result = graphDB.execute(" \\
-%			WITH {paIDs} AS coll UNWIND coll AS col \\
-%			MATCH (p:Paper)-[:PaPAA]->(r)-[:PAAAth]-(a:Author)\\
-%			WHERE p.paID= col  WITH ... \\
-%			RETURN  title, paID, authors, authorsID;\\
-%		");	\\
-%7.		tx.success();\\
-%	}
-
 
 
 \eat{
