@@ -2,17 +2,6 @@
 %\section{System Framework}
 \label{sec-system}
 
-\begin{figure}
-\centering
-\subfigure[{\scriptsize Framework}]{\label{fig:framework}
-\includegraphics[width=0.4\columnwidth]{systemFrame.pdf}}
-%\hspace{3ex}
-\subfigure[{\scriptsize Neo4j schema}]{\label{fig:schema}
-\includegraphics[width=0.56\columnwidth]{neo4jSchema.pdf}}
-\caption{System design of \oursystem}
-\label{fig:system}
-%\vspace{-2ex}
-\end{figure}
 
 
 Figure \ref{fig:framework} shows the framework of our \oursystem. It consists of two main components, \ie \emph{Storage} and \emph{Query Engine}.
@@ -35,6 +24,19 @@ As another space-efficiency trade-off, those {\em Paper} nodes also use extra sp
 
 
 
+\begin{figure}
+\centering
+\subfigure[{\scriptsize Framework}]{\label{fig:framework}
+\includegraphics[width=0.4\columnwidth]{systemFrame.pdf}}
+%\hspace{3ex}
+\subfigure[{\scriptsize Neo4j schema}]{\label{fig:schema}
+\includegraphics[width=0.56\columnwidth]{neo4jSchema.pdf}}
+\caption{System design of \oursystem}
+\label{fig:system}
+\vspace{-2ex}
+\end{figure}
+
+
 \subsection{Graph Storage} \label{subsec:storage}
 
 %Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
@@ -45,7 +47,7 @@ Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015o
 %Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
 % neo4j native graph storage.
 
-First, based on the original scholarly data, the {\em Query-Independent Ranking} module pre-computes those query-independent ranking metrics, \ie numbers of citations of papers, importance scores of papers, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.  
+First, based on the original scholarly data, the {\em Query-Independent Ranking} module pre-computes those query-independent ranking metrics, \ie numbers of citations of papers, importance scores of papers, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.
 Note that iteratively accessing the linked entities is the most essential operation in the pre-computation. And it is much more convenient with graph storage.
 Moreover, both citation numbers and importance scores support incremental computation~\cite{ma2018query} and are easier to dynamically maintain once the property graph gets updated.
 
@@ -100,7 +102,7 @@ To this end, we propose to utilize a popular graph database Neo4j to store and m
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
 \caption{An example workflow of the query engine}
 \label{fig:queryProcess}
-%\vspace{-3ex}
+\vspace{-3ex}
 \end{figure}
 
 \subsection{Graph Query Engine} \label{subsec:qe}

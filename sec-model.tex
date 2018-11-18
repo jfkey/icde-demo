@@ -25,7 +25,7 @@ Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of 
 \includegraphics[scale=0.15]{framework-lite-2.eps}
 %\vspace{-1ex}
 \caption{\sarank framework~\cite{ma2018query}} \label{fig:sarank}
-%\vspace{-3ex}
+\vspace{-3ex}
 \end{figure}
 
 \stitle{Sort by importance}. The second metric for querying important scholarly articles is adapted from a recently developed scholarly article ranking model \sarank~\cite{ma2018query}. The importance of scholarly entities is defined as a combination of prestige and popularity, where prestige is computed by a novel Time-Weighted PageRank and popularity is evaluated as the sum of citation freshness. To assign those newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking scores, as illustrated in Fig.~\ref{fig:sarank}.
