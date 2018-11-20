@@ -7,7 +7,7 @@
 \vspace{-3ex}
 \caption{Demonstration of heterogeneous entity ranking}
 \label{fig:searchKeywords}
-\vspace{-2ex}
+%\vspace{-2ex}
 \end{figure*}
 
 \begin{figure}
@@ -18,7 +18,7 @@
 \vspace{-1ex}
 \caption{Demonstration of author profiling}
 \label{fig:hjwProfile}
-\vspace{-2ex}
+%\vspace{-2ex}
 \end{figure}
 
 The demonstrate our system from three aspects: (i) heterogeneous entity ranking, (ii) author profiling, and (iii) performance comparison between Neo4j and RDBMS MySQL.
@@ -27,13 +27,13 @@ The demonstrate our system from three aspects: (i) heterogeneous entity ranking,
 %The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate the ability of \oursystem to query and rank heterogeneous entities. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) In the scholarly information search scenario, we compare the query performance of MySQL and Neo4j through experiments.
 
 \stitle{Heterogeneous entity ranking}.
-Figure~\ref{fig:searchKeywords} present the heterogeneous entity rankings under query ``graph database".
+Figure~\ref{fig:searchKeywords} presents the heterogeneous entity rankings under query ``graph database".
 %
-The ranking metrics are displayed in the left. As can be seen, \oursystem also supports querying articles and other entities within a specific range of year.
-When sorted by relevant importance, the rankings of articles and other entities, \ie authors, affiliations, journals and conferences, are shown in the middle and right side.
+The ranking metrics are displayed in the left. Note that \oursystem also supports querying articles and other entities within a specific range of year.
+When sorting by relevant importance, the rankings of articles and other entities, \ie authors, affiliations, journals and conferences, are shown in the middle and right side.
 %For instance, Dr. Lei Chen, Mihalis Yannakakis, Jeffrey Xu Yu, M Tamer Ozsu are ranked as top authors in the field of graph database.
 %
-Finally, it is worth pointing out that users can also directly query entities by typing their names in the search bay on top in our \oursystem.
+Finally, it is worth pointing out that users can also directly query entities by typing their names in the search box on top. %in \oursystem.
 
 
 
@@ -42,13 +42,13 @@ Finally, it is worth pointing out that users can also directly query entities by
 Figure~\ref{fig:hjwProfile} gives an example of author profiling for Prof. Jiawei Han.
 Basically, the affiliation and numbers of published papers and citations are presented.
 Moreover, the word cloud gives a summary description of the author's fields of study, where the size of words represents its importance in the author's research career. For instance, data mining and machine learning are identified as Prof. Jiawei Han's most important fields of study.
-\oursystem also details the evolution of research interest. %by counting the numbers of publications in the top fields of study.
+Moreover, \oursystem details the evolution of research interest, shown in the bottom of Fig.~\ref{fig:hjwProfile}. %by counting the numbers of publications in the top fields of study.
 %His publications keep growing before 2010, and the convex near 2011 is due to his numerous and influential publications such as ``data mining: concepts and techniques".
-Besides, users can also find the relevant publications in each field of study. Other functions in author profiling include co-author analysis, relevant affiliations and statistics by time. We omit the demonstration of those functions due to space limitation.
+Besides, users can also find the relevant articles in each field of study. Other functions in author profiling include co-author analysis and statistics by time. We omit the demonstration of those functions due to space limitation.
 
 
 \stitle{Performance comparison: Neo4j vs. MySQL}.
-Lastly, we compare the query processing performance of the adopted graph database Neo4j with traditional RDBMS MySQL. More specifically, we consider three types of queries, \ie (i) finding the title and authors of a paper given paper ID, (ii) finding the top-10 most important citations of a paper given paper ID, and (iii) finding the top-10 most important papers published by an author given author ID.
+Lastly, we compare the query performance of the adopted graph database Neo4j with traditional RDBMS MySQL. More specifically, we consider three types of queries, \ie (i) finding the title and authors of a paper given paper ID, (ii) finding the top-10 most important citations of a paper given paper ID, and (iii) finding the top-10 most important papers published by an author given author ID.
 Note that the numbers of joins are (2, 3, 4) for the three types of queries in MySQL, respectively. As people care more about those ``good'' papers, we thus randomly selected 1000 papers/authors whose numbers of citations/published-articles are no less than 100/50, respectively, and computed the average processing time, shown in Table~\ref{tab-compare}.
 % 14.8%	19.4 %	45.3%
 As can be seen, Neo4j is consistently more efficient than MySQL, which is on average (14.8\%, 19.4\%, 45.3\%) faster for the three types of queries.
