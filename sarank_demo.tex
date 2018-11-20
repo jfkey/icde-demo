@@ -90,9 +90,9 @@ Fax: (888) 555--1212}}
 \begin{abstract}
 Scholarly analysis systems greatly enhance scientific knowledge discovery and propagation.
 %
-Recently, a number of scholarly analysis systems have been developed. However, these systems barely support ranking heterogenous scholarly entities with different metrics and, hence, fail to answer questions such as which authors/venues/affiliations are currently the most relevant/important in the queried field of study. In addition, existing systems adopt RDBMS or distributed file systems as their storage solutions, whereas the linked feature of scholarly data is largely ignored.
+Recently, a number of scholarly analysis systems have been developed. However, these systems either only support ranking limited types of entities or only have basic ranking metrics. Hence, they may face challenges in ranking heterogeneous scholarly entities simultaneously with certain comprehensive ranking metric. In addition, existing systems mainly adopt RDBMS as their storage solutions, whereas the linked feature of scholarly data is largely ignored.
 %
-To this end, in this paper, we design and develop a novel scholarly analysis system \oursystem. Our \oursystem supports heterogeneous scholarly entity rankings and is equipped with traditional relevance-, citation- and more recent importance-based ranking metrics. Moreover, \oursystem utilizes graph database Neo4j as its storage solution. The linked structures are directly leveraged to facilitate the efficiency of graph query processing.
+To this end, in this paper, we design and develop a novel scholarly analysis system \oursystem. It supports ranking four types of scholarly entities given a query, and is equipped with a total of five ranking metrics, including not only traditional time, relevance and citation-based ones but also a more advanced importance-ensemble ranking metric. Moreover, \oursystem utilizes graph database Neo4j for storage. The linked feature is directly leveraged to facilitate the efficiency of complex query processing.
 %Based on the above, we have built an online service for scholarly analysis.
 Finally, we demonstrate two use cases in scholarly entity ranking and profiling and the advantage of Neo4j-based storage. %compared with RDBMS.
 \end{abstract}

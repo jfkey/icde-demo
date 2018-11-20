@@ -65,12 +65,14 @@ Second, to facilitate query processing on the billion-scale property graph, Luce
 \oursystem supports a variety of graph queries on the property graph. And the {\em Query Engine} is responsible for processing this set of queries. When a query is issued, {\em Neo4j Query Engine} first translates it into a cypher with proper parsing and semantic analysis.
 Note that, when applicable, the cypher also includes the entity IDs returned from the Lucene index. Rankings given by the {\em Query-Dependent Ranking} module, \ie relevance and relevant importance-based rankings, may also be included in the cypher if needed. Based on the final cypher, an optimized query plan is generated and processed on the property graph.
 
-%Figure~\ref{fig:queryProcess} 
+%Figure~\ref{fig:queryProcess}
 
-Table~\ref{tab-workflow} gives an example workflow of the query engine that users want to retrieve the top scholarly articles about ``graph database"  ranked by relevant importance. The fulltext index is firstly hit to get the related paper IDs on ``graph database'' (lines 3--4). The {\em Query-Dependent Ranking} module then calculates the relevant importance scores of those related papers and the top-k paper IDs are further identified (lines 5--6). Based on the complete cypher (lines 7--12)., the {\em Neo4j Query Engine} finally generates the query plan, executes it on the property graph and gets the results.
+Table~\ref{tab-workflow} gives an example workflow of the query engine that users want to retrieve the top scholarly articles about ``graph database"  ranked by relevant importance. The fulltext index is firstly hit to get the related paper IDs on ``graph database'' (lines 3--4). The {\em Query-Dependent Ranking} module then calculates the relevant importance scores of those related papers and the top-k paper IDs are further identified (lines 5--6). Based on the complete cypher (lines 7--12), the {\em Neo4j Query Engine} finally generates the query plan, executes it on the property graph and gets the results.
 
 \subsection{Function Modules}
-Finally, the two function modules on top collect the scholarly entities ranked and returned from the back-end, and present some (visual) analysis to users. Moreover specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{http://echarts.baidu.com/} to display the scholarly ranking and profiling. Detailed demonstrations are available in next section.
+Finally, the two function modules on top collect the scholarly entities ranked and returned from the back-end, and present visual analysis to users. Moreover specifically, \oursystem utilizes RESTful APIs  and Echarts {\scriptsize (http://echarts.baidu.com/)} to display the scholarly ranking and profiling. Detailed demonstrations are available in next section.
+
+\stitle{Remarks}. The ranking and profiling functions of \oursystem will be available online via API. 
 
 
 % visualization do what ?
@@ -86,11 +88,12 @@ Finally, the two function modules on top collect the scholarly entities ranked a
 \begin{table}[t!]
 %\begin{center}
 \caption{An example workflow of the query engine}
+\vspace{-1ex}
 \label{tab-workflow}
 \begin{scriptsize}
 \begin{tabular}{ l}
-\hline
-{An example workflow of the query engine} \\
+%\hline
+%{An example workflow of the query engine} \\
 \hline
 1. GraphDatabaseService graphDB = new GraphDatabaseFactory()... ; \\
 2.  \hspace{0ex}  try(Transaction tx = graphDB.beginTx()) \{ \\
