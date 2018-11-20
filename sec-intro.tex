@@ -33,7 +33,7 @@ On the other hand, Microsoft Academic {\scriptsize (https://academic.microsoft.c
 %
 To conclude, these systems may face challenges in ranking heterogeneous entities simultaneously with certain comprehensive metric.
 
-%Given a query, these systems rank scholarly articles according to publish time, relevance or other citation-based metrics. %For instance, Google Scholar 
+%Given a query, these systems rank scholarly articles according to publish time, relevance or other citation-based metrics. %For instance, Google Scholar
 %However, a majority of them do not support ranking other heterogenous entities, \eg authors, venues and affiliations, in a specific field of study, expect that , and it is unclear how Microsoft Academic does \marked{focus on user intension Bing vs. we give a comprehensive recommendation based on relevance and importance}. Moreover, the established ranking metrics are either simple (\eg time and relevance) or biased to older articles (\eg citation-based). Hence, they are insufficient to identify influential scholarly entities in an early stage.
 %
 
@@ -89,7 +89,7 @@ To this end, in this paper, we design and develop \oursystem, a novel scholarly 
 
 \noindent  (3) \oursystem utilizes graph database Neo4j {\scriptsize (https://neo4j.com)} for storage. To do this, we carefully design a Neo4j schema and represent the data as a huge property graph. We also incorporate Lucene index to enhance query efficiency.
 
-\noindent (4) We have built a prototype system for \oursystem. We demonstrate two use cases in scholarly entity ranking and profiling and the advantage of storage with Neo4j compared with RDBMS. Our system also provides online service via API.
+\noindent (4) We have built a prototype system for \oursystem. We demonstrate two use cases in scholarly entity ranking and profiling and the advantage of storage with Neo4j compared with RDBMS. We will provide online service via Web and API.
 
 %Our system implements a range of functions including: (i) article ranking by different ranking models given query keywords, (ii) heterogeneous entity rankings based on importance and (iii) detailed description and statistics of articles, authors, venues and affiliations.
 
