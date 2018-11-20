@@ -31,6 +31,7 @@ As another space-efficiency trade-off, those {\em Paper} nodes also use extra sp
 %\hspace{3ex}
 \subfigure[{\scriptsize Neo4j schema}]{\label{fig:schema}
 \includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}}
+\vspace{-1ex}
 \caption{System design of \oursystem}
 \label{fig:system}
 \vspace{-2ex}
@@ -39,68 +40,22 @@ As another space-efficiency trade-off, those {\em Paper} nodes also use extra sp
 
 \subsection{Graph Storage} \label{subsec:storage}
 
-%Thus, we model scholarly data as a huge heterogeneous graph, shown in Fig. \ref{fig:schema}, which contains more than one billion nodes and over two billion relationships.
-% 126909021 paper  114698044 articles 529 million, node:1032827519, relationship:1933421586
 
 Based on the above schema, we store our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than 1.03 billion nodes and 1.93 billion relationships. We further clarify our graph storage with the following two points.
 
-%Neo4j with native graph storage ensures that scholarly data is stored efficiently and relationships close to each other. We have proved through experiments that index-free adjacency is more efficient and cheaper, shown in Section~\ref{sec-demo}. Moreover, we highlight our graph storage on the following two points.
-% neo4j native graph storage.
 
 First, based on the original scholarly data, the {\em Query-Independent Ranking} module pre-computes those query-independent ranking metrics, \ie numbers of citations of papers, importance scores of papers, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.
 Note that iteratively accessing the linked entities is the most essential operation in the pre-computation. And it is much more convenient with graph storage.
 Moreover, both citation numbers and importance scores support incremental computation~\cite{ma2018query} and are easier to dynamically maintain once the property graph gets updated.
 
-%given that our query independent ranking, a type of Time-Weighted PageRank based on graph, assesses the importance of nodes in the heterogeneous scholarly graph. Thus, it is much more convenient to compute the importance score when employ graph storage. Secondly,
-%we recompute the scholarly graph once scholarly data gets updated through incremental algorithm~\cite{ma2018query}. We can easily operate the affected areas of the scholarly graph on the graph storage. (weak? we do not implement in \oursystem) However, a huge volume index in RDBMS will cause significant performance bottleneck when update.
-% benefits£ºPageRank algorithm. incremental computation. update index??? in neo4j and mysql. in stages
 
 Second, to facilitate query processing on a billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for paper titles and affiliation names. These enable to efficiently find papers and affiliations whose titles and names contain a specific keyword. Besides, we also create schema indices for the entire author and venue names. %for efficient initial entity lookup.
-
-%Other properties, such as {\em Author name} and {\em Paper ID}, are also created index for initial entity lookups.
-% lucene index. Why we need lucene index. index what. result.
-%  with IKAnalyzer to support Chinese
-
-\eat{
-\marked{highlight graph storage, query engine detail}
-
-\marked{relation to ranking model, when to do ranking}
-
-\marked{incremental computation}
-
-
-(2) property graph (billion-scale) -- lucene index
-%(1) adopt neo4j
-%(2)
-
-Storage is a key factor for the success of scholarly analysis systems, due to the large volume of scholarly data (\eg \oursystem mainly uses the MAG data with 126 and 529 million articles and citations, respectively~\cite{sinha2015overview}) and the complex entities and relationships.
-%
-Traditional RDBMS are used by CiteSeerx, AMiner and Semantic Scholar to manage scholarly data. On the other hand, Acemap and Microsoft Academic exploit distributed file systems.
-%
-We observe that entities in scholarly data are inherently linked. The existing storage solutions all ignore such linked feature, and may face challenges for efficient and high-concurrent query processing when the computing resources are limited. For instance, complex join operations in RDBMS will become the bottleneck when processing queries such as {\em finding all articles of someone's co-authors}.
-%
-To this end, we propose to utilize a popular graph database Neo4j to store and manage the large-scale, heterogeneous and linked scholarly data in \oursystem.
-}
-
-%Scholarly data highly connected by reference relationship between articles and constructs a huge heterogeneous graph.  Take RDBMS as an example, complex joins and self-joins will incur obviously performance bottleneck when the scholarly dataset becomes more inter-related. A comparison of the performance of querying the cited articles of an article using RDBMS(Mysql) and graph database(Neo4j) is given in table 1. Furthermore, our heterogeneous entities ranking algorithm, a type of Time-Weighted PageRank bases on graph structure, assesses the importance of nodes in a heterogeneous graph. Thus, it utilizes a popular graph database Neo4j to store and manage heterogeneous scholarly data.
-% scholarly data source, currently solution, why graph database.
-
-%Intuitively, a paper get published in a journal/conference by the author means new edges among paper, author and venue node. By employing ranking model as stated in section \ref{sec-model}, we derive affiliation, author, venue and article ranking score using incremental computation \cite{ma2018query}. And those score is described as a property in the graph schema.
-% explain our schema
-
-
-
-% design principles and schema.
-% We take into consideration of the query ability of the graph schema and adopt specific time and space trade-offs. heterogeneous scholarly entity ranking ?
-
-%In fact, we can apply any other ranking algorithms to rank scholarly entities in the graph schema.
-
 
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
-\vspace{-4ex}
+\vspace{-3ex}
 \caption{An example workflow of the query engine}
 \label{fig:queryProcess}
 \vspace{-2ex}
