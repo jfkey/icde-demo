@@ -11,7 +11,7 @@ To fit various ranking scenarios, \oursystem implements five ranking metrics, na
 %
 Note that given a query, those articles whose titles contain at least one query keyword after removing stop words are retrieved as candidates for ranking.
 
-\stitle{Sort by relevance}. The first metric enables to query highly-correlated scholarly articles. For doing so, we evaluate the relevance of their titles given the query keywords, and return those with the highest relevance. Since the development of Word2vec, word embedding~\cite{corrado2013efficient} has become the {\em de facto} standard method to capture semantic-level relevance. We also exploit Word2vec for evaluating the relevance between a scholarly article and a query, defined as follows:
+\stitle{Sort by relevance}. The first metric enables to query highly-correlated scholarly articles. Thus, we evaluate the relevance of their titles given the query, and return those with the highest relevance. Since the development of Word2vec~\cite{corrado2013efficient}, word embedding has become the {\em de facto} standard method to capture semantic-level relevance. We also exploit Word2vec for evaluating the relevance defined as follows:
 \begin{equation}
 \label{eq:relscore}
 rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
@@ -23,14 +23,14 @@ Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of 
 \begin{figure}[tb!]
 \centering
 \includegraphics[scale=0.15]{framework-lite-2.eps}
-\vspace{-1ex}
+%\vspace{-1ex}
 \caption{\sarank framework~\cite{ma2018query}} \label{fig:sarank}
 \vspace{-2ex}
 \end{figure}
 
-\stitle{Sort by importance}. The second metric for querying important scholarly articles is adapted from a recently developed scholarly article ranking model \sarank~\cite{ma2018query}. The importance of scholarly entities is defined as a combination of prestige and popularity, where prestige is computed by a novel Time-Weighted PageRank and popularity is evaluated as the sum of citation freshness. To assign those newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking scores, as illustrated in Fig.~\ref{fig:sarank}.
+\stitle{Sort by importance}. The second metric for querying important scholarly articles is adopted from a recently developed scholarly article ranking model \sarank~\cite{ma2018query}. The importance is defined as a combination of prestige and popularity, where prestige is computed by a novel Time-Weighted PageRank and popularity is evaluated as the sum of citation freshness. To assign those newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking, as illustrated in Fig.~\ref{fig:sarank}.
 
-\stitle{Sort by relevant importance.} Note that the importance metric does not consider how the articles relate to the queries. The third metric is then propose for retrieving scholarly articles that are both relevant and important. More specifically, we first normalize the computed relevance (resp. importance) scores by scaling with the maximal relevance (resp. importance) scores in the candidate set, and then rank scholarly articles based on the following relevant importance scores:
+\stitle{Sort by relevant importance.} The importance metric does not consider how the articles relate to queries. The third metric is then proposed for retrieving scholarly articles both relevant and important. More specifically, we first normalize the computed relevance (resp. importance) scores by scaling with the maximal relevance (resp. importance) scores in the candidate set, and then rank scholarly articles based on the following relevant importance scores:
 \begin{equation}
 \label{eq:relimp}
 rImp(a, Q) = \alpha \cdot rel_n(a, Q) + (1-\alpha)\cdot imp_n(a),
