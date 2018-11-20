@@ -4,9 +4,10 @@
 \begin{figure*}[tp]
 \centering
 \includegraphics[width=\textwidth]{searchKeywords.pdf}
+\vspace{-4ex}
 \caption{Demonstration of heterogeneous entity ranking}
 \label{fig:searchKeywords}
-\vspace{-3ex}
+\vspace{-2ex}
 \end{figure*}
 
 \begin{figure}
@@ -14,9 +15,10 @@
 \includegraphics[width=0.8\columnwidth]{hjwAvatar.pdf}
 \includegraphics[width=0.8\columnwidth]{hjwInterest.pdf}
 %\includegraphics[width=\columnwidth]{hjwPapers.pdf}
+\vspace{-2ex}
 \caption{Demonstration of author profiling}
 \label{fig:hjwProfile}
-\vspace{-3ex}
+\vspace{-2ex}
 \end{figure}
 
 The demonstrate our system from three aspects: (i) heterogeneous entity ranking, (ii) author profiling, and (iii) performance comparison between Neo4j and RDBMS MySQL.
@@ -48,7 +50,7 @@ Besides, users can also find the relevant publications in each field of study. O
 \stitle{Performance comparison: Neo4j vs. MySQL}.
 Lastly, we compare the query processing performance of the adopted graph database Neo4j with traditional RDBMS MySQL. More specifically, we consider three types of queries, \ie (i) finding the title and authors of a paper given paper ID, (ii) finding the top-10 most important citations of a paper given paper ID, and (iii) finding the top-10 most important papers published by an author given author ID.
 Note that the numbers of joins are (2, 3, 4) for the three types of queries in MySQL, respectively. As people care more about those ``good'' papers, we thus randomly selected 1000 papers/authors whose numbers of citations/published-articles are no less than 100/50, respectively, and computed the average processing time, shown in Table~\ref{tab-compare}.
-% 14.8%	19.4 %	45.3% 
+% 14.8%	19.4 %	45.3%
 As can be seen, Neo4j is consistently more efficient than MySQL, which is on average (14.8\%, 19.4\%, 45.3\%) faster for the three types of queries.
 Thus, structure-aware Neo4j is more efficient than MySQL for scholarly analysis, especially for complex queries with more join operations.
 
