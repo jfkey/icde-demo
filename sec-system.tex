@@ -52,21 +52,22 @@ Moreover, both citation numbers and importance scores support incremental comput
 Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for paper titles and affiliation names. These enable to efficiently find papers and affiliations whose titles and names contain a specific keyword. Besides, we also create schema indices for the entire author and venue names. %for efficient initial entity lookup.
 
 
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{queryProcess.pdf}
-\vspace{-3ex}
-\caption{An example workflow of the query engine}
-\label{fig:queryProcess}
-%\vspace{-2ex}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[width=\columnwidth]{queryProcess.pdf}
+%\vspace{-3ex}
+%\caption{An example workflow of the query engine}
+%\label{fig:queryProcess}
+%%\vspace{-2ex}
+%\end{figure}
 
 \subsection{Graph Query Engine} \label{subsec:qe}
 \oursystem supports a variety of graph queries on the property graph. And the {\em Query Engine} is responsible for processing this set of queries. When a query is issued, {\em Neo4j Query Engine} first translates it into a cypher with proper parsing and semantic analysis.
 Note that, when applicable, the cypher also includes the entity IDs returned from the Lucene index. Rankings given by the {\em Query-Dependent Ranking} module, \ie relevance and relevant importance-based rankings, may also be included in the cypher if needed. Based on the final cypher, an optimized query plan is generated and processed on the property graph.
 
+%Figure~\ref{fig:queryProcess} 
 
-Figure~\ref{fig:queryProcess} gives an example workflow of the query engine that users want to retrieve the top scholarly articles about ``graph database"  ranked by relevant importance. The fulltext index is firstly hit to get the related paper IDs on ``graph database'' (lines 4--5). The {\em Query-Dependent Ranking} module then calculates the relevant importance scores of those related papers and the top-k paper IDs are further identified (lines 7--8). Based on the complete cypher (lines 11--15)., the {\em Neo4j Query Engine} finally generates the query plan, executes it on the property graph and gets the results.
+Table~\ref{tab-workflow} gives an example workflow of the query engine that users want to retrieve the top scholarly articles about ``graph database"  ranked by relevant importance. The fulltext index is firstly hit to get the related paper IDs on ``graph database'' (lines 3--4). The {\em Query-Dependent Ranking} module then calculates the relevant importance scores of those related papers and the top-k paper IDs are further identified (lines 5--6). Based on the complete cypher (lines 7--12)., the {\em Neo4j Query Engine} finally generates the query plan, executes it on the property graph and gets the results.
 
 \subsection{Function Modules}
 Finally, the two function modules on top collect the scholarly entities ranked and returned from the back-end, and present some (visual) analysis to users. Moreover specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{http://echarts.baidu.com/} to display the scholarly ranking and profiling. Detailed demonstrations are available in next section.
@@ -82,31 +83,32 @@ Finally, the two function modules on top collect the scholarly entities ranked a
 %With scholarly data management and processing in the system back-end, the visualizer of \oursystem collects user queries through user interfaces. The queries are to the query engine and the returned results are then presented by visualizer. We will demonstrate some scholarly analysis scenarios in the next Section.
 
 
-%\begin{table}[t!]
-%%\begin{center}
-%\caption{Query TopK Articles by Relevant Importance }
-%\label{tab-codeExample}
-%\begin{scriptsize}
-%\begin{tabular}{ l}
-%\hline
-%{An Example procedure of Query TopK Articles by Relevant Importance } \\
-%\hline
-%1. GraphDatabaseService graphDB = new GraphDatabaseFactory()... ; \\
-%2.  \hspace{6ex}  try(Transaction tx = graphDB.beginTx()) \{ \\
-%3.  \hspace{12ex} 	IndexHits $\langle$ Node$\rangle$ hits = db.index().forNodes("fulltext") \\
-%    \hspace{20ex}   .query("titile: graph AND title:database"); \\
-%4.  \hspace{12ex} 	List$\langle$ ReleImpScore$\rangle$ listScore = calcRelevantImportance(hits); \\
-%5.  \hspace{12ex} 	List$\langle$ String$\rangle$  paIDs = getTopKIDs(listScore); \\
-%6.  \hspace{12ex}    Result result = graphDB.execute(`` \\
-%    \hspace{20ex}		WITH \{paIDs\} AS coll UNWIND coll AS col \\
-%    \hspace{20ex}		MATCH (p:Paper)-[:PaToPAA]-$>$(r)-[:PAAToAut]-(a:Author)\\
-%	\hspace{20ex}		WHERE p.paID= col  WITH p, r, a, ... \\
-%	\hspace{20ex}		RETURN  title, paID, authors, authorsID; ");\\
-%7.	\hspace{12ex}	tx.success();\\
-%    \hspace{6ex}  \} \\
-%\hline
-%\end{tabular} \\ %\vspace{.5ex}
-%\end{scriptsize}
-%%\end{center}
-%\end{table}
+\begin{table}[t!]
+%\begin{center}
+\caption{An example workflow of the query engine}
+\label{tab-workflow}
+\begin{scriptsize}
+\begin{tabular}{ l}
+\hline
+{An example workflow of the query engine} \\
+\hline
+1. GraphDatabaseService graphDB = new GraphDatabaseFactory()... ; \\
+2.  \hspace{0ex}  try(Transaction tx = graphDB.beginTx()) \{ \\
+3.  \hspace{4ex} 	IndexHits $\langle$ Node$\rangle$ hits = db.index().forNodes(``fullTextIndex") \\
+4.  \hspace{8ex}   .query("title: graph AND title:database"); \\
+5.  \hspace{4ex} 	List$\langle$ ReleImpScore$\rangle$ listScore = calcReleImpo(hits, ``graph database"); \\
+6.  \hspace{4ex} 	List$\langle$ String$\rangle$  paIDs = getTopKIDs(listScore); \\
+7.  \hspace{4ex}    Result result = graphDB.execute(`` \\
+8.  \hspace{8ex}		WITH \{paIDs\} AS IDs UNWIND IDs AS perID \\
+9.  \hspace{8ex}		MATCH (p:Paper)-[:PaToPAA]-$>$(r)-[:PAAToAut]-(a:Author)\\
+10.	\hspace{7ex}		WHERE p.paID= perID \\
+11. \hspace{7ex}        WITH p.title,  COLLECT(a.auName), SIZE(()-[:PaRef]-$>$(p)) AS cite, r \\
+12.	\hspace{7ex}		RETURN  paID, title, authors, cite ... ");\\
+13.	\hspace{4ex}	    tx.success();\\
+14. \hspace{2ex}  \} \\
+\hline
+\end{tabular} \\ %\vspace{.5ex}
+\end{scriptsize}
+%\end{center}
+\end{table}
 
