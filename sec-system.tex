@@ -1,26 +1,34 @@
-\section{System Overview}
+\section{\oursystem System}
 %\section{System Framework}
 \label{sec-system}
 
+In this section, we introduce our \oursystem system.
+As shown in Figure \ref{fig:framework}, \oursystem consists of three main components, \ie \emph{storage}, \emph{query engine} and {\em function modules}.
+Below the storage component is a {\em query independent ranking} module that enriches the scholarly data with pre-computed query independent ranking scores,  there is another {\em query dependent ranking} module inside the query engine, and the two function modules support visual analyses for users.
 
 
-Figure \ref{fig:framework} shows the framework of \oursystem. It consists of two main components, \ie \emph{Storage} and \emph{Query Engine}.
-Below the storage component is a {\em Query-Independent Ranking} module that enriches the data with those pre-computed query-independent ranking scores. Note that there is another {\em Query-Dependent Ranking} module inside the query engine. Finally, two function modules on top present the analysis  to users based on the retrieved results. We next detail our system.
+%In this section, we introduce our \oursystem system. The system contains framework and schema, as shown in Figure \ref{fig:system}. The framework of \oursystem consists of three main components, \ie \emph{storage}, \emph{query engine} and {\em function modules} (Figure \ref{fig:framework}). The \emph{schema} is designed to model scholarly data as a property graph (Figure \ref{fig:schema}).
+
+We next explain our system in detail.
+
+
+
+
 
 \subsection{Schema Design} \label{subsec:schema}
 
-Graph database Neo4j is adopted for storage in \oursystem. As such, we need to design a schema that abstracts the entities and linked structures (\eg citation, authored-by).
+Graph database Neo4j is adopted for storage in \oursystem. To do so, we need to design a schema that abstracts the entities and linked structures (\eg citation, authored-by).
 % schema design rationaile
-We follow two principles for schema design: (a) nodes for entities and relationships for linked structures, and (b) trading space for query efficiency if affordable and possible.
+We follow two principles for schema design: (1) nodes for entities and relationships for linked structures, and (2) trading space for query efficiency if affordable and possible.
 
 %reducing fine-grained relationship names while increase generic relationships qualified with property appropriately.
 
-The schema is presented in Fig.~\ref{fig:schema}, where texts nears nodes and relationships represent properties of entities and linked structures, respectively.
-It contains seven basic types of nodes including {\em Paper}, {\em Author}, {\em Affiliation}, {\em Venue}, {\em FOS} (field of study), {\em ConIns} (conference instance in each year) and {\em Year}.
-In addition, it further incorporates an artificial type of nodes, \ie {\em PAA} representing paper-author-affiliation tuples. Here we trade extra space cost for query efficiency, \ie an author and her/his affiliation can be retrieved in one query.
+The schema is presented in Figure~\ref{fig:schema}, where the texts near nodes and relationships represent the properties of entities and linked structures, respectively.
+It contains seven basic types of nodes including {\em Article}, {\em Author}, {\em Affiliation}, {\em Venue}, {\em FOS} (field of study), {\em ConIns} (conference instance in each year) and {\em Year}.
+In addition, it further incorporates an artificial type of nodes, \ie~{\em AAA} representing article-author-affiliation tuples. Here we trade extra space for query efficiency, \ie an author and her/his affiliations can be retrieved in one query.
+As another space-efficiency trade-off, we also use extra space to maintain certain properties of  {\em article} nodes: conference ID, journal ID and year.
 %
-Our schema also forms a total of nine types of relationships, one of which, \ie {\em :VenueScore}, has a weight property {\em score} and the rest are unweighted.
-As another space-efficiency trade-off, those {\em Paper} nodes also use extra space on properties to maintain conference ID, journal ID and year.
+Our schema also forms a total of nine types of relationships, one of which, \ie~{\em :VenueScore}, has a {\em score} property.
 
 
 
@@ -34,47 +42,44 @@ As another space-efficiency trade-off, those {\em Paper} nodes also use extra sp
 \vspace{-1ex}
 \caption{System design of \oursystem}
 \label{fig:system}
-%\vspace{-2ex}
+\vspace{-2ex}
 \end{figure}
 
 
 \subsection{Graph Storage} \label{subsec:storage}
 
 
-Based on the above schema, we maintain our scholarly data, \ie MAG~\cite{sinha2015overview}, as a huge property graph with more than 1.03 billion nodes and 1.93 billion relationships. We further clarify our graph storage with the following.
+Following the above schema, we maintain scholarly data as a huge property graph, \eg the one of MAG~\cite{sinha2015overview}  has more than 1.03 billion nodes and 1.93 billion relationships. %We further clarify our graph storage with the following.
 
 
-First, based on the original scholarly data, the {\em Query-Independent Ranking} module pre-computes those query-independent ranking scores, \ie numbers of citations of papers, importance scores of papers, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.
-Note that iteratively accessing the linked entities is the most essential operation in the pre-computation. And it is much more convenient with graph storage.
-Moreover, both citation numbers and importance scores support incremental computation~\cite{ma2018query} and are easier to dynamically maintain once the property graph gets updated.
+First, based on the original scholarly data, the {\em query independent ranking} module pre-computes those query independent ranking scores: citation counts of articles, importance scores of articles, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.
+As iteratively accessing the linked entities is the most essential operation in the pre-computation, the graph storage is much more convenient and effective for such computations.
+Moreover, both citation counts and importance scores support incremental computation~\cite{ma2018query}, and they are easy to be dynamically maintained once the property graph gets updated.
 
 
-Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for paper titles and affiliation names. These enable to efficiently find papers and affiliations whose titles and names contain a specific keyword. Besides, we also create schema indices for the entire author and venue names. %for efficient initial entity lookup.
+Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for article titles, author names, venue names and affiliation names. These enable to efficiently find articles, authors, venues and affiliations whose titles or names contain specific keywords. %Besides, we also create schema indices for the entire author and venue names to speed up initial entity lookups.
 
 
 
 
 \subsection{Graph Query Engine} \label{subsec:qe}
-\oursystem supports a variety of graph queries on the property graph. And the {\em Query Engine} is responsible for processing this set of queries. When a query is issued, {\em Neo4j Query Engine} first translates it into a cypher with proper parsing and semantic analysis.
-Note that, when applicable, the cypher also includes the entity IDs returned from the Lucene index. Rankings given by the {\em Query-Dependent Ranking} module, \ie relevance and relevant importance-based rankings, may also be included in the cypher if needed. Based on the final cypher, an optimized query plan is generated and processed on the property graph.
+Utilizing Neo4j, \oursystem supports a variety of graph queries on the property graph to aid scholarly search. And the {\em query engine} is responsible for processing this set of queries. When a query is issued, the {\em Neo4j query engine} first translates it into a  Neo4j Cypher query with proper parsing and semantic analyses. When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed. Based on the final Cypher query, an optimized query plan is generated and processed on the property graph.
 
 %Figure~\ref{fig:queryProcess}
 %Table~\ref{tab-workflow}
 
-Figure~\ref{fig:queryProcess} gives an example workflow of the query engine that users want to retrieve the top scholarly articles about ``data mining"  ranked by relevant importance. The fulltext index is firstly hit to get the related paper IDs on ``data mining'' (lines 3--4). The {\em Query-Dependent Ranking} module then calculates the relevant importance scores of those related papers and the top-k paper IDs are further identified (lines 5--6). Based on the complete cypher (lines 7--12), the {\em Neo4j Query Engine} finally generates the query plan, executes it on the property graph and gets the results.
+Figure~\ref{fig:queryProcess} gives an example workflow of the query engine when a user wants to search the top scholarly articles about ``data mining"  ranked by relevant importance. The fulltext index is firstly used to get the related article IDs on ``data mining'' (lines 3--4). The {\em query dependent ranking} module then calculates the relevant importance scores of those related articles, and the top-k article IDs are further identified (lines 5--6). Based on the complete Cypher query, the {\em Neo4j query engine} finally generates the query plan, executes it on the property graph, and returns the results (lines 7--12).
 
 \subsection{Function Modules}
-Finally, the two function modules on top collect the scholarly entities ranked and returned from the back-end, and present visual analysis to users. Moreover specifically, \oursystem utilizes RESTful APIs  and Echarts {\scriptsize (http://echarts.baidu.com/)} to display the scholarly ranking and profiling. Detailed demonstrations are available in next section.
-
-\stitle{Remarks}. The ranking and profiling functions of \oursystem will be available online via API.
+Scholarly entity ranking and scholarly entity profiling are the two function modules that collect the ranked scholarly entities returned from the back-end, and present a visual analysis to users. More specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{ http://echarts.baidu.com} for the scholarly ranking and profiling. Further, \oursystem provides users with the APIs of the ranking and profiling functions.
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
 \vspace{-3ex}
-\caption{An example workflow of the query engine}
+\caption{Example workflow of \oursystem query engine}
 \label{fig:queryProcess}
-%\vspace{-2ex}
+\vspace{-2ex}
 \end{figure}
 
 % visualization do what ?

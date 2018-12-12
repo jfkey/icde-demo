@@ -1,25 +1,70 @@
-\section{Ranking Model}
+\section{Scholarly Search and Ranking Model}
 \label{sec-model}
 
+In this section, we first introduce scholarly search, and then present the ranking model that lays its core foundation.
 
-Central to \oursystem is its ranking model that supports heterogeneous scholarly entity ranking with five ranking metrics.
-In this section, we introduce the details of rankings.
 
-\subsection{Ranking Metrics}
+
+
+\begin{table*}[t!]
+\label{tab-function}
+\begin{center}
+\caption{Functions provided in \oursystem and existing scholarly search systems}
+%\vspace{-1ex}
+\begin{scriptsize}
+\begin{tabular}{|c||c c c c|c c c c|c c c c|}
+\hline
+\multirow{2}{*}{\bf Systems} &  \multicolumn{4}{c|}{\bf Scholarly Search}     &  \multicolumn{4}{c|}{\bf Article-Coupled Ranking}     & \multicolumn{4}{c|}{\bf Visual Profiling}  \\
+&  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} &  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} & {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} \\
+\hline \hline
+CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$}
+& $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} &\marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+Google Scholar & $\surd$  & $\surd$  & \marked{$\times$} & $\surd$
+ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+Semantic Scholar & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$}
+ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &
+\marked{$\times$} \\
+AMiner & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$
+ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &   \marked{$\times$}\\
+MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
+\oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ &  $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
+\end{tabular} \\
+\vspace{1ex}
+AR, AU, VE and AF stand for article, author, venue and affiliation,
+respectively.
+\end{scriptsize}
+\vspace{-4ex}
+\end{center}
+\end{table*}
+
+\subsection{Scholarly Search}
+Our \oursystem system facilitates the research activities of scholars by providing four types of entity searches as follows.
+
+
+\stitle{Article search}. Given a set of keywords, \oursystem returns a sorted list of  articles whose titles {\em contain} the given keywords. In the meantime, it also returns three sorted lists of authors, venues and affiliations associated with the returned articles.
+
+%For each author (resp. venue and affiliation),  we combine the importance score of the author and the importance score of all articles of the author under the keywords. The same is true for affiliations and venues.
+
+\stitle{Author, venue and affiliation searches}. Given a (partial) name of an author, venue or affiliation, \oursystem returns a sorted list of  authors, venues or affiliations, respectively, that {\em contain} the given (partial) name.
+
+
+
+
+\subsection{Scholarly Article Ranking}
 \label{subsec:rankingMetric}
-To fit various ranking scenarios, \oursystem implements five ranking metrics, namely {\em relevance}, {\em importance}, {\em relevant importance}, {\em citation} and {\em time}. We first elaborate how to rank scholarly articles with these metrics and extend to other entities in Section~\ref{subsec:heteroRanking}.
-%
-Note that given a query, those articles whose titles contain at least one query keyword after removing stop words are retrieved as candidates for ranking.
 
-\stitle{Sort by relevance}. The first metric enables to query highly-correlated scholarly articles. Thus, we evaluate the relevance of their titles given the query, and return those with the highest relevance. Since the development of Word2vec~\cite{corrado2013efficient}, word embedding has become the {\em de facto} standard method to capture semantic-level relevance. We also exploit Word2vec for evaluating the relevance defined as follows:
-\begin{equation}
-\label{eq:relscore}
-rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
-\end{equation}
-Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of article $a$ and in the query, respectively, $idf(q)$ is the inverse document frequency of word $q$, and $\textbf{t}$ and $\textbf{q}$ are the corresponding word embeddings.
+\oursystem provides five metrics to support article search.
+
+
+
 
 %Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
 
+\eat{%%%%%%%%%%%%%%%%
 \begin{figure}[tb!]
 \centering
 \includegraphics[scale=0.15]{framework-lite-2.eps}
@@ -27,30 +72,47 @@ Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of 
 \caption{\sarank framework~\cite{ma2018query}} \label{fig:sarank}
 \vspace{-2ex}
 \end{figure}
+}%%%%%%%%%%EAT
 
-\stitle{Sort by importance}. The second metric for querying important scholarly articles is adopted from a recently developed scholarly article ranking model \sarank~\cite{ma2018query}. The importance is defined as a combination of prestige and popularity, where prestige is computed by a novel Time-Weighted PageRank and popularity is evaluated as the sum of citation freshness. To assign those newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking, as illustrated in Fig.~\ref{fig:sarank}.
 
-\stitle{Sort by relevant importance.} The importance metric does not consider how the articles relate to queries. The third metric is then proposed for retrieving scholarly articles both relevant and important. More specifically, we first normalize the computed relevance (resp. importance) scores by scaling with the maximal relevance (resp. importance) scores in the candidate set, and then rank scholarly articles based on the following relevant importance scores:
+
+
+
+\stitle{Citation counts and publish time}. Scholarly articles are simply sorted based on their citation counts and publish time. %, respectively, and ties are broken by further comparing importance scores.
+
+
+\stitle{Importance}. This metric comes from our recently developed \sarank (please refer to~\cite{ma2018query} for details). The importance of an article is defined as a combination of its prestige and popularity, where its prestige is computed by a novel Time-Weighted PageRank, and its popularity is the sum of citation freshness. To assign those newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking. %, as illustrated in Fig.~\ref{fig:sarank}.
+
+The above three metrics are for {\em query independent ranking}, and we introduce two metrics for {\em query dependent ranking}.
+
+\stitle{Relevance}. This metric enables to rank scholarly articles in terms of the semantic correlation between their titles and given queries (keywords). As Word2vec \cite{corrado2013efficient} has become the {\em de facto} standard to capture semantics, we utilize Word2vec to evaluate semantic relevance as follows.
+\begin{equation}
+\label{eq:relscore}
+rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
+\end{equation}
+Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, $idf(q)$ is the inverse document frequency of a word $q$, and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings.
+
+
+\stitle{Relevant importance.} The previous importance metric does not consider the closeness of the articles with respect to given queries (keywords). This metric is to rank scholarly articles by combining the semantic relevance and importance metrics. More specifically, we first normalize the computed relevance (resp. importance) score by scaling with the maximum relevance (resp. importance) score in the resulting article set, and we then define the relevant importance score as follows.
 \begin{equation}
 \label{eq:relimp}
 rImp(a, Q) = \alpha \cdot rel_n(a, Q) + (1-\alpha)\cdot imp_n(a),
 \end{equation}
-where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} relevance and importance scores, and $\alpha$ is a regularizing parameter.  We fix $\alpha=0.5$ by default.
-
-\stitle{Sort by citation and time}. For the remaining two metrics, scholarly articles are simply sorted based on their numbers of total citations and their publish time, respectively. And ties are broken by further comparing importance scores.
+where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter, typically set to an empirical value in $[0.2, 0.4]$.
 
 
-\subsection{Heterogeneous Scholarly Entity Ranking}
+
+\subsection{Author, Venue and Affiliation Ranking}
 \label{subsec:heteroRanking}
 
-Besides scholarly articles, other scholarly heterogeneous entities are another important part of the scholarly data.
-Our \oursystem further supports ranking these heterogeneous entities, \ie authors, venues, and affiliations.
-More specifically, we consider the following two heterogeneous ranking scenarios.
+For authors, venues and affiliations,  \oursystem provides stand-alone ranking and article-coupled ranking.
 
-\stitle{Heterogeneous entity ranking given a query}. Given a specific query, \oursystem also ranks the related authors, venues, and affiliations according to the selected metric. This helps to answer questions like which authors/venues/affiliations are the most authoritative in the queried field of study.
-These rankings are derived based on the ranking scores of scholarly articles. And the ranking score of an entity is computed as the sum of the ranking scores of its associated articles. When sorting by time, we use an exponentially decayed ranking score $e^{T_a-T_0}$ where $T_a$ and $T_0$ are the publish year of article $a$ and the current year, respectively.
+\stitle{Stand-alone ranking}. To support author, venue and affiliation searches, \oursystem ranks authors, venues and affiliations with the sum of the query independent ranking scores of all their associated articles. Further, when sorting entities by publish time, it uses an exponentially decayed ranking score $e^{T_a-T_0}$ to evaluate the research activeness of an entity, where $T_a$ is the publish year of an article $a$, and $T_0$ is the current year.
 
-\stitle{Direct author, venue and affiliation ranking}. Finally, \oursystem provides an interface to directly query and rank these heterogeneous entities given their names, where importance is used as the ranking metric.
+\stitle{Article-coupled ranking}. To support article search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of an article search query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.
+
+
+The search and ranking functions of \oursystem and existing systems are summarized in Table~I, where metrics are not reported due to their unavailability in commercial systems.
 
 
 
@@ -163,4 +225,4 @@ Hence, we employ distributional semantic approach to represent words. Similariti
 F(v) = \theta S(v) + (1- \theta) \sum_j idf(Q_j) \frac {Q_j \cdot T} {\left \| Q_j \right \| \left \| T \right \|}
 \end{equation}
 Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
-} %%% end of \eat 
+} %%% end of \eat
