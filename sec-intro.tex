@@ -2,6 +2,42 @@
 \label{sec-intro}
 
 
+\begin{table*}[t!]
+\label{tab-function}
+\begin{center}
+\caption{Functions provided in \oursystem and existing scholarly search systems}
+%\vspace{-1ex}
+\begin{scriptsize}
+\begin{tabular}{|c|c c c c|c c c c|c c c c|}
+\hline
+\multirow{2}{*}{\bf Systems} &  \multicolumn{4}{c|}{\bf Scholarly Search}     &  \multicolumn{4}{c|}{\bf Article-Coupled Ranking}     & \multicolumn{4}{c|}{\bf Visual Profiling}  \\
+&  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} &  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} & {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} \\
+%\hline
+\hline
+CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$}
+& $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} &\marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+Google Scholar & $\surd$  & $\surd$  & \marked{$\times$} & $\surd$
+ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+Semantic Scholar & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$}
+ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &
+\marked{$\times$} \\
+AMiner & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$
+ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &   \marked{$\times$}\\
+MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
+\oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ &  $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
+\end{tabular} \\
+\vspace{1ex}
+AR, AU, VE and AF stand for article, author, venue and affiliation,
+respectively.
+\end{scriptsize}
+\vspace{-4ex}
+\end{center}
+\end{table*}
+
 % Contributions: (1) heterogeneous entity ranking, (2) graph database for scholarly data management, (3) demonstration
 %% Why heterogeneous entity ranking:
 %% Why graph database:
@@ -70,3 +106,8 @@ In this study, we design and develop a scholarly search system \oursystem  to ai
 
 \stitle{Organization}.
 The rest of this paper is organized as follows. Section \ref{sec-model} introduces scholarly search and ranking model. Our \oursystem system is presented in Section \ref{sec-system}, followed by demonstrations in Section~\ref{sec-demo} and conclusions in Section \ref{sec-conc}.
+
+
+
+
+

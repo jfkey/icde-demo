@@ -1,0 +1,156 @@
+% THIS IS AN EXAMPLE DOCUMENT FOR VLDB 2012
+% based on ACM SIGPROC-SP.TEX VERSION 2.7
+% Modified by  Gerald Weber <gerald@cs.auckland.ac.nz>
+% Removed the requirement to include *bbl file in here. (AhmetSacan, Sep2012)
+% Fixed the equation on page 3 to prevent line overflow. (AhmetSacan, Sep2012)
+
+\documentclass{vldb}
+%\usepackage{graphicx}
+%\usepackage{balance}
+
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{epsfig}
+\usepackage{xspace}
+\usepackage{graphicx,epstopdf}
+\usepackage{stfloats}
+%\usepackage{times}
+\usepackage{subfigure}
+\usepackage{cite}
+\usepackage{balance}    % for  \balance command ON LAST PAGE  (only there!)
+\usepackage{amsmath, bm}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage{multirow}
+
+\newcommand{\eat}[1]{}
+\newcommand{\sttab}{\rule{0pt}{8pt}\\[-3ex]}
+\newcounter{ccc}
+\newcommand{\bcc}{\setcounter{ccc}{1}\theccc.}
+\newcommand{\icc}{\addtocounter{ccc}{1}\theccc.}
+\newcommand{\myhrule}{\rule[.5pt]{\hsize}{.5pt}}
+\newcommand{\mat}[2]{{\begin{tabbing}\hspace{#1}\=\+\kill #2\end{tabbing}}}
+\newcommand{\stitle}[1]{\vspace{0.5ex}\noindent{\bf #1}}
+\newcommand{\etitle}[1]{\vspace{0.5ex}\noindent{\em \underline{#1}}}
+\newcommand{\marked}[1]{\textcolor{red}{#1}}
+\newcommand{\markedb}[1]{\textcolor{blue}{#1}}
+\newcommand{\subsubtitle}[1]{\vspace{0.5ex}\noindent\underline{{\bf #1}}}
+
+%\newcommand{\stab}{\rule{0pt}{8pt}\\[-1.6ex]}
+%\newcommand{\sttab}{\rule{0pt}{8pt}\\[-2ex]}
+\newcommand{\sstab}{\rule{0pt}{8pt}\\[-2ex]}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\wrt}{\emph{w.r.t.}\xspace}
+\newcommand{\aka}{\emph{a.k.a.}\xspace}
+\newcommand{\kw}[1]{{\ensuremath {\mathsf{#1}}}\xspace}
+
+\newcommand{\oursystem}{\kw{Athena}}
+\newcommand{\sarank}{\kw{SARank}}
+
+
+% Include information below and uncomment for camera ready
+\vldbTitle{A Ranking Enabled Scholarly Search System}
+\vldbAuthors{Junfeng Liu, Shuai Ma, Renjun Hu, Chunming Hu and Jinpeng Huai}
+\vldbDOI{https://doi.org/10.14778/xxxxxxx.xxxxxxx}
+\vldbVolume{12}
+\vldbNumber{xxx}
+\vldbYear{2019}
+
+\begin{document}
+
+% ****************** TITLE ****************************************
+
+\title{A Ranking Enabled Scholarly Search System
+}
+
+
+%\def\sharedaffiliation{%
+%\end{tabular}
+%\begin{tabular}{c}
+%}
+%%
+%\author{\IEEEauthorblockN{Junfeng Liu, Shuai Ma, Renjun Hu, Chunming Hu and Jinpeng Huai}
+%\IEEEauthorblockA{SKLSDE Lab, Beihang University, Beijing, China}
+%\IEEEauthorblockA{Beijing Advanced Innovation Center for Big Data and Brain Computing, Beijing, China}
+%\{liujunfeng, mashuai, hurenjun, hucm, huaijp\}@buaa.edu.cn}
+
+%\numberofauthors{5}
+%% Three authors sharing the same affiliation.
+%    \author{
+%      \alignauthor Junfeng Liu\\
+%      \email{liujunfeng@buaa.edu.cn}
+%%
+%      \alignauthor Shuai Ma\\
+%       \email{mashuai@buaa.edu.cn}
+%%
+%      \alignauthor Renjun Hu\\
+%      \email{hurenjun@buaa.edu.cn}
+%%
+%     \alignauthor Chunming Hu\\
+%      \email{hucm@buaa.edu.cn}
+%%
+%     \alignauthor Jinpeng Huai\\
+%      \email{huaijp@buaa.edu.cn}
+%%
+%      \sharedaffiliation
+%      \affaddr{SKLSDE Lab, Beihang University, Beijing, China}  \\
+%      \affaddr{Beijing Advanced Innovation Center for Big Data and Brain Computing, Beijing, China}   \\
+%      %\affaddr{Berkeley, CA 94720-1776 }
+%}
+%%
+
+\numberofauthors{1}
+\author{
+  \alignauthor
+    Junfeng Liu, Shuai Ma, Renjun Hu, Chunming Hu and Jinpeng Huai\\                       % names
+    \affaddr{KLSDE Lab, Beihang University, Beijing, China } \\            % affiliations
+    \affaddr{Beijing Advanced Innovation Center for Big Data and Brain Computing, Beijing, China}\\
+    \email{\{liujunfeng, mashuai, hurenjun, hucm, huaijp\}@buaa.edu.cn}  % emails
+}
+
+
+
+\maketitle
+
+\begin{abstract}
+Scholarly search systems greatly  aid the deep understanding of scholarly data and facilitate the research activities of scholars for scientific studies.
+%
+Though a number of such systems have been developed, most of them either support rankings of limited search of entities or provide only basic ranking metrics. These existing systems also mainly adopt RDBMS as their storage such that the linked feature of scholarly data is not fully exploited.
+% Hence, they may face challenges in ranking heterogeneous scholarly entities simultaneously with certain comprehensive ranking metric.
+%
+In this study, we design and develop a novel scholarly search system \oursystem. (1) It supports four types of scholarly entity searches: articles, authors, venues and affiliations, and is equipped with five ranking metrics, including three traditional metrics and two comprehensive  importance ranking metrics.
+(2) It also provides profiling of scholarly entities.
+(3) It further utilizes a graph storage to directly leverage the linked feature for speeding up the processing of complex queries.
+%Based on the above, we have built an online service for scholarly analysis.
+We shall demonstrate the advantages of \oursystem from three aspects: scholarly search, author profiling and the graph storage. %compared with RDBMS.
+\end{abstract}
+
+
+
+\input{sec-intro}
+\input{sec-model}
+\input{sec-system}
+\input{sec-demo}
+\input{sec-conc}
+
+
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{abbrv}
+%\bibliography{vldb_sample}  % vldb_sample.bib is the name of the Bibliography in this case
+\bibliography{refs}
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+
+
+\end{document}

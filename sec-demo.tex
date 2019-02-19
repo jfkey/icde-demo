@@ -1,4 +1,4 @@
-\section{\oursystem Demonstration}
+\section{Athena Demonstration}
 \label{sec-demo}
 
 \begin{figure*}[tp]
@@ -10,16 +10,6 @@
 \vspace{-2ex}
 \end{figure*}
 
-\begin{figure}
-\centering
-\includegraphics[width=0.98\columnwidth]{hjwAvatar.pdf}
-\includegraphics[width=\columnwidth]{hjwInterest.pdf}
-%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
-\vspace{-3ex}
-\caption{Demonstration of author profiling}
-\label{fig:hjwProfile}
-\vspace{-3.5ex}
-\end{figure}
 
 We demonstrate our \oursystem system from three aspects: (1) scholarly search, (2) author profiling, and (3) performance comparison between Neo4j and RDBMS MySQL.
 
@@ -48,6 +38,18 @@ Finally, functions such as co-authors analyses and statistics by times are provi
 %Other functions in author profiling include co-author analysis and statistics by time. %We omit the demonstration of those functions due to space limitation.
 
 
+\begin{figure}
+\centering
+\includegraphics[width=0.98\columnwidth]{hjwAvatar.pdf}
+\includegraphics[width=\columnwidth]{hjwInterest.pdf}
+%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
+\vspace{-3ex}
+\caption{Demonstration of author profiling}
+\label{fig:hjwProfile}
+\vspace{-3.5ex}
+\end{figure}
+
+
 \stitle{(3) Performance evaluation: Neo4j vs. MySQL}.
 Lastly, we compare the query performance of the adopted graph database Neo4j with traditional RDBMS MySQL. More specifically, we consider three types of queries, \ie (i) given an article ID, finding its title and authors, (ii)  given an article ID, finding its top--10 most important citations, and (iii) given an author ID, finding her/his published top--10 most important articles. Note that the numbers of joins are (2, 3, 4) for the three types of queries in MySQL, respectively.
 
@@ -64,7 +66,7 @@ Thus, structure-aware Neo4j is more efficient than MySQL for such scholarly anal
 \begin{tabular}{|c|c|c|c|} %{lp{2cm}p{2cm}p{2cm}}
 \hline
 {\bf Engines} & {\bf Type I Queries} & {\bf Type II Queries} & {\bf Type III Queries}\\
-\hline\hline
+\hline %\hline
 MySQL & 0.115 sec.  & 2.89 sec. & 3.60 sec. \\
 Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 \hline

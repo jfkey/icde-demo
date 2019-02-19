@@ -1,4 +1,4 @@
-\section{\oursystem System}
+\section{ Athena System}
 %\section{System Framework}
 \label{sec-system}
 
@@ -60,8 +60,6 @@ Moreover, both citation counts and importance scores support incremental computa
 Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for article titles, author names, venue names and affiliation names. These enable to efficiently find articles, authors, venues and affiliations whose titles or names contain specific keywords. %Besides, we also create schema indices for the entire author and venue names to speed up initial entity lookups.
 
 
-
-
 \subsection{Graph Query Engine} \label{subsec:qe}
 Utilizing Neo4j, \oursystem supports a variety of graph queries on the property graph to aid scholarly search. And the {\em query engine} is responsible for processing this set of queries. When a query is issued, the {\em Neo4j query engine} first translates it into a  Neo4j Cypher query with proper parsing and semantic analyses. When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed. Based on the final Cypher query, an optimized query plan is generated and processed on the property graph.
 
@@ -69,6 +67,12 @@ Utilizing Neo4j, \oursystem supports a variety of graph queries on the property 
 %Table~\ref{tab-workflow}
 
 Figure~\ref{fig:queryProcess} gives an example workflow of the query engine when a user wants to search the top scholarly articles about ``data mining"  ranked by relevant importance. The fulltext index is firstly used to get the related article IDs on ``data mining'' (lines 3--4). The {\em query dependent ranking} module then calculates the relevant importance scores of those related articles, and the top-k article IDs are further identified (lines 5--6). Based on the complete Cypher query, the {\em Neo4j query engine} finally generates the query plan, executes it on the property graph, and returns the results (lines 7--12).
+
+
+
+
+
+
 
 \subsection{Function Modules}
 Scholarly entity ranking and scholarly entity profiling are the two function modules that collect the ranked scholarly entities returned from the back-end, and present a visual analysis to users. More specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{ http://echarts.baidu.com} for the scholarly ranking and profiling. Further, \oursystem provides users with the APIs of the ranking and profiling functions.
@@ -81,6 +85,9 @@ Scholarly entity ranking and scholarly entity profiling are the two function mod
 \label{fig:queryProcess}
 \vspace{-2ex}
 \end{figure}
+
+
+
 
 % visualization do what ?
 % restful API

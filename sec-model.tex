@@ -1,45 +1,11 @@
 \section{Scholarly Search and Ranking Model}
 \label{sec-model}
 
+
+
+
 In this section, we first introduce scholarly search, and then present the ranking model that lays its core foundation.
 
-
-
-
-\begin{table*}[t!]
-\label{tab-function}
-\begin{center}
-\caption{Functions provided in \oursystem and existing scholarly search systems}
-%\vspace{-1ex}
-\begin{scriptsize}
-\begin{tabular}{|c||c c c c|c c c c|c c c c|}
-\hline
-\multirow{2}{*}{\bf Systems} &  \multicolumn{4}{c|}{\bf Scholarly Search}     &  \multicolumn{4}{c|}{\bf Article-Coupled Ranking}     & \multicolumn{4}{c|}{\bf Visual Profiling}  \\
-&  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} &  {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} & {\bf AR} & {\bf AU} & {\bf VE} & {\bf AF} \\
-\hline \hline
-CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$}
-& $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} &\marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
-Google Scholar & $\surd$  & $\surd$  & \marked{$\times$} & $\surd$
- & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
-Semantic Scholar & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$}
- & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &
-\marked{$\times$} \\
-AMiner & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$
- & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &   \marked{$\times$}\\
-MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
-AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
-\oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\surd$ & $\surd$ &  $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
-\end{tabular} \\
-\vspace{1ex}
-AR, AU, VE and AF stand for article, author, venue and affiliation,
-respectively.
-\end{scriptsize}
-\vspace{-4ex}
-\end{center}
-\end{table*}
 
 \subsection{Scholarly Search}
 Our \oursystem system facilitates the research activities of scholars by providing four types of entity searches as follows.
@@ -58,8 +24,6 @@ Our \oursystem system facilitates the research activities of scholars by providi
 \label{subsec:rankingMetric}
 
 \oursystem provides five metrics to support article search.
-
-
 
 
 %Here, $S(v)$ is a static ranking score of article, $Q(j)$ is the j$th$ of query keywords vector which have removed stop words, $idf(Q_j)$ is inverse document frequency measures how much information the word $Q(j)$ provides, $T$ suggests we aggregate the title word vectors to their centroid and $\theta$ means the relevance factor.
