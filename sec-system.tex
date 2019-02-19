@@ -34,13 +34,13 @@ Our schema also forms a total of nine types of relationships, one of which, \ie~
 
 \begin{figure}
 \centering
-\subfigure[{\scriptsize Framework}]{\label{fig:framework}
+\subfigure[{\scriptsize Framework \marked{add scholarly data} }]{\label{fig:framework}
 \includegraphics[width=0.45\columnwidth]{systemFrame.pdf}}
 %\hspace{3ex}
 \subfigure[{\scriptsize Neo4j schema}]{\label{fig:schema}
 \includegraphics[width=0.5\columnwidth]{neo4jSchema.pdf}}
 \vspace{-1ex}
-\caption{System design of \oursystem}
+\caption{System design of \oursystem  }
 \label{fig:system}
 \vspace{-2ex}
 \end{figure}
@@ -60,7 +60,7 @@ Moreover, both citation counts and importance scores support incremental computa
 Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for article titles, author names, venue names and affiliation names. These enable to efficiently find articles, authors, venues and affiliations whose titles or names contain specific keywords. %Besides, we also create schema indices for the entire author and venue names to speed up initial entity lookups.
 
 
-\subsection{Graph Query Engine} \label{subsec:qe}
+\subsection{Graph Query Engine \marked{what kind of query, remove optimization} } \label{subsec:qe}
 Utilizing Neo4j, \oursystem supports a variety of graph queries on the property graph to aid scholarly search. And the {\em query engine} is responsible for processing this set of queries. When a query is issued, the {\em Neo4j query engine} first translates it into a  Neo4j Cypher query with proper parsing and semantic analyses. When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed. Based on the final Cypher query, an optimized query plan is generated and processed on the property graph.
 
 %Figure~\ref{fig:queryProcess}
