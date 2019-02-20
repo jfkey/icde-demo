@@ -58,24 +58,28 @@ Thus, structure-aware Neo4j is more efficient than MySQL for such scholarly anal
 
 \begin{table}[t!]
 \begin{center}
-\caption{Demonstration of Performance: Neo4j vs. MySQL}
+\caption{Performance: Neo4j vs. MySQL}
 %\vspace{-1ex}
 \label{tab-compare}
 \begin{scriptsize}
+
 \begin{tabular}{|c|c|c|c|} %{lp{2cm}p{2cm}p{2cm}}
 \hline
-{\bf Engines} & {\bf Type I Queries} & {\bf Type II Queries} & {\bf Type III Queries}\\
+{Engines} & {Type I Queries} & {Type II Queries} & {Type III  Queries}\\
 \hline %\hline
 MySQL & 0.115 sec.  & 2.89 sec. & 3.60 sec. \\
+\hline
 Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 \hline
 \end{tabular}
+
 \end{scriptsize}
 \vspace{-4.5ex}
 \end{center}
 \end{table}
 
-\stitle{(4) \marked{Evaluation of Query Results}  }
+\stitle{(4) Ranking quality evaluation}
+\marked{table of ranking quality, P@5, P@10, MAP, }
 
 
 \eat{

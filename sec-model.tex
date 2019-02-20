@@ -56,7 +56,7 @@ The above three metrics are for {\em query independent ranking}, and we introduc
 \label{eq:relscore}
 rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
 \end{equation}
-Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, $idf(q)$ is the inverse document frequency of a word $q$, and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings. \marked{Although the entire text can boost the performance , it is not the main concern of our work, we just briefly touch on this and will explore it in future work.}
+Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, $idf(q)$ is the inverse document frequency of a word $q$, and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings. \marked{Although the entire text can boost the performance, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.}
 
 
 
