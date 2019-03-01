@@ -20,7 +20,7 @@ We demonstrate our \oursystem system from four aspects: (1) scholarly search, (2
 \marked{
 Figure~\ref{fig:searchKeywords} presents the scholarly entity rankings under query ``scale stream processing".
 The ranking metrics are displayed on the left-hand side. Note that \oursystem also supports queries within a specific range of years and displaying PageRank rankings.
-When setting radio option checked and sorted by Rel.Imp (relevant importance), the rankings of articles sorted by  \sarank and PageRank score and the associated entities (authors, affiliations, conferences and journals) are shown in the middle and on the right-hand side.
+When setting radio option checked and sorted by Relevant Importance, the rankings of articles sorted by  \sarank and PageRank score and the associated entities (authors, affiliations, conferences and journals) are shown in the middle and on the right-hand side.
 Further, it is worth pointing out that users can also directly query entities by typing their names in the search box.
 }
 
@@ -29,6 +29,16 @@ Further, it is worth pointing out that users can also directly query entities by
 %The ranking metrics are displayed on the left hand side. Note that \oursystem also supports queries within a specific range of years. 
 %When sorted by relevant importance, the rankings of articles and the associated entities (authors, affiliations, journals and conferences) are shown in the middle and on the right hand side.
 %Further, it is worth pointing out that users can also directly query entities by typing their names in the search box.
+\begin{figure}
+\centering
+\includegraphics[width=0.98\columnwidth]{hjwAvatar.pdf}
+\includegraphics[width=\columnwidth]{hjwInterest.pdf}
+%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
+\vspace{-3ex}
+\caption{Demonstration of author profiling }
+\label{fig:hjwProfile}
+\vspace{-3.5ex}
+\end{figure}
 
 
 
@@ -43,16 +53,6 @@ Finally, functions such as co-authors analyses and statistics by times are provi
 %Other functions in author profiling include co-author analysis and statistics by time. %We omit the demonstration of those functions due to space limitation.
 
 
-\begin{figure}
-\centering
-\includegraphics[width=0.98\columnwidth]{hjwAvatar.pdf}
-\includegraphics[width=\columnwidth]{hjwInterest.pdf}
-%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
-\vspace{-3ex}
-\caption{Demonstration of author profiling }
-\label{fig:hjwProfile}
-\vspace{-3.5ex}
-\end{figure}
 
 
 \stitle{(3) Performance evaluation: Neo4j vs. MySQL}.
@@ -86,10 +86,13 @@ Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 
 \stitle{(4) Ranking quality evaluation}.
 \marked{
-As shown in the middle of Figure~\ref{fig:searchKeywords}, we evaluate the ranking quality by comparing it with PageRank. Specifically, consider two articles: ``MillWheel: Fault-tolerant Stream Processing At Internet Scale"(millwheel) was published in PVLDB 2013 with 39 citations (ranked first in \sarank) and ``Adaptive Control of Extreme-Scale Stream Processing Systems" (adaptive) was published in ICDCS 2006 with 48 citations (ranked first in pagerank). 
-Although ``millwheel" has a little less citations, ``millwheel" gets published in PVLDB which has a higher impact than ICDCS. Moreover, ``millwheel" published in 2013 more recently than ``adaptive" in 2006 as researchers potentially discover recent influential articles.
+As shown in the middle of Figure~\ref{fig:searchKeywords}, we evaluate the ranking quality by comparing it with PageRank. Specifically, consider two articles: ``MillWheel: Fault-tolerant Stream Processing At Internet Scale"(millwheel) was published in PVLDB 2013 with 39 citations (ranked first in \sarank) and ``Adaptive Control of Extreme-Scale Stream Processing Systems" (adaptive) was published in ICDCS 2006 with 48 citations (ranked first in PageRank).}
+
+\marked{
+Although ``millwheel" has a little less citations, it gets published in PVLDB which has a higher impact than ICDCS. 
+Moreover, ``millwheel" is published in 2013 later than ``adaptive" in 2006 as researchers potentially discover most recent influential articles.
 Thus, ``millwheel" has a high influence and should be ranked first corresponding to \sarank. 
-To conclusion, our query result is more effective for searching influential articles due to considering the temporal factor and and assembling the venue and author component.
+In concluding, \oursystem provide an effective ranking component for searching influential articles due to considering the temporal factor and assembling the article, venue and author entities.
 }
 
 
