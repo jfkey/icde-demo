@@ -3,7 +3,7 @@
 
 \begin{figure*}[tp]
 \centering
-\includegraphics[width=\textwidth]{searchKeywords2.pdf}
+\includegraphics[width=\textwidth]{searchKeywords3.pdf}
 \vspace{-3.5ex}
 \caption{Demonstration of scholarly search and ranking quality evaluation}
 \label{fig:searchKeywords}
@@ -86,9 +86,10 @@ Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 
 \stitle{(4) Ranking quality evaluation}.
 \marked{
-As shown in the middle of Figure~\ref{fig:searchKeywords}, we evaluate the ranking quality by compared with PageRank. Specifically, we put the article ``MillWhell: Fault-tolerant Stream Processing At Internet Scale"(millwhell) in the first place sorted by \sarank while ``Adaptive Control of Extreme-Scale Stream Processing Systems"(adaptive) in the first place sorted by PageRank.
-Although ``adaptive" has a little more citations, ``millwhell" gets published in ``VLDB" which has a higher impact than ``ICDCS". Moreover,  ``millwhell" published in ``2013" more recently than ``adaptive" in ``2006" as researchers potentially discover recent influential articles.
-Thus, our query result is more effective for searching influential articles due to considering the temporal factor and and assembling the venue and author component. 
+As shown in the middle of Figure~\ref{fig:searchKeywords}, we evaluate the ranking quality by comparing it with PageRank. Specifically, consider two articles: ``MillWheel: Fault-tolerant Stream Processing At Internet Scale"(millwheel) was published in PVLDB 2013 with 39 citations (ranked first in \sarank) and ``Adaptive Control of Extreme-Scale Stream Processing Systems" (adaptive) was published in ICDCS 2006 with 48 citations (ranked first in pagerank). 
+Although ``millwheel" has a little less citations, ``millwheel" gets published in PVLDB which has a higher impact than ICDCS. Moreover, ``millwheel" published in 2013 more recently than ``adaptive" in 2006 as researchers potentially discover recent influential articles.
+Thus, ``millwheel" has a high influence and should be ranked first corresponding to \sarank. 
+To conclusion, our query result is more effective for searching influential articles due to considering the temporal factor and and assembling the venue and author component.
 }
 
 
