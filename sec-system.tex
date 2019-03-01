@@ -54,8 +54,9 @@ Following the above schema, we maintain scholarly data as a huge property graph,
 
 First, based on the original scholarly data, the {\em query independent ranking} module pre-computes those query independent ranking scores: citation counts of articles, importance scores of articles, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.
 %As iteratively accessing the linked entities is the most essential operation in the pre-computation, the graph storage is much more convenient and effective for such computations.
-Moreover, both citation counts and importance scores support incremental computation~\cite{ma2018query}, and they are easy to be dynamically maintained \marked{once scholarly data get increment.}%once the property graph gets updated.
-
+\marked{
+Moreover, both citation counts and importance scores support incremental computation~\cite{ma2018query}, and they are easy to be dynamically maintained once new scholarly data arrives.%once the property graph gets updated.
+}
 
 Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for article titles, author names, venue names and affiliation names. These enable to efficiently find articles, authors, venues and affiliations whose titles or names contain specific keywords. %Besides, we also create schema indices for the entire author and venue names to speed up initial entity lookups.
 
@@ -64,18 +65,18 @@ Second, to facilitate query processing on the billion-scale property graph, Luce
 %Utilizing Neo4j, \oursystem supports a variety of graph queries on the property graph to aid scholarly search. And the {\em query engine} is responsible for processing this set of queries. When a query is issued, the {\em Neo4j query engine} first translates it into a Neo4j Cypher query with proper parsing and semantic analyses. When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed.Based on the final Cypher query, an optimized query plan is generated and processed on the property graph.
 
 \marked{
-Utilizing {\em Neo4j query engine}, \oursystem supports a variety of graph queries on the property graph to aid scholarly search, such as searching the author's top-k fields of study and searching the affiliation having higher impact on which venues. When a query is issued, \oursystem first translates it into a Neo4j Cypher query. 
-When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed. 
+Utilizing {\em Neo4j query engine}, \oursystem supports a variety of graph queries on the property graph to aid scholarly search, such as searching the author's top-k fields of study and searching the affiliation having higher impact on which venues. When a query is issued, \oursystem first translates it into a Neo4j Cypher query.
+When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed.
 Based on the final Cypher query, query plan is generated and processed on the property graph after proper parsing and semantic analyses.
 }
 
 %Find out which institutions have higher influence in which journals
 %Athena turns user queries into database queries
-%what kind of query 
+%what kind of query
 
 
 % neo4j query implement user query .
-% 
+%
 
 %Figure~\ref{fig:queryProcess}
 %Table~\ref{tab-workflow}
