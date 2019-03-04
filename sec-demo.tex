@@ -11,7 +11,7 @@
 \end{figure*}
 
 \marked{
-We demonstrate our \oursystem system from four aspects: (1) scholarly search, (2) author profiling, (3) performance comparison between Neo4j and RDBMS MySQL and (4) ranking quality evaluation by case study. 
+We demonstrate our \oursystem system from four aspects: (1) scholarly search, (2) author profiling, (3) performance comparison between Neo4j and RDBMS MySQL and (4) ranking quality evaluation by case study.
 }
 
 %The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate the ability of \oursystem to query and rank heterogeneous entities. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) In the scholarly information search scenario, we compare the query performance of MySQL and Neo4j through experiments.
@@ -26,7 +26,7 @@ Further, it is worth pointing out that users can also directly query entities by
 
 
 %Figure~\ref{fig:searchKeywords} presents the scholarly entity rankings under query ``scale stream processing".
-%The ranking metrics are displayed on the left hand side. Note that \oursystem also supports queries within a specific range of years. 
+%The ranking metrics are displayed on the left hand side. Note that \oursystem also supports queries within a specific range of years.
 %When sorted by relevant importance, the rankings of articles and the associated entities (authors, affiliations, journals and conferences) are shown in the middle and on the right hand side.
 %Further, it is worth pointing out that users can also directly query entities by typing their names in the search box.
 \begin{figure}
@@ -89,10 +89,10 @@ Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 As shown in the middle of Figure~\ref{fig:searchKeywords}, we evaluate the ranking quality by comparing it with PageRank. Specifically, consider two articles: ``MillWheel: Fault-tolerant Stream Processing At Internet Scale"(millwheel) was published in PVLDB 2013 with 39 citations (ranked first in \sarank) and ``Adaptive Control of Extreme-Scale Stream Processing Systems" (adaptive) was published in ICDCS 2006 with 48 citations (ranked first in PageRank).}
 
 \marked{
-Although ``millwheel" has a little less citations, it gets published in PVLDB which has a higher impact than ICDCS. 
+Although ``millwheel" has a little less citations, it gets published in PVLDB which has a higher impact than ICDCS.
 Moreover, ``millwheel" is published in 2013 later than ``adaptive" in 2006 as researchers potentially discover most recent influential articles.
-Thus, ``millwheel" has a high influence and should be ranked first corresponding to \sarank. 
-In concluding, \oursystem provide an effective ranking component for searching influential articles due to considering the temporal factor and assembling the article, venue and author entities.
+Thus, ``millwheel" has a high influence and should be ranked first corresponding to \sarank.
+To conclude, \oursystem provides an effective ranking component for searching influential articles due to considering the temporal factor and assembling the article, venue and author entities.
 }
 
 

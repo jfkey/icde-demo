@@ -52,13 +52,20 @@ The above three metrics are for {\em query independent ranking}, and we introduc
 
 \stitle{Relevance}. This metric enables to rank scholarly articles in terms of the semantic correlation between their titles and given queries (keywords). As Word2vec \cite{corrado2013efficient} has become the {\em de facto} standard to capture semantics, we utilize Word2vec to evaluate semantic relevance as follows.
 
+%\begin{equation}
+%\label{eq:relscore}
+%rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
+%\end{equation}
+
+\marked{
 \begin{equation}
 \label{eq:relscore}
-rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
+rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
 \end{equation}
-Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, $idf(q)$ is the inverse document frequency of a word $q$, and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings. \marked{Although the entire article to compute the relevance can improves relevance accuracy, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.}
-
-
+}
+\marked{
+Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, %$idf(q)$ is the inverse document frequency of a word $q$,
+and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings. Although the entire article to compute the relevance can improves relevance accuracy, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.}
 
 \stitle{Relevant importance.} The previous importance metric does not consider the closeness of the articles with respect to given queries (keywords). This metric is to rank scholarly articles by combining the semantic relevance and importance metrics. More specifically, we first normalize the computed relevance (resp. importance) score by scaling with the maximum relevance (resp. importance) score in the resulting article set, and we then define the relevant importance score as follows.
 \begin{equation}
