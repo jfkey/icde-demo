@@ -57,6 +57,10 @@ First, based on the original scholarly data, the {\em query independent ranking}
 \marked{
 Moreover, both citation counts and importance scores support incremental computation~\cite{ma2018query}, and they are easy to be dynamically maintained once new scholarly data arrives.%once the property graph gets updated.
 }
+% Review 1 
+% Lack of discussion on updating time-dependent metrics, How to input new data 
+% add *scholarly data* component in Figure 1 (a)Framework. when new data arrives, calculate query independent ranking. and update property graph.
+
 
 Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for article titles, author names, venue names and affiliation names. These enable to efficiently find articles, authors, venues and affiliations whose titles or names contain specific keywords. %Besides, we also create schema indices for the entire author and venue names to speed up initial entity lookups.
 
@@ -69,14 +73,12 @@ Utilizing {\em Neo4j query engine}, \oursystem supports a variety of graph queri
 When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed.
 Based on the final Cypher query, query plan is generated and processed on the property graph after proper parsing and semantic analyses.
 }
+% Reviewer 2
+% However, they do not specify what kind of graph queries are required and why it is challenging to evaluate them efficiently.
+% specify graph queries. clear User Query and Neo4j Cypher Query. 
 
-%Find out which institutions have higher influence in which journals
-%Athena turns user queries into database queries
-%what kind of query
 
 
-% neo4j query implement user query .
-%
 
 %Figure~\ref{fig:queryProcess}
 %Table~\ref{tab-workflow}
