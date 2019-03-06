@@ -1,39 +1,74 @@
 \section{Introduction}
 \label{sec-intro}
 
+%\begin{table*}[!t]
+%\label{tab-function}
+%\begin{center}
+%\caption{Functions provided in \oursystem and existing scholarly search systems}
+%%\vspace{-1ex}
+%%\begin{scriptsize}
+%\begin{tabular}{|c|c c c c|c c c c|c c c c|}
+%\hline
+%\multirow{2}{*}{Systems} &  \multicolumn{4}{c|}{Scholarly Search}   &  \multicolumn{4}{c|}{Article-Coupled Ranking}     & \multicolumn{4}{c|}{Visual Profiling}  \\
+%&  {AR} & {AU} & {VE} & {AF} &   {AR} & {AU} & {VE} & {AF} & {AR} & {AU} & {VE} & {AF} \\
+%%\hline
+%\hline
+%CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$}
+%& $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} &\marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+%Google Scholar & $\surd$  & $\surd$  & \marked{$\times$} & $\surd$
+% & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+%Semantic Scholar & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$}
+% & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &
+%\marked{$\times$} \\
+%AMiner & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$
+% & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &   \marked{$\times$}\\
+%MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
+%& $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+%AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$
+%& $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
+%\oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$
+%& $\surd$ & $\surd$ &  $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
+%\end{tabular} \\
+%\vspace{1ex}
+%AR, AU, VE and AF stand for article, author, venue and affiliation,
+%respectively.
+%%\end{scriptsize}
+%\vspace{-4ex}
+%\end{center}
+%\end{table*}
+
+
 \begin{table*}[!t]
 \label{tab-function}
 \begin{center}
 \caption{Functions provided in \oursystem and existing scholarly search systems}
 %\vspace{-1ex}
 %\begin{scriptsize}
-\begin{tabular}{|c|c c c c|c c c c c|c c c c|c c c c|}
+\begin{tabular}{|c|c c c c|c c c c|c c c c|}
 \hline
-\multirow{2}{*}{Systems} &  \multicolumn{4}{c|}{Scholarly Search}   & \multicolumn{5}{c|}{Ranking Metrics}  &  \multicolumn{4}{c|}{Article-Coupled Ranking}     & \multicolumn{4}{c|}{Visual Profiling}  \\
-&  {AR} & {AU} & {VE} & {AF} & {rel} & {imp} & {rel.imp}  &  {time} &  {cite}  &  {AR} & {AU} & {VE} & {AF} & {AR} & {AU} & {VE} & {AF} \\
+\multirow{2}{*}{Systems} &  \multicolumn{4}{c|}{Scholarly Search}   &  \multicolumn{4}{c|}{Entity-Coupled Ranking}     & \multicolumn{4}{c|}{Visual Profiling}  \\
+&  {AR} & {AU} & {VE} & {AF} &   {AR} & {AU} & {VE} & {AF} & {AR} & {AU} & {VE} & {AF} \\
 %\hline
 \hline
-CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$} 
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
-& $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} &\marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$}
+& \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} 
+& \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 Google Scholar & $\surd$  & $\surd$  & \marked{$\times$} & $\surd$
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
- & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} 
+ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 Semantic Scholar & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$}
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
- & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &
-\marked{$\times$} \\
+ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} 
+ & \marked{$\times$} & $\surd$ & \marked{$\times$} & \marked{$\times$} \\
 AMiner & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
- & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & $\surd$ & \marked{$\times$} &   \marked{$\times$}\\
-MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
-& $\surd$ & $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
+ & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} 
+ & \marked{$\times$} & $\surd$ & \marked{$\times$} & \marked{$\times$}\\
 AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
-& $\surd$ & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
+& $\surd$ & \marked{$\times$} & $\surd$ & \marked{$\times$} 
+& \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
+MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$  & \marked{$\times$} & $\surd$
+& \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 \oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\times$ & $\times$ & $\times$ & $\times$ & $\times$
 & $\surd$ & $\surd$ &  $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
 \end{tabular} \\
 \vspace{1ex}
@@ -46,10 +81,12 @@ respectively.
 
 % reviewer 2
 % The demo scenario, while interesting, is not very novel (esp. as seen from a comparison from Table I)бн
-% reviewer 3 
+% reviewer 3
 % My reservation with respect to this submission regards novelty. As stated there are many academic search systems widely in use, and the contribution with respect to these existing systems, as detailed in Table 1, seems marginal.
 
 % add ranking metrics. or remove same function.
+% Article-Couple Ranking -> Entity-Couple Ranking, if AR equals \surd, means : in Article page, there support article-couple ranking for article, author, venue and affiliation. if AU equals \surd, means : in Author page, there support author-couple ranking for article, author, venue and affiliation. ...
+
 
 
 
