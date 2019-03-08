@@ -10,20 +10,19 @@
 \vspace{-2ex}
 \end{figure*}
 
-\marked{
-We demonstrate our \oursystem system from four aspects: (1) scholarly search, (2) author profiling, (3) performance comparison between Neo4j and RDBMS MySQL and (4) ranking quality evaluation by case study.
-}
+
+We demonstrate our \oursystem system from four aspects: (1) scholarly search, (2) author profiling, (3) performance comparison between Neo4j and RDBMS MySQL and (4) ranking quality with a case study.
+
 
 %The demonstration consists of three parts. (1) We walk through its various ranking metrics to demonstrate the ability of \oursystem to query and rank heterogeneous entities. (2) To further illustrate the profiling function based on scholarly data analysis, we take author profiling as an example. (3) In the scholarly information search scenario, we compare the query performance of MySQL and Neo4j through experiments.
 
 \stitle{(1) Scholarly search}.
-\marked{
-Figure~\ref{fig:searchKeywords} presents the scholarly entity rankings under query ``scale stream processing".
+Figure~\ref{fig:searchKeywords} presents the scholarly entity rankings with query ``scale stream processing".
 The ranking metrics are displayed on the left-hand side. Note that \oursystem also supports queries within a specific range of years and displaying PageRank rankings.
 When setting radio option checked and sorted by Relevant Importance, the rankings of articles sorted by  \sarank and PageRank score and the associated entities (authors, affiliations, conferences and journals) are shown in the middle and on the right-hand side.
 Further, it is worth pointing out that users can also directly query entities by typing their names in the search box.
-}
-% revise the description of Figure 3. 
+
+% revise the description of Figure 3.
 
 
 %Figure~\ref{fig:searchKeywords} presents the scholarly entity rankings under query ``scale stream processing".
@@ -95,9 +94,9 @@ Moreover, ``millwheel" is published in 2013 later than ``adaptive" in 2006 as re
 Thus, ``millwheel" has a high influence and should be ranked first corresponding to \sarank.
 To conclude, \oursystem provides an effective ranking component for searching influential articles due to considering the temporal factor and assembling the article, venue and author entities.
 }
-% Reviewer 2 
+% Reviewer 2
 % Finally, there is no evaluation (however brief) of the quality of returned results.
-% ranking result evaluation by case study, analyze the reasons. 
+% ranking result evaluation by case study, analyze the reasons.
 
 
 

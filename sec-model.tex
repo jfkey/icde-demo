@@ -1,4 +1,4 @@
-\section{Scholarly Search and Ranking Model}
+\section{Scholarly Search and Ranking}   %Model
 \label{sec-model}
 
 
@@ -43,29 +43,29 @@ Our \oursystem system facilitates the research activities of scholars by providi
 
 
 
-\stitle{Citation counts and publish time}. Scholarly articles are simply sorted based on their citation counts and publish time. %, respectively, and ties are broken by further comparing importance scores.
+\stitle{Citation counts and publish time}. Articles are simply sorted based on their citation counts and publish time. %, respectively, and ties are broken by further comparing importance scores.
 
 
-\stitle{Importance}. This metric comes from our recently developed \sarank (please refer to~\cite{ma2018query} for details). The importance of an article is defined as a combination of its prestige and popularity, where its prestige is computed by a novel Time-Weighted PageRank, and its popularity is the sum of citation freshness. To assign those newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking. %, as illustrated in Fig.~\ref{fig:sarank}.
+\stitle{Importance}. This metric comes from our recently developed \sarank (please refer to~\cite{ma2018query} for details). The importance of an article is defined as a combination of its prestige and popularity, where prestige is computed by a novel Time-Weighted PageRank, and popularity is the sum of citation freshness. To assign newly published articles reasonable ranking scores, it further assembles the importance of citations, authors and venues to derive the final ranking. %, as illustrated in Fig.~\ref{fig:sarank}.
 
-The above three metrics are for {\em query independent ranking}, and we introduce two metrics for {\em query dependent ranking}.
+The above three are for {\em query independent ranking}, and we introduce another two metrics for {\em query dependent ranking}.
 
-\stitle{Relevance}. This metric enables to rank scholarly articles in terms of the semantic correlation between their titles and given queries (keywords). As Word2vec \cite{corrado2013efficient} has become the {\em de facto} standard to capture semantics, we utilize Word2vec to evaluate semantic relevance as follows.
-
+\stitle{Relevance}. This metric enables to rank scholarly articles in terms of the semantic correlation between their titles and given queries (keywords). Nowadays Word2vec \cite{corrado2013efficient} has become the {\em de facto} standard to capture semantics and we also utilize Word2vec to evaluate semantic relevance as follows:
+%
 %\begin{equation}
 %\label{eq:relscore}
 %rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} idf(q) \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
 %\end{equation}
-
-\marked{
+%
 \begin{equation}
 \label{eq:relscore}
 rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} \frac {\textbf{t} \cdot \textbf{q}} {|| \textbf{t} ||\ ||\textbf{q}||}.
 \end{equation}
-}
-\marked{
+
 Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, %$idf(q)$ is the inverse document frequency of a word $q$,
-and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings. Although the entire article to compute the relevance can improves relevance accuracy, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.}
+and $\textbf{t}$ and $\textbf{q}$ are the corresponding embeddings of words $t$ and $q$. 
+%Although the entire article to compute the relevance can improves relevance accuracy, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.
+Note that abstract and full texts are not available for most scholarly articles in our data and word embeddings are pre-trained with external corpus.
 
 % Reviewer 2
 % Moreover, they say that the similarity to be captured is only between the query keywords and the article title, but do not explain why the entire text is not used.
@@ -73,12 +73,12 @@ and $\textbf{t}$ and $\textbf{q}$ are their corresponding word embeddings. Altho
 
 
 
-\stitle{Relevant importance.} The previous importance metric does not consider the closeness of the articles with respect to given queries (keywords). This metric is to rank scholarly articles by combining the semantic relevance and importance metrics. More specifically, we first normalize the computed relevance (resp. importance) score by scaling with the maximum relevance (resp. importance) score in the resulting article set, and we then define the relevant importance score as follows.
+\stitle{Relevant importance.} The previous importance metric does not consider the closeness of the articles with respect to given queries. This metric is to rank scholarly articles by combining the semantic relevance and importance metrics. More specifically, we first normalize the computed relevance (resp. importance) score by scaling with the maximum relevance (resp. importance) score in the resulting article set, and we then define the relevant importance score as follows.
 \begin{equation}
 \label{eq:relimp}
 rImp(a, Q) = \alpha \cdot rel_n(a, Q) + (1-\alpha)\cdot imp_n(a),
 \end{equation}
-where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter, typically set to an empirical value in $[0.2, 0.4]$.
+where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter, which is set to 0.2 in \oursystem.
 
 
 
@@ -92,7 +92,7 @@ For authors, venues and affiliations,  \oursystem provides stand-alone ranking a
 \stitle{Article-coupled ranking}. To support article search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of an article search query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.
 
 
-The search and ranking functions of \oursystem and existing systems are summarized in Table~I, where metrics are not reported due to their unavailability in commercial systems.
+The search and ranking functions of \oursystem and existing systems are summarized in Table~1, where metrics are not reported due to their unavailability in commercial systems.
 
 
 

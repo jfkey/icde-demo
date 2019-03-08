@@ -54,11 +54,10 @@ Following the above schema, we maintain scholarly data as a huge property graph,
 
 First, based on the original scholarly data, the {\em query independent ranking} module pre-computes those query independent ranking scores: citation counts of articles, importance scores of articles, authors, venues and affiliations~\cite{ma2018query}. These scores are assigned as properties to the corresponding nodes.
 %As iteratively accessing the linked entities is the most essential operation in the pre-computation, the graph storage is much more convenient and effective for such computations.
-\marked{
 Moreover, both citation counts and importance scores support incremental computation~\cite{ma2018query}, and they are easy to be dynamically maintained once new scholarly data arrives.%once the property graph gets updated.
-}
-% Review 1 
-% Lack of discussion on updating time-dependent metrics, How to input new data 
+
+% Review 1
+% Lack of discussion on updating time-dependent metrics, How to input new data
 % add *scholarly data* component in Figure 1 (a)Framework. when new data arrives, calculate query independent ranking. and update property graph.
 
 
@@ -68,14 +67,18 @@ Second, to facilitate query processing on the billion-scale property graph, Luce
 \subsection{Graph Query Engine } \label{subsec:qe}
 %Utilizing Neo4j, \oursystem supports a variety of graph queries on the property graph to aid scholarly search. And the {\em query engine} is responsible for processing this set of queries. When a query is issued, the {\em Neo4j query engine} first translates it into a Neo4j Cypher query with proper parsing and semantic analyses. When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed.Based on the final Cypher query, an optimized query plan is generated and processed on the property graph.
 
-\marked{
-Utilizing {\em Neo4j query engine}, \oursystem supports a variety of graph queries on the property graph to aid scholarly search, such as searching the author's top-k fields of study and searching the affiliation having a higher impact on which venues. When user issue a query, \oursystem first translates it into a Neo4j Cypher query.
+% why graph queries: query involved with multiple types of entities --> join
+
+Complex scholarly queries, such as finding the top-$k$ fields of study of an author, inevitably involve with multiple types of entities. In RDBMS these are implemented with joins, which may become a bottleneck for query processing.
+Differently, \oursystem executes graph queries on the property graph to answer scholarly queries.
+%
+To be specific, when user issue a query, \oursystem first translates it into a Neo4j Cypher query.
 When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed.
-Based on the final Cypher query, query plan is generated and processed on the property graph after proper parsing and semantic analyses.
-}
+Based on the final Cypher query, Neo4j query engine generates a query plan and processes it on the property graph after proper parsing and semantic analyses.
+
 % Reviewer 2
 % However, they do not specify what kind of graph queries are required and why it is challenging to evaluate them efficiently.
-% specify graph queries. clear User Query and Neo4j Cypher Query. 
+% specify graph queries. clear User Query and Neo4j Cypher Query.
 
 
 
@@ -83,7 +86,7 @@ Based on the final Cypher query, query plan is generated and processed on the pr
 %Figure~\ref{fig:queryProcess}
 %Table~\ref{tab-workflow}
 
-Figure~\ref{fig:queryProcess} gives an example workflow of the query engine when a user wants to search the top scholarly articles about ``scale stream processing"  ranked by relevant importance. The fulltext index is firstly used to get the related article IDs on ``scale stream processing'' (lines 3--4). The {\em query dependent ranking} module then calculates the relevant importance scores of those related articles, and the top-k article IDs are further identified (lines 5--6). Based on the complete Cypher query, the {\em Neo4j query engine} finally generates the query plan, executes it on the property graph, and returns the results (lines 7--12).
+Figure~\ref{fig:queryProcess} gives an example workflow of the query engine when a user wants to search the top scholarly articles about ``scale stream processing"  ranked by relevant importance. The fulltext index is firstly used to get the related article IDs on ``scale stream processing'' (lines 3--4). The {\em query dependent ranking} module then calculates the relevant importance scores of those related articles, and the top-k article IDs are further identified (lines 5--6). Based on the complete Cypher query, the Neo4j query engine finally generates the query plan, executes it on the property graph, and returns the results (lines 7--12).
 
 
 
@@ -92,7 +95,9 @@ Figure~\ref{fig:queryProcess} gives an example workflow of the query engine when
 
 
 \subsection{Function Modules}
-Scholarly entity ranking and scholarly entity profiling are the two function modules that collect the ranked scholarly entities returned from the back-end, and present a visual analysis to users. More specifically, \oursystem utilizes RESTful APIs  and Echarts\footnote{ http://echarts.baidu.com} for the scholarly ranking and profiling. Further, \oursystem provides users with the APIs of the ranking and profiling functions.
+Scholarly entity ranking and scholarly entity profiling are the two function modules that collect the ranked scholarly entities returned from the back-end, and present a visual analysis to users. More specifically, \oursystem utilizes RESTful APIs  and Echarts {\scriptsize (http://echarts.baidu.com)} for the scholarly ranking and profiling. Further, \oursystem provides users with the APIs of the ranking and profiling functions.
+
+%\footnote{ http://echarts.baidu.com}
 
 \begin{figure}
 \centering
