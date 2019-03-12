@@ -50,7 +50,7 @@ Our \oursystem system facilitates the research activities of scholars by providi
 
 The above three are for {\em query independent ranking}, and we introduce another two metrics for {\em query dependent ranking}.
 
-\stitle{Relevance}. This metric enables to rank scholarly articles in terms of the semantic correlation between their titles and given queries (keywords). Nowadays Word2vec \cite{corrado2013efficient} has become the {\em de facto} standard to capture semantics and we also utilize Word2vec to evaluate semantic relevance as follows:
+\stitle{Relevance}. This metric enables to rank scholarly articles in terms of the semantic correlation between their titles and given queries (keywords). \marked{Nowadays Word2vec \cite{corrado2013efficient} has become the {\em de facto} standard to capture semantics and we also utilize Word2vec to evaluate semantic relevance as follows:}
 %
 %\begin{equation}
 %\label{eq:relscore}
@@ -63,13 +63,11 @@ rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} \frac {\textbf{t} \cdot \textbf{q}} 
 \end{equation}
 
 Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, %$idf(q)$ is the inverse document frequency of a word $q$,
-and $\textbf{t}$ and $\textbf{q}$ are the corresponding embeddings of words $t$ and $q$. 
+and $\textbf{t}$ and $\textbf{q}$ are the corresponding embeddings of words $t$ and $q$.
 %Although the entire article to compute the relevance can improves relevance accuracy, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.
+\marked{
 Note that abstract and full texts are not available for most scholarly articles in our data and word embeddings are pre-trained with external corpus.
-
-% Reviewer 2
-% Moreover, they say that the similarity to be captured is only between the query keywords and the article title, but do not explain why the entire text is not used.
-% remove idf. I think idf(q) has no obvious effect. The reason is that we do not have the entire text.
+}
 
 
 
@@ -78,7 +76,9 @@ Note that abstract and full texts are not available for most scholarly articles 
 \label{eq:relimp}
 rImp(a, Q) = \alpha \cdot rel_n(a, Q) + (1-\alpha)\cdot imp_n(a),
 \end{equation}
-where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter, which is set to 0.2 in \oursystem.
+where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter, 
+typically set to an empirical value in [0.2, 0.4].
+% which is set to 0.2 in \oursystem.
 
 
 
@@ -91,8 +91,8 @@ For authors, venues and affiliations,  \oursystem provides stand-alone ranking a
 
 \stitle{Article-coupled ranking}. To support article search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of an article search query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.
 
-
-The search and ranking functions of \oursystem and existing systems are summarized in Table~1, where metrics are not reported due to their unavailability in commercial systems.
+The search and ranking functions of \oursystem and existing systems are summarized in Table~1.
+%The search and ranking functions of \oursystem and existing systems are summarized in Table~1, where metrics are not reported due to their unavailability in commercial systems.
 
 
 

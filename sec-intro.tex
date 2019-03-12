@@ -41,40 +41,49 @@
 \begin{table*}[!t]
 \label{tab-function}
 \begin{center}
-\caption{Functions provided in \oursystem and existing scholarly search systems}
+\caption{\marked{Functions provided in \oursystem and existing scholarly search systems}}
 %\vspace{-1ex}
-%\begin{scriptsize}
-\begin{tabular}{|c|c c c c|c c c c|c c c c|}
+\begin{scriptsize}
+\begin{tabular}{|c|c c c c|c c c c|c c c c c|c c c c|}
 \hline
-\multirow{2}{*}{Systems} &  \multicolumn{4}{c|}{Scholarly Search}   &  \multicolumn{4}{c|}{Entity-Coupled Ranking}     & \multicolumn{4}{c|}{Visual Profiling}  \\
-&  {AR} & {AU} & {VE} & {AF} &   {AR} & {AU} & {VE} & {AF} & {AR} & {AU} & {VE} & {AF} \\
+\multirow{2}{*}{Systems} &  \multicolumn{4}{c|}{Scholarly Search}   &  \multicolumn{4}{c|}{Article-Coupled Ranking}  
+&\multicolumn{5}{c|}{\marked{Ranking Metrics}}    & \multicolumn{4}{c|}{Visual Profiling}  \\
+&  {AR} & {AU} & {VE} & {AF} &   {AR} & {AU} & {VE} & {AF} & {RE} & {IM} & {RE.IM}& {Time}& {Citation}  &  {AR} & {AU} & {VE} & {AF} \\
 %\hline
 \hline
 CiteSeerX & $\surd$  & $\surd$  & \marked{$\times$} & \marked{$\times$}
 & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$}
+& $\surd$ & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$
 & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 Google Scholar & $\surd$  & $\surd$  & \marked{$\times$} & $\surd$
  & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$}
+ & $\surd$ & \marked{$\times$} & $\surd$ & $\surd$  & \marked{$\times$} 
  & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 Semantic Scholar & $\surd$ & $\surd$ & \marked{$\times$} & \marked{$\times$}
  & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$}
+ & $\surd$  & \marked{$\times$} & \marked{$\times$} & $\surd$ & $\surd$
  & \marked{$\times$} & $\surd$ & \marked{$\times$} & \marked{$\times$} \\
 AMiner & $\surd$ & $\surd$ & \marked{$\times$} & $\surd$
  & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$}
+ & $\surd$ & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$
  & \marked{$\times$} & $\surd$ & \marked{$\times$} & \marked{$\times$}\\
 AceMap & $\surd$ & $\surd$ & $\surd$ & $\surd$
 & $\surd$ & \marked{$\times$} & $\surd$ & \marked{$\times$}
+& $\surd$  & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$}
 & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$ \\
 MS Academic  & $\surd$ & $\surd$ & $\surd$ & $\surd$
 & $\surd$ & $\surd$  & \marked{$\times$} & $\surd$
+& $\surd$ & \marked{$\times$} & $\surd$ & $\surd$ & $\surd$
 & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} & \marked{$\times$} \\
 \oursystem & $\surd$ & $\surd$ & $\surd$ & $\surd$
-& $\surd$ & $\surd$ &  $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
+& $\surd$ & $\surd$ &  $\surd$ & $\surd$
+& $\surd$ & $\surd$ & $\surd$ & $\surd$ & $\surd$
+& $\surd$ & $\surd$ & $\surd$ & $\surd$ \\ \hline
 \end{tabular} \\
 \vspace{1ex}
-AR, AU, VE and AF stand for article, author, venue and affiliation,
+AR, AU, VE, AF, RE, IM, RE.IM stand for article, author, venue, affiliation, relevance, importance and relevant importance
 respectively.
-%\end{scriptsize}
+\end{scriptsize}
 \vspace{-4ex}
 \end{center}
 \end{table*}
@@ -156,9 +165,10 @@ In this study, we design and develop a scholarly search system \oursystem  to ai
 \noindent  (3) \oursystem utilizes graph database Neo4j {\scriptsize (https://neo4j.com)} for storage. To do so, we carefully design a Neo4j schema to model scholarly data as a property graph, and incorporate Lucene index to speed up query processing.
 %\footnote{https://neo4j.com}
 
-\noindent (4) We develop a prototype system \oursystem, and demonstrate its advantages in scholarly search, profiling and query processing. We compare our Neo4j-based graph storage with the relational storage using MySQL and our ranking with traditional PageRank.
-% revise description.
+\noindent (4) \marked{We develop a prototype system \oursystem, and demonstrate its advantages in scholarly search, profiling, the graph storage and ranking quality evaluation.
+}
 
+% We compare our Neo4j-based graph storage with the relational storage using MySQL and our ranking with PageRank and FutureRank~\cite{sayyadi2009futurerank}.
 
 %We also provide online services via Web and API.
 
