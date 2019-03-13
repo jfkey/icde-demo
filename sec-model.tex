@@ -76,7 +76,7 @@ Note that abstract and full texts are not available for most scholarly articles 
 \label{eq:relimp}
 rImp(a, Q) = \alpha \cdot rel_n(a, Q) + (1-\alpha)\cdot imp_n(a),
 \end{equation}
-where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter, 
+where $rel_n(a, Q)$ and $imp_n(a)$ are the {\em normalized} semantic relevance and importance scores, and $\alpha$ is a regularization parameter,
 typically set to an empirical value in [0.2, 0.4].
 % which is set to 0.2 in \oursystem.
 
@@ -89,7 +89,10 @@ For authors, venues and affiliations,  \oursystem provides stand-alone ranking a
 
 \stitle{Stand-alone ranking}. To support author, venue and affiliation searches, \oursystem ranks authors, venues and affiliations with the sum of the query independent ranking scores of all their associated articles. Further, when sorting entities by publish time, it uses an exponentially decayed ranking score $e^{T_a-T_0}$ to evaluate the research activeness of an entity, where $T_a$ is the publish year of an article $a$, and $T_0$ is the current year.
 
-\stitle{Article-coupled ranking}. To support article search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of an article search query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.
+\stitle{Article-coupled ranking}. \marked{To support scholarly entity search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of scholarly entity query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.
+}
+
+%To support article search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of an article search query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.
 
 The search and ranking functions of \oursystem and existing systems are summarized in Table~1.
 %The search and ranking functions of \oursystem and existing systems are summarized in Table~1, where metrics are not reported due to their unavailability in commercial systems.
