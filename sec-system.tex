@@ -66,6 +66,8 @@ Second, to facilitate query processing on the billion-scale property graph, Luce
 %Utilizing Neo4j, \oursystem supports a variety of graph queries on the property graph to aid scholarly search. And the {\em query engine} is responsible for processing this set of queries. When a query is issued, the {\em Neo4j query engine} first translates it into a Neo4j Cypher query with proper parsing and semantic analyses. When applicable, the Cypher query also includes the entity IDs returned from the Lucene index. Relevance and relevant importance rankings given by the {\em query dependent ranking} module may also be included in the Cypher query if needed.Based on the final Cypher query, an optimized query plan is generated and processed on the property graph.
 
 % why graph queries: query involved with multiple types of entities --> join
+% However, they do not specify what kind of graph queries are required and why it is challenging to evaluate them efficiently.
+
 
 \marked{
 Complex scholarly queries, such as finding the top-$k$ fields of study of an author, inevitably involve with multiple types of entities. In RDBMS these are implemented with joins, which may become a bottleneck for query processing.
@@ -79,9 +81,6 @@ When applicable, the Cypher query also includes the entity IDs returned from the
 Based on the final Cypher query, Neo4j query engine generates a query plan and processes it on the property graph after proper parsing and semantic analyses.
 }
 
-% Reviewer 2
-% However, they do not specify what kind of graph queries are required and why it is challenging to evaluate them efficiently.
-% specify graph queries. clear User Query and Neo4j Cypher Query.
 
 
 %Figure~\ref{fig:queryProcess}
@@ -103,7 +102,7 @@ Scholarly entity ranking and scholarly entity profiling are the two function mod
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
-\vspace{-4.5ex}
+\vspace{-3.5ex}
 \caption{Example workflow of \oursystem query engine}
 \label{fig:queryProcess}
 \vspace{-2ex}
