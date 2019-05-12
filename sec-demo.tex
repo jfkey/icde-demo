@@ -2,9 +2,10 @@
 \label{sec-demo}
 
 \begin{figure*}[tp]
+\vspace{-2ex}
 \centering
 \includegraphics[width=\textwidth]{searchKeywords.pdf}
-\vspace{-3ex}
+\vspace{-5ex}
 \caption{Demonstration of scholarly search}
 \label{fig:searchKeywords}
 \vspace{-3ex}
@@ -31,16 +32,7 @@ Further, it is worth pointing out that users can directly query entities by typi
 %The ranking metrics are displayed on the left hand side. Note that \oursystem also supports queries within a specific range of years.
 %When sorted by relevant importance, the rankings of articles and the associated entities (authors, affiliations, journals and conferences) are shown in the middle and on the right hand side.
 %Further, it is worth pointing out that users can also directly query entities by typing their names in the search box.
-\begin{figure}
-\centering
-\includegraphics[width=0.98\columnwidth]{hjwAvatar.pdf}
-\includegraphics[width=\columnwidth]{hjwInterest.pdf}
-%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
-\vspace{-5ex}
-\caption{Demonstration of author profiling }
-\label{fig:hjwProfile}
-\vspace{-3.5ex}
-\end{figure}
+
 
 
 
@@ -63,9 +55,21 @@ We test a scenario for searching ``good'' articles. We randomly select 1000 arti
 Thus, structure-aware Neo4j is more efficient than MySQL for such scholarly analyses, especially for complex queries with more join operations.
 
 
+\begin{figure}
+%\vspace{-3ex}
+\centering
+\includegraphics[width=0.98\columnwidth]{hjwAvatar.pdf}
+\includegraphics[width=\columnwidth]{hjwInterest.pdf}
+%\includegraphics[width=\columnwidth]{hjwPapers.pdf}
+\vspace{-5ex}
+\caption{Demonstration of author profiling }
+\label{fig:hjwProfile}
+\vspace{-4ex}
+\end{figure}
+
 \stitle{(4) Ranking quality evaluation}.
 Firstly, we evaluate ranking quality by comparing with PRank (PageRank) and FRank (FutureRank).
-To be specific, we test 110 queries in the field of computer science, and ask 3 computer science students (2 phD candidates and 1 master student) to label the ranking results. As a result, P@5 (precision at top 5) of PRank, FRank and \oursystem achieve (65.9\%, 76.9\%, 81.7\%) under relevant important metric, respectively. 
+To be specific, we test 110 queries in the field of computer science, and ask 3 computer science students (2 phD candidates and 1 master student) to label the ranking results. As a result, P@5 (precision at top 5) of PRank, FRank and \oursystem achieve (65.9\%, 76.9\%, 81.7\%) under relevant important metric, respectively.
 Indeed, \oursystem improves ranking accuracy over (PRank, FRank) by (15.8\%, 4.8\%).
 Secondly, we do case studies to demonstrate that considering temporal factor of articles and assembling the importance of citations, authors and venues do make ranking results more reasonable. However, the results are not presented due to space limitation.
 To conclude, \oursystem provides a more effective ranking component for searching influential articles. %
@@ -89,7 +93,7 @@ To conclude, \oursystem provides a more effective ranking component for searchin
 \begin{table}[t!]
 \begin{center}
 \caption{Performance: Neo4j vs. MySQL}
-%\vspace{-1ex}
+\vspace{-3ex}
 \label{tab-compare}
 \begin{scriptsize}
 \begin{tabular}{|c|c|c|c|} %{lp{2cm}p{2cm}p{2cm}}
@@ -102,7 +106,7 @@ Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 \hline
 \end{tabular}
 \end{scriptsize}
-\vspace{-5ex}
+\vspace{-3ex}
 \end{center}
 \end{table}
 
