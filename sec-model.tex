@@ -1,4 +1,4 @@
-\section{Scholarly Search and Ranking}   %Model
+\section{Scholarly Search And Ranking}   %Model
 \label{sec-model}
 
 
@@ -65,10 +65,11 @@ rel(a, Q) = \sum_{t \in a.T} \sum_{q \in Q} \frac {\textbf{t} \cdot \textbf{q}} 
 Here $a.T$ and $Q$ are the sets of words (excluding stop words) in the title of an article $a$ and the query, respectively, %$idf(q)$ is the inverse document frequency of a word $q$,
 and $\textbf{t}$ and $\textbf{q}$ are the corresponding embeddings of words $t$ and $q$.
 %Although the entire article to compute the relevance can improves relevance accuracy, it is not the main concern of our work, we just briefly touch on this and will explore it in future work.
-Note that the abstracts and full texts of scholarly articles may not available for scholarly systems, and word embeddings are pre-trained with external corpus.
+Note that the abstracts and full texts of scholarly articles may not \marked{be} available for scholarly systems, and word embeddings are pre-trained with external corpus.
+
+% may not available for -> may not be available for 
 
 %Note that the abstracts and full texts are not available for most scholarly articles in our data and word embeddings are pre-trained with external corpus.
-
 
 
 \stitle{Relevant importance.} The previous importance metric does not consider the closeness of the articles with respect to given queries. This metric is to rank scholarly articles by combining the semantic relevance and importance metrics. More specifically, we first normalize the computed relevance (resp. importance) score by scaling with the maximum relevance (resp. importance) score in the resulting article set, and we then define the relevant importance score as follows.
@@ -88,10 +89,13 @@ typically set to an empirical value in [0.2, 0.4].
 
 For authors, venues and affiliations,  \oursystem provides stand-alone ranking and article-coupled ranking.
 
-\stitle{Stand-alone ranking}. To support author, venue and affiliation searches, \oursystem ranks authors, venues and affiliations with the sum of the query independent ranking scores of all their associated articles. Further, when sorting entities by publish time, it uses an exponentially decayed ranking score $e^{T_a-T_0}$ to evaluate the research activeness of an entity, where $T_a$ is the publish year of an article $a$, and $T_0$ is the current year.
+\stitle{Stand-alone ranking}. To support author, venue and affiliation searches, \oursystem ranks authors, venues and affiliations with the sum of the query independent ranking scores of all their associated articles. Further, when sorting entities by publish time, it uses an \marked{exponentially decayed score} $e^{T_a-T_0}$ to evaluate the research activeness of an entity, where $T_a$ is the publish year of an article $a$, and $T_0$ is the current year.
 
-\stitle{Article-coupled ranking}. To support scholarly entity search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of a specific scholarly entity query, along the same lines as stand-alone ranking. This helps to answer those questions such as which authors, venues or affiliations are the most authoritative ones in the query related field of study.
+% exponentially decayed ranking score -> exponentially decayed score 
 
+\stitle{Article-coupled ranking}. To support scholarly entity search, \oursystem ranks authors, venues, and affiliations \marked{regarding} the resulting articles of a specific scholarly entity query, along the same lines as stand-alone ranking. This helps to answer questions such as which authors, venues or affiliations are the most authoritative ones in the query related field of study.
+
+% with respect to -> regarding
 
 
 %To support article search, \oursystem ranks authors, venues, and affiliations with respect to the resulting articles of an article search query, along the same lines as stand-alone ranking. This helps to answer questions like which authors (venues or affiliations) are the most authoritative ones in the query related field of study.

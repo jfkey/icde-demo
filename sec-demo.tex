@@ -2,7 +2,7 @@
 \label{sec-demo}
 
 \begin{figure*}[tp]
-\vspace{-2ex}
+\vspace{-2.5ex}
 \centering
 \includegraphics[width=\textwidth]{searchKeywords.pdf}
 \vspace{-5ex}
@@ -49,10 +49,14 @@ Finally, functions such as co-authors analyses and statistics by times are provi
 
 
 \stitle{(3) Performance evaluation: Neo4j vs. MySQL}.
-We compare the query performance of the adopted graph database Neo4j with traditional RDBMS MySQL. More specifically, we consider three types of queries, \ie (i) given an article ID, finding its title and authors, (ii)  given an article ID, finding its top--10 most important citations, and (iii) given an author ID, finding her/his published top--10 most important articles. Note that the numbers of joins are (2, 3, 4) for the three types of queries in MySQL, respectively.
+We compare the query performance of the adopted graph database Neo4j with traditional RDBMS MySQL. \marked{More specifically, we consider three widely used types of queries in \oursystem,} \ie (i) given an article ID, finding its title and authors, (ii)  given an article ID, finding its top--10 most important citations, and (iii) given an author ID, finding her/his top--10 most important articles. Note that the numbers of joins are (2, 3, 4) for the three types of queries in MySQL, respectively.
 
-We test a scenario for searching ``good'' articles. We randomly select 1000 articles and 100 authors whose citation counts and published articles are no less than 100 and 50, respectively, and compute the average processing time. As shown in Table~\ref{tab-compare}, Neo4j performs consistently faster than MySQL, which is on average (14.8\%, 19.4\%, 45.3\%) faster for the three types of queries.
-Thus, structure-aware Neo4j is more efficient than MySQL for such scholarly analyses, especially for complex queries with more join operations.
+We test a scenario for searching ``good'' articles. We randomly select 1000 articles and 100 authors whose citation counts and published articles are no less than 100 and 50, respectively, \marked {execute three times and compute the average processing time.} As shown in Table~\ref{tab-compare}, Neo4j performs consistently faster than MySQL, which is on average (14.8\%, 19.4\%, 45.3\%) faster for the three types of queries.
+Thus, structure-aware Neo4j is more efficient than MySQL for such scholarly analyses, especially for queries with more join operations.
+
+
+% More specifically, we consider three types of queries,
+% especially for complex queries with more join operations.
 
 
 \begin{figure}
@@ -64,23 +68,19 @@ Thus, structure-aware Neo4j is more efficient than MySQL for such scholarly anal
 \vspace{-5ex}
 \caption{Demonstration of author profiling }
 \label{fig:hjwProfile}
-\vspace{-4ex}
+\vspace{-5ex}
 \end{figure}
 
 \stitle{(4) Ranking quality evaluation}.
 Firstly, we evaluate ranking quality by comparing with PRank (PageRank) and FRank (FutureRank).
+\marked{Note that ranking algorithm are not reported due to their unavailability in commercial systems such as Google Scholar.}
 To be specific, we test 110 queries in the field of computer science, and ask 3 computer science students (2 phD candidates and 1 master student) to label the ranking results. As a result, P@5 (precision at top 5) of PRank, FRank and \oursystem achieve (65.9\%, 76.9\%, 81.7\%) under relevant important metric, respectively.
 Indeed, \oursystem improves ranking accuracy over (PRank, FRank) by (15.8\%, 4.8\%).
 Secondly, we do case studies to demonstrate that considering temporal factor of articles and assembling the importance of citations, authors and venues do make ranking results more reasonable. However, the results are not presented due to space limitation.
 To conclude, \oursystem provides a more effective ranking component for searching influential articles. %
 
+%
 
-
-%in newly published articles , however, the results are not presented due to space limitation.
-
-%it further assembles  to derive the final ranking
-
-% on the basis of
 
 %we analyze the ranking quality of PRank, FRank and SARank by case studies in \oursystem. However, the analysis page does not display due to space limitation.
 %To conclude, \oursystem provides a more effective ranking component for searching influential articles. %due to considering the temporal factor and assembling the article, venue and author entities.
@@ -106,7 +106,7 @@ Neo4j & 0.098 sec.  & 2.33 sec. & 1.97 sec. \\
 \hline
 \end{tabular}
 \end{footnotesize}
-\vspace{-3ex}
+\vspace{-4ex}
 \end{center}
 \end{table}
 

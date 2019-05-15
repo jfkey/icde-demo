@@ -1,4 +1,3 @@
-\vspace{-1ex}
 \section{ Athena System}
 %\section{System Framework}
 \label{sec-system}
@@ -8,9 +7,13 @@ As shown in Figure \ref{fig:framework}, \oursystem consists of three main compon
 Below the storage component is a {\em query independent ranking} module that enriches the scholarly data with pre-computed query independent ranking scores,  there is another {\em query dependent ranking} module inside the query engine, and the two function modules support visual analyses for users.
 
 
+% We next explain our system in detail.
+
+
+
 %In this section, we introduce our \oursystem system. The system contains framework and schema, as shown in Figure \ref{fig:system}. The framework of \oursystem consists of three main components, \ie \emph{storage}, \emph{query engine} and {\em function modules} (Figure \ref{fig:framework}). The \emph{schema} is designed to model scholarly data as a property graph (Figure \ref{fig:schema}).
 
-% We next explain our system in detail.
+
 
 
 
@@ -51,7 +54,7 @@ Moreover, both citation counts and importance scores support incremental computa
 Second, to facilitate query processing on the billion-scale property graph, Lucene index is utilized for initial entity lookups. Specifically, we create fulltext indices for article titles, author names, venue names and affiliation names. These enable to efficiently find articles, authors, venues and affiliations whose titles or names contain specific keywords. %Besides, we also create schema indices for the entire author and venue names to speed up initial entity lookups.
 
 \begin{figure}
-\vspace{-3ex}
+\vspace{-4ex}
 \centering
 \subfigure[{\scriptsize Framework}]{\label{fig:framework}
 \includegraphics[width=0.45\columnwidth]{systemFrame.pdf}}
@@ -93,17 +96,16 @@ Figure~\ref{fig:queryProcess} gives an example workflow of the query engine when
 
 
 
-
 \subsection{Function Modules}
 Scholarly entity ranking and scholarly entity profiling are the two function modules that collect the ranked scholarly entities returned from the back-end, and present a visual analysis to users. More specifically, \oursystem utilizes RESTful APIs  and Echarts {\scriptsize (http://echarts.baidu.com)} for the scholarly ranking and profiling. Further, \oursystem provides users with the APIs of the ranking and profiling functions.
 
 %\footnote{ http://echarts.baidu.com}
 
 \begin{figure}
-\vspace{-2ex}
+\vspace{-2.5ex}
 \centering
 \includegraphics[width=\columnwidth]{queryProcess.pdf}
-\vspace{-4.5ex}
+\vspace{-5.5ex}
 \caption{Example workflow of \oursystem query engine}
 \label{fig:queryProcess}
 \vspace{-3ex}
